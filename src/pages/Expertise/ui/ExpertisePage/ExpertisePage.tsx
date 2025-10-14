@@ -1,0 +1,14 @@
+import React from "react"
+
+import { Flex, Pagination } from "itpc-ui-kit"
+
+import { SwitchingStagePreCourt } from "@/features/SwitchingStagePreCourt"
+
+import "./styles.scss"
+
+export const ExpertisePage: React.FC = () => (
+  <Flex className="selection-page" gap={16} vertical>
+    <SwitchingStagePreCourt />
+    <Pagination callback={() => console.info("Пагинация")} dataLength={1000} />
+  </Flex>
+)

@@ -1,0 +1,12 @@
+.itpc-positioned-wrap {
+  z-index: 999999;
+}
+
+.itpc-positioned-wrap_opened {
+  display: block;
+  width: max-content;
+}
+
+.itpc-positioned-wrap_closed {
+  display: none;
+}

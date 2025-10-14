@@ -1,0 +1,11 @@
+:root {
+  --font-size-label: 14px;
+  --font-size-input: 16px;
+  --unit: 0.5rem; /* 4px */
+  --space-0: 0;
+  --space-xs: calc(1 * var(--unit)); /* 4px */
+  --space-s: calc(2 * var(--unit)); /* 8px */
+  --space-m: calc(4 * var(--unit)); /* 16px */
+  --space-l: calc(6 * var(--unit)); /* 24px */
+  --space-xl: calc(8 * var(--unit)); /* 32px */
+}

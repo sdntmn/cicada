@@ -1,0 +1,64 @@
+.itpc-select-item {
+  position: relative;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 0.75rem;
+
+  font-size: var(--itpc-font-size-xs);
+  color: var(--itpc-primary-text-color);
+
+  background-color: var(--itpc-primary-bg-color);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+}
+
+.itpc-select-item_clickable_hover {
+  background-color: var(--itpc-primary-bg-selected-color);
+}
+
+.itpc-select-item_active {
+  background-color: var(--itpc-extra-hover-color-component);
+}
+
+.itpc-select-item_selected {
+  background-color: var(--itpc-primary-bg-selected-color);
+}
+
+.itpc-select-item_disabled {
+  color: var(--itpc-disabled-text-color);
+
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.itpc-select-item__stick {
+  position: absolute;
+  top: 15%;
+  left: -4px;
+
+  width: 4px;
+  height: 70%;
+
+  border-radius: 0 3px 3px 0;
+  background-color: var(--itpc-primary-icon-color);
+}
+
+.itpc-select-item__stick_showed {
+  animation: stick_position 100ms ease-in-out 0s 1 normal forwards;
+}
+
+@keyframes stick_position {
+  from {
+    left: -4px;
+  }
+
+  to {
+    left: 0;
+  }
+}

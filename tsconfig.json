@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "allowJs": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "ES2019.Array",
+      "es5",
+      "es6",
+      "dom"
+    ],
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "typeRoots": [
+    "./types",
+    "./node_modules/@types"
+  ],
+  "include": [
+    "./src/**/*"
+  ]
+}

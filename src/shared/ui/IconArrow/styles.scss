@@ -1,0 +1,35 @@
+@import url("../../../app/styles/index.scss");
+
+.itpc-icon__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 10px;
+
+  background-color: transparent;
+  cursor: pointer;
+  fill: var(--itpc-primary-icon-color);
+
+  transition: all ease-in-out 0.3s;
+}
+
+.itpc-icon__arrow_disabled {
+  fill: var(--itpc-disabled-bg-color-component);
+}
+
+.itpc-icon__arrow_orientation_top {
+  transform: rotate(180deg);
+}
+
+.itpc-icon__arrow_orientation_bottom {
+  transform: rotate(0);
+}
+
+.itpc-icon__arrow_orientation_left {
+  transform: rotate(90deg);
+}
+
+.itpc-icon__arrow_orientation_right {
+  transform: rotate(-90deg);
+}

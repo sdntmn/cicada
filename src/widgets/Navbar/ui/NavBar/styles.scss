@@ -1,0 +1,51 @@
+@use "../../../../app/styles/index";
+
+.navbar {
+  &__menu {
+    display: flex;
+    gap: 32px;
+  }
+
+  &__text {
+    line-height: 20px;
+  }
+
+  &__item {
+    list-style: none;
+    width: 116px;
+    display: flex;
+    flex-direction: column;
+    /* align-content: center; */
+    align-items: center;
+    gap: 4px;
+    // background: aqua;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      // background: rgba(75, 68, 136, 0.259);
+      background: rgba(var(--button-color-primary-rgb), 0.36);
+    }
+
+    &_active {
+      background: rgba(var(--button-color-primary-rgb), 0.26);
+      box-shadow: 0 0px 4px rgba(var(--button-color-primary-rgb), 0.26);
+
+      &:hover {
+        background: rgba(var(--button-color-primary-rgb), 0.26);
+      }
+    }
+  }
+
+  &__icon {
+    color: #585858;
+    &_active {
+      color: var(--button-color-primary);
+    }
+  }
+
+  &__actions {
+    margin-left: auto;
+  }
+}

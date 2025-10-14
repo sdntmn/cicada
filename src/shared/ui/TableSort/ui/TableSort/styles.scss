@@ -1,0 +1,12 @@
+.table-sort {
+  overflow: auto;
+  width: 100%;
+
+  color: var(--itpc-primary-text-color);
+  text-align: left;
+
+  border-spacing: 0;
+  border-radius: 4px;
+  table-layout: unset;
+  border-collapse: collapse;
+}

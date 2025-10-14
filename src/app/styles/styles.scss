@@ -1,0 +1,15 @@
+.app {
+  color: rgb(58, 58, 58);
+  background: #ffffff;
+
+  &__logo {
+    height: 40px;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

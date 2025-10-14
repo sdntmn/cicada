@@ -1,0 +1,27 @@
+.itpc-table-sort__cell {
+  padding: 10px;
+
+  font-weight: var(--itpc-font-weight-normal);
+
+  border: none;
+  border-radius: 0;
+  cursor: default;
+
+  &-align-left {
+    text-align: left;
+  }
+  &-align-center {
+    text-align: center;
+  }
+  &-align-right {
+    text-align: right;
+  }
+}
+
+.tpc-table-sort__cell_clickable {
+  cursor: pointer;
+}
+
+.itpc-table-sort__cell_back {
+  background-color: var(--itpc-table-hover-color-component);
+}

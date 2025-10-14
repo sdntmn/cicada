@@ -1,0 +1,21 @@
+@use "../../../../../app/styles/index.scss";
+.table-sort-row {
+  background-color: var(--itpc-primary-bg-color);
+  cursor: default;
+
+  &:hover {
+    background-color: var(--itpc-table-hover-color-component);
+  }
+
+  &__selection-cell {
+    padding: 10px;
+  }
+
+  &__selected {
+    background-color: var(--selected-row-table-color);
+  }
+}
+
+.itpc-table-sort__row_clickable {
+  cursor: pointer;
+}

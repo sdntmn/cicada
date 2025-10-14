@@ -1,0 +1,38 @@
+.table-sort-head {
+  &__wrap-cell {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+
+  &__selection-cell {
+    z-index: 1;
+  }
+
+  &__head-no-sort:hover {
+    background-color: var(--itpc-table-hover-color-component);
+  }
+
+  &_background-active {
+    background-color: var(--itpc-table-hover-color-component);
+  }
+
+  &_background {
+    background-color: #f0f0f0;
+  }
+
+  &__content-left {
+    justify-content: flex-start;
+  }
+  &__content-center {
+    justify-content: center;
+  }
+  &__content-right {
+    flex-direction: row-reverse;
+  }
+}
+
+.itpc-table-sort__head .itpc-table-sort__head-no-sort {
+  background-color: transparent;
+  cursor: default;
+}

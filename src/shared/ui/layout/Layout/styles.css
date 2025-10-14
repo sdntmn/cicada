@@ -1,0 +1,6 @@
+.itpc-layout {
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--itpc-primary-bg-color);
+}

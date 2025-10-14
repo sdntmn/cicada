@@ -1,0 +1,41 @@
+.table-header-cell {
+  background-color: transparent;
+  cursor: default;
+
+  &:hover {
+    background-color: var(--itpc-table-hover-color-component);
+    cursor: pointer;
+  }
+
+  &_clickable {
+    cursor: pointer;
+  }
+
+  &_pointer-none {
+    pointer-events: none;
+  }
+
+  &_background-active {
+    background-color: var(--itpc-table-hover-color-component);
+  }
+
+  &_background {
+    background-color: #f0f0f0;
+  }
+
+  &__wrap-cell {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+
+  &__content-left {
+    justify-content: flex-start;
+  }
+  &__content-center {
+    justify-content: center;
+  }
+  &__content-right {
+    flex-direction: row-reverse;
+  }
+}
