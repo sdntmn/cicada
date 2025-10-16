@@ -14,17 +14,29 @@ export type SorterFn<T> = (a: T, b: T) => number
 
 export type TextAlign = "center" | "right" | "left"
 
-export interface Column<T> {
+export interface DataColumn<T> {
   align?: TextAlign
   icon?: React.ReactNode
   isSortable: boolean
   name: keyof T
+  render?: (value: T[keyof T], rowData: T, rowIndex: number) => React.ReactNode
   sorter?: SorterFn<T>
   title: string
+  type: "data"
 }
 
+export interface VirtualColumn<T = any> {
+  align?: TextAlign
+  icon?: React.ReactNode
+  name: string
+  render?: (rowData: T, rowIndex: number) => React.ReactNode
+  title: string
+  type: "virtual"
+}
+
+export type Column<T> = VirtualColumn<T> | DataColumn<T>
+
 export interface KeySort<T> {
-  // isSortable: boolean
   name: keyof T
   order: SortType
   sorter: SorterFn<T>

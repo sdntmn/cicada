@@ -6,15 +6,15 @@ import { Column, RowType } from "../../types"
 
 import "./styles.scss"
 
-interface Props {
-  column: Column<RowType>
+interface Props<T extends RowType> {
+  column: Column<T>
   isActive: boolean
   isSortable: boolean
   onClick: () => void
   sortIcon: React.ReactNode
 }
 
-export const TableHeaderCell: React.FC<Props> = ({ column, isActive, isSortable, onClick, sortIcon }) => (
+export const TableHeaderCell = <T extends RowType>({ column, isActive, isSortable, onClick, sortIcon }: Props<T>) => (
   <th
     className={cn(
       "table-header-cell",

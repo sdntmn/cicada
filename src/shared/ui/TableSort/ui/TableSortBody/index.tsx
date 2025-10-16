@@ -1,52 +1,51 @@
 import React from "react"
 
+import { RowDensity } from "@/shared/constants"
+
 import { Column, NumberColumns, RowType } from "../../types"
 import { TableSortRow } from "../TableSortRow"
 
-interface TableSortBodyProps {
-  arrKeysNameColumns?: (keyof RowType)[]
-  columns?: Column<RowType>[]
-  getRowId?: (row: RowType) => string | number
-  isShowRowIndex: boolean
+interface TableSortBodyProps<T extends RowType> {
+  columns?: Column<T>[]
+  getRowId?: (row: T) => string | number
   isShowSelection: boolean
-  nameMainColumnSort?: keyof RowType
+  nameMainColumnSort?: keyof T
   onRowSelect?: (id: string | number, checked: boolean) => void
-  rows: RowType[]
+  rowDensity?: RowDensity
+  rows: T[]
   selectedRow?: Set<string | number>
   sortByNumberColumns?: NumberColumns
 }
 
-export const TableSortBody: React.FC<TableSortBodyProps> = ({
-  arrKeysNameColumns,
+export const TableSortBody = <T extends RowType>({
   columns,
   getRowId,
-  isShowRowIndex,
   isShowSelection,
   nameMainColumnSort,
   onRowSelect,
+  rowDensity,
   rows,
   selectedRow,
   sortByNumberColumns,
   ...rest
-}: TableSortBodyProps) => (
+}: TableSortBodyProps<T>) => (
   <tbody className="itpc-table-sort__body" {...rest}>
     {rows &&
-      rows.map((row: RowType, index) => {
+      rows.map((row: T, rowIndex) => {
         const rowId = getRowId(row)
         const isSelected = selectedRow?.has(rowId) || false
 
         return (
-          <TableSortRow
-            arrKeysNameColumns={arrKeysNameColumns}
+          <TableSortRow<T>
             columns={columns}
-            index={index}
-            isSelected={isSelected} // ← новое свойство
-            isShowRowIndex={isShowRowIndex}
+            isSelected={isSelected}
             isShowSelection={isShowSelection}
             key={rowId}
             nameMainColumnSort={nameMainColumnSort}
             onCheck={(checked) => onRowSelect?.(rowId, checked)}
             rowData={row}
+            rowDensity={rowDensity}
+            rowIndex={rowIndex}
             selectedRow={selectedRow}
             sortByNumberColumns={sortByNumberColumns}
           />

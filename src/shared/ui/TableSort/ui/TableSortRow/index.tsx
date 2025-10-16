@@ -3,82 +3,76 @@ import React from "react"
 import cn from "classnames"
 import { Checkbox } from "itpc-ui-kit"
 
+import { RowDensity } from "@/shared/constants"
+
 import { Column, NumberColumns, RowType } from "../../types"
 import { TableSortCell } from "../TableSortCell"
 
 import "./styles.scss"
 
-interface TableSortRowProps {
-  arrKeysNameColumns: (keyof RowType)[]
-  columns?: Column<RowType>[]
-  index?: number
+interface TableSortRowProps<T extends RowType> {
+  columns?: Column<T>[]
   isChecked?: boolean
   isSelected?: boolean
-  isShowRowIndex?: boolean
   isShowSelection?: boolean
-  nameMainColumnSort?: keyof RowType
+  nameMainColumnSort?: keyof T
   onCheck: (checked: boolean) => void
-  rowData: RowType
+  rowData: T
+  rowDensity?: RowDensity
+  rowIndex?: number
   selectedRow?: Set<string | number>
   sortByNumberColumns?: NumberColumns
 }
 
-export const TableSortRow: React.FC<TableSortRowProps> = ({
-  arrKeysNameColumns,
+export const TableSortRow = <T extends RowType>({
   columns,
-  index,
   isSelected,
-  isShowRowIndex,
   isShowSelection,
   nameMainColumnSort,
   onCheck,
   rowData,
+  rowDensity,
+  rowIndex,
   selectedRow,
   sortByNumberColumns,
-  ...rest
-}: TableSortRowProps) => {
-  const columnMap = React.useMemo(() => {
-    if (!columns) {
-      return {}
-    }
-    return columns.reduce<Record<string, Column<RowType>>>((acc, col) => {
-      acc[String(col.name)] = col
-      return acc
-    }, {})
-  }, [columns])
+}: TableSortRowProps<T>) => (
+  <tr className={cn("table-sort-row", isSelected && "table-sort-row__selected", rowDensity && `table-sort-row_${rowDensity}`)}>
+    {isShowSelection && onCheck && (
+      <td className="table-sort-row__selection-cell">
+        <Checkbox
+          className="table-sort-checkbox"
+          id={`check-${rowData.id}`}
+          isChecked={selectedRow?.has(rowData.id) || false}
+          name="row-selection"
+          onClick={(e) => onCheck(e.target.checked)}
+          type="checkbox"
+          variant="square"
+        />
+      </td>
+    )}
 
-  return (
-    <tr className={cn("table-sort-row", isSelected && "table-sort-row__selected")} {...rest}>
-      {isShowSelection && onCheck && (
-        <td className="table-sort-row__selection-cell">
-          <Checkbox
-            className="table-sort-checkbox"
-            id={`check-${rowData.id}`}
-            isChecked={selectedRow?.has(rowData.id) || false}
-            name="row-selection"
-            onClick={(e) => onCheck(e.target.checked)}
-            type="checkbox"
-            variant="square"
-          />
-        </td>
-      )}
-      {isShowRowIndex && <TableSortCell isMainColumSort={false} value={(index + 1).toString()} />}
-      {rowData &&
-        arrKeysNameColumns &&
-        arrKeysNameColumns?.map((colName) => {
-          const column = columnMap[String(colName)]
-          const align = column?.align || "left"
-          const value = rowData[colName]
-          return (
-            <TableSortCell
-              align={align}
-              isMainColumSort={nameMainColumnSort === colName}
-              key={colName}
-              sortByNumberColumns={sortByNumberColumns}
-              value={value}
-            />
-          )
-        })}
-    </tr>
-  )
-}
+    {columns?.map((column) => {
+      const align = column.align || "left"
+      const isMainColumSort = nameMainColumnSort === column.name
+
+      let cellContent: React.ReactNode
+
+      if (column.type === "virtual") {
+        cellContent = column.render?.(rowData, rowIndex) ?? null
+      } else {
+        const value = rowData[column.name]
+        cellContent = column.render ? column.render(value, rowData, rowIndex) : value != null ? String(value) : ""
+      }
+
+      return (
+        <TableSortCell
+          align={align}
+          isMainColumSort={isMainColumSort}
+          key={String(column.name)}
+          sortByNumberColumns={sortByNumberColumns}
+          value={cellContent}
+        />
+      )
+    })}
+  </tr>
+)

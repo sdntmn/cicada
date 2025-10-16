@@ -10,7 +10,7 @@ interface TableSortCellProps {
   align?: TextAlign
   isMainColumSort?: boolean
   sortByNumberColumns?: NumberColumns
-  value: string
+  value: React.ReactNode
 }
 
 export const TableSortCell: React.FC<TableSortCellProps> = ({

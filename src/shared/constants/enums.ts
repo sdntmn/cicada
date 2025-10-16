@@ -7,6 +7,13 @@ export enum Menu {
   monitoring = "monitoring",
 }
 
+export enum RowDensity {
+  LARGE = "large",
+  MEDIUM = "medium",
+  SMALL = "small",
+  X_LARGE = "xLarge",
+}
+
 export enum MenuName {
   archive = "Архив",
   cardIndex = "Поиск",

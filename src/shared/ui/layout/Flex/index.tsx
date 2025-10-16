@@ -1,4 +1,4 @@
-import React, { CSSProperties, HTMLAttributes } from "react"
+import React, { CSSProperties, forwardRef, HTMLAttributes } from "react"
 
 import "./styles.scss"
 import { generateClassList } from "./utils"
@@ -22,8 +22,15 @@ export interface FlexProps extends HTMLAttributes<HTMLDivElement> {
   wrap?: CSSProperties["flexWrap"]
 }
 
-export const Flex: React.FC<FlexProps> = ({ align, children, className, gap, justify, style, vertical, wrap, ...props }) => (
-  <div {...props} className={generateClassList({ align, className, gap, justify, vertical, wrap })} style={{ gap, ...style }}>
-    {children}
-  </div>
+export const Flex = forwardRef<HTMLDivElement, FlexProps>(
+  ({ align, children, className, gap, justify, style, vertical, wrap, ...props }, ref) => (
+    <div
+      {...props}
+      className={generateClassList({ align, className, gap, justify, vertical, wrap })}
+      ref={ref}
+      style={{ gap, ...style }}
+    >
+      {children}
+    </div>
+  )
 )

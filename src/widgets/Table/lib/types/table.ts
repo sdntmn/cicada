@@ -1,3 +1,5 @@
+import { BaseColumnTableSelect, VirtualColumnTableSelect } from "../constants/enums"
+
 export interface RowType {
   account: string
   address: string
@@ -5,3 +7,5 @@ export interface RowType {
   id: string
   population: string
 }
+
+export type ColumnTableSelect = VirtualColumnTableSelect | BaseColumnTableSelect

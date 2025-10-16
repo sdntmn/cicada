@@ -9,4 +9,8 @@
   border-radius: 4px;
   table-layout: unset;
   border-collapse: collapse;
+
+  .itpc-checkbox__fake_square {
+    padding-left: 0 !important;
+  }
 }

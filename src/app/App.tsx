@@ -54,7 +54,6 @@ export const App: React.FC = () => {
         </>
       }
       className="app app_default_theme"
-      // content={<MainPage />}
       content={<Section section={renderSection()} sectionName={sectionName} />}
     />
   )

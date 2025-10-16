@@ -9,29 +9,27 @@ import { TableHeaderCell } from "../TableHeaderCell/TableHeaderCell"
 
 import "./styles.scss"
 
-interface TableSortHeaderProps extends HTMLAttributes<HTMLTableCellElement> {
-  columns?: Column<RowType>[]
-  currentKey?: KeySort<RowType>
-  currentKeys?: KeysSort<RowType>
+interface TableSortHeaderProps<T extends RowType> extends HTMLAttributes<HTMLTableCellElement> {
+  columns?: Column<T>[]
+  currentKey?: KeySort<T>
+  currentKeys?: KeysSort<T>
   isAllSelected?: boolean
-  isShowRowIndex?: boolean
   isShowSelection?: boolean
   onSelectAll?: (checked: boolean) => void
-  setKeySort?: (key: Column<RowType>) => void
+  setKeySort?: (key: Column<T>) => void
   sortByNumberColumns?: NumberColumns
 }
 
-export const TableSortHeader: React.FC<TableSortHeaderProps> = ({
+export const TableSortHeader = <T extends RowType>({
   columns,
   currentKey,
   currentKeys,
   isAllSelected,
-  isShowRowIndex,
   isShowSelection,
   onSelectAll,
   setKeySort,
   sortByNumberColumns,
-}: TableSortHeaderProps) => (
+}: TableSortHeaderProps<T>) => (
   <thead className={cn("table-sort-head")}>
     <tr>
       {isShowSelection && onSelectAll && (
@@ -50,25 +48,22 @@ export const TableSortHeader: React.FC<TableSortHeaderProps> = ({
           </div>
         </th>
       )}
-      {isShowRowIndex && (
-        <th className={cn("table-sort-head__selection-cell table-sort-head_background")}>
-          <div className="table-sort-head__wrap-cell">#</div>
-        </th>
-      )}
 
       {columns &&
-        columns.map((column: Column<RowType>, index: number) => {
+        columns.map((column: Column<T>, index: number) => {
           const isActive = isColumnActive(column, currentKey, currentKeys, sortByNumberColumns)
           const sortIcon = renderSortIcon(column, currentKey, currentKeys, sortByNumberColumns)
-          const isSortable = Boolean(column.isSortable)
+          const isSortable = column.type === "data" && Boolean(column.isSortable)
+
+          const align = column.type === "data" && column.align
 
           if (sortByNumberColumns === NumberColumns.ONE || sortByNumberColumns === NumberColumns.TWO) {
             return (
-              <TableHeaderCell
+              <TableHeaderCell<T>
                 column={column}
                 isActive={isActive}
                 isSortable={isSortable}
-                key={column.name || index}
+                key={String(column.name) || index}
                 onClick={() => setKeySort?.(column)}
                 sortIcon={sortIcon}
               />
@@ -76,10 +71,8 @@ export const TableSortHeader: React.FC<TableSortHeaderProps> = ({
           }
 
           return (
-            <th className={cn("table-sort-head__head-no-sort")} key={column.name || index}>
-              <div className={cn("table-sort-head__wrap-cell", `table-sort-head__content-${column.align || "left"}`)}>
-                {column.title}
-              </div>
+            <th className={cn("table-sort-head__head-no-sort")} key={String(column.name) || index}>
+              <div className={cn("table-sort-head__wrap-cell", `table-sort-head__content-${align || "left"}`)}>{column.title}</div>
             </th>
           )
         })}

@@ -1,8 +1,9 @@
 import React from "react"
 
-import { Flex, Pagination } from "itpc-ui-kit"
+import { Pagination } from "itpc-ui-kit"
 
 import { SwitchingStagePreCourt } from "@/features/SwitchingStagePreCourt"
+import { Flex } from "@/shared/ui/layout/Flex"
 
 import "./styles.scss"
 

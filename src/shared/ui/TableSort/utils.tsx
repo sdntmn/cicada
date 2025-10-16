@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Column, KeySort, KeysSort, NumberColumns, RowType, SaveOrder, SorterFn, SortType } from "./types"
+import { Column, DataColumn, KeySort, KeysSort, NumberColumns, RowType, SaveOrder, SorterFn, SortType } from "./types"
 import { IconSortDown } from "./ui/IconSortDown"
 import { IconSortUp } from "./ui/IconSortUp"
 
@@ -20,39 +20,61 @@ export const toggleSort = (orderSort: SortType): SortType => {
   }
 }
 
-export const getKeysNamesColumns = (column: Column<RowType>[]): (keyof RowType)[] => column?.map((item: Column<RowType>) => item.name)
+export const getKeysNamesColumns = <T extends RowType>(columns: Column<T>[]): (keyof T)[] =>
+  columns.filter((col): col is DataColumn<T> => col.type === "data").map((col) => col.name)
 
 export const sorterFn =
-  (currentKey: Column<RowType>): SorterFn<RowType> =>
-  (a: RowType, b: RowType): number =>
-    Number(a[currentKey?.name] > b[currentKey?.name]) - Number(a[currentKey?.name] < b[currentKey?.name])
+  <T extends RowType>(currentKey: DataColumn<T>): SorterFn<T> =>
+  (a, b) => {
+    const valA = a[currentKey.name]
+    const valB = b[currentKey.name]
 
-export const setKey = (key: Column<RowType>, columnKey?: KeySort<RowType>): KeySort<RowType> => {
-  if (Boolean(key) && key.name === columnKey?.name) {
+    if (typeof valA === "string" && typeof valB === "string") {
+      return valA.localeCompare(valB)
+    }
+    if (valA < valB) {
+      return -1
+    }
+    if (valA > valB) {
+      return 1
+    }
+    return 0
+  }
+
+export const setKey = <T extends RowType>(column: Column<T>, columnKey?: KeySort<T>): KeySort<T> => {
+  if (column.type === "virtual") {
+    return columnKey ?? { name: "id" as keyof T, order: SortType.NONE, sorter: () => 0 }
+  }
+
+  if (column.name === columnKey?.name) {
     return updateParametersKey(columnKey)
   } else {
-    return updateParametersKey(key)
+    return updateParametersKey(column)
   }
 }
 
-const updateParametersKey = (key: KeySort<RowType> | Column<RowType>): KeySort<RowType> => {
+const updateParametersKey = <T extends RowType>(key: KeySort<T> | Column<T>): KeySort<T> => {
   if ("order" in key) {
     return {
       ...key,
-      order: key.order && toggleSort(key?.order),
+      order: key.order ? toggleSort(key.order) : SortType.NONE,
     }
-  } else {
-    return {
-      ...key,
-      order: SortType.ASCENDING,
-      sorter: !key.sorter ? sorterFn(key as Column<RowType>) : key.sorter,
-    }
+  }
+
+  if (key.type === "virtual") {
+    throw new Error("Невозможно сортировать по виртуальному столбцу")
+  }
+
+  return {
+    name: key.name,
+    order: SortType.ASCENDING,
+    sorter: key.sorter ?? sorterFn(key),
   }
 }
 
 export const byKey =
-  (key: KeySort<RowType>) =>
-  (a: RowType, b: RowType): number => {
+  <T extends RowType>(key: KeySort<T>) =>
+  (a: T, b: T): number => {
     if (key && key.sorter) {
       return key.sorter(a, b)
     }
@@ -60,28 +82,32 @@ export const byKey =
     return 0
   }
 
-export const updateParametersKeys = (key: Column<RowType>, currentKeys?: KeysSort<RowType>): KeysSort<RowType> => {
-  let keys: KeysSort<RowType> = {}
+export const updateParametersKeys = <T extends RowType>(key: Column<T>, currentKeys?: KeysSort<T>): KeysSort<T> => {
+  if (key.type === "virtual") {
+    return currentKeys ?? {}
+  }
+
+  let keys: KeysSort<T> = {}
 
   if (currentKeys?.mainKey?.name === key.name && currentKeys?.mainKey?.order === SortType.DESCENDING) {
     return keys
   }
 
-  if (!Boolean(currentKeys?.mainKey) || key.name === currentKeys?.mainKey?.name) {
+  if (!currentKeys?.mainKey || key.name === currentKeys.mainKey.name) {
     if (!currentKeys?.secondKey) {
       keys = {
         mainKey: {
-          ...key,
-          order: currentKeys?.mainKey?.order ? toggleSort(currentKeys?.mainKey?.order) : SortType.ASCENDING,
-          sorter: !key?.sorter ? sorterFn(key) : key?.sorter,
+          name: key.name, // keyof T ✅
+          order: currentKeys?.mainKey?.order ? toggleSort(currentKeys.mainKey.order) : SortType.ASCENDING,
+          sorter: key.sorter ?? sorterFn(key),
         },
       }
     } else {
       keys = {
         mainKey: {
-          ...key,
-          order: currentKeys?.mainKey?.order ? toggleSort(currentKeys?.mainKey?.order) : SortType.ASCENDING,
-          sorter: !key?.sorter ? sorterFn(key) : key?.sorter,
+          name: key.name,
+          order: currentKeys?.mainKey?.order ? toggleSort(currentKeys.mainKey.order) : SortType.ASCENDING,
+          sorter: key.sorter ?? sorterFn(key),
         },
         secondKey: currentKeys.secondKey,
       }
@@ -89,20 +115,20 @@ export const updateParametersKeys = (key: Column<RowType>, currentKeys?: KeysSor
   } else {
     if (key.name === currentKeys?.secondKey?.name) {
       keys = {
-        mainKey: currentKeys?.mainKey,
+        mainKey: currentKeys.mainKey,
         secondKey: {
-          ...key,
-          order: currentKeys?.secondKey?.order ? toggleSort(currentKeys?.secondKey?.order) : SortType.ASCENDING,
-          sorter: !key?.sorter ? sorterFn(key) : key?.sorter,
+          name: key.name,
+          order: currentKeys?.secondKey?.order ? toggleSort(currentKeys.secondKey.order) : SortType.ASCENDING,
+          sorter: key.sorter ?? sorterFn(key),
         },
       }
     } else {
       keys = {
         mainKey: currentKeys?.mainKey,
         secondKey: {
-          ...key,
+          name: key.name,
           order: SortType.ASCENDING,
-          sorter: !key?.sorter ? sorterFn(key) : key?.sorter,
+          sorter: key.sorter ?? sorterFn(key),
         },
       }
     }
@@ -111,29 +137,28 @@ export const updateParametersKeys = (key: Column<RowType>, currentKeys?: KeysSor
   return keys
 }
 
-export const renderIcon = (column: Column<RowType>, columnKey?: KeySort<RowType>): React.ReactNode => {
-  if (column?.isSortable) {
-    if (column.name === columnKey?.name) {
-      switch (columnKey?.order) {
-        case SortType.ASCENDING:
-          return <IconSortUp isActiveIcon />
-
-        case SortType.DESCENDING:
-          return <IconSortDown isActiveIcon />
-
-        default:
-          return <IconSortUp />
+export const renderIcon = <T extends RowType>(column: Column<T>, columnKey?: KeySort<T>): React.ReactNode => {
+  if (column.type === "data" && column.isSortable) {
+    if (column?.isSortable) {
+      if (column.name === columnKey?.name) {
+        switch (columnKey?.order) {
+          case SortType.ASCENDING:
+            return <IconSortUp isActiveIcon />
+          case SortType.DESCENDING:
+            return <IconSortDown isActiveIcon />
+          default:
+            return <IconSortUp />
+        }
+      } else {
+        return <IconSortUp />
       }
-    } else {
-      return <IconSortUp />
     }
   }
-
   return null
 }
 
-const renderIconTwoColumns = (column: Column<RowType>, currentKeys?: KeysSort<RowType>): React.ReactNode => {
-  if (column?.isSortable) {
+const renderIconTwoColumns = <T extends RowType>(column: Column<T>, currentKeys?: KeysSort<T>): React.ReactNode => {
+  if (column.type === "data" && column.isSortable) {
     const mainKey = currentKeys?.mainKey
     const secondKey = currentKeys?.secondKey
 
@@ -143,19 +168,18 @@ const renderIconTwoColumns = (column: Column<RowType>, currentKeys?: KeysSort<Ro
     if (column.name === secondKey?.name) {
       return renderIcon(column, secondKey)
     }
-
-    if (column.name !== secondKey?.name || mainKey?.name) {
-      return <IconSortUp />
-    }
+    return <IconSortUp />
   }
+
+  return null
 }
 
-export const renderSortIcon = (
-  column: Column<RowType>,
-  currentKey?: KeySort<RowType>,
-  currentKeys?: KeysSort<RowType>,
+export const renderSortIcon = <T extends RowType>(
+  column: Column<T>,
+  currentKey?: KeySort<T>,
+  currentKeys?: KeysSort<T>,
   sortByNumberColumns?: NumberColumns
-) => {
+): React.ReactNode => {
   if (sortByNumberColumns === NumberColumns.TWO) {
     return renderIconTwoColumns(column, currentKeys)
   }
@@ -166,24 +190,21 @@ export const renderSortIcon = (
 }
 
 export const byKeys =
-  (currentKeys: KeysSort<RowType>) =>
-  (a: RowType, b: RowType): number => {
+  <T extends RowType>(currentKeys: KeysSort<T>) =>
+  (a: T, b: T): number => {
     const main = currentKeys?.mainKey
     const second = currentKeys?.secondKey
 
-    // Сортируем по главному ключу с учётом направления
     if (main?.sorter) {
       let result = main.sorter(a, b)
       if (main.order === SortType.DESCENDING) {
         result = -result
       }
-
       if (result !== 0) {
         return result
       }
     }
 
-    // Если главный ключ равен — сортируем по второму
     if (second?.sorter) {
       let result = second.sorter(a, b)
       if (second.order === SortType.DESCENDING) {
@@ -207,12 +228,16 @@ export const restoreOrder = (saveOrder: SaveOrder[], rows: RowType[]): RowType[]
     return rows[index]
   })
 
-export const isColumnActive = (
-  column: Column<RowType>,
-  currentKey?: KeySort<RowType>,
-  currentKeys?: KeysSort<RowType>,
+export const isColumnActive = <T extends RowType>(
+  column: Column<T>,
+  currentKey?: KeySort<T>,
+  currentKeys?: KeysSort<T>,
   sortByNumberColumns?: NumberColumns
 ): boolean => {
+  if (column.type !== "data") {
+    return false
+  }
+
   if (sortByNumberColumns === NumberColumns.TWO && currentKeys?.mainKey) {
     return currentKeys.mainKey.name === column.name && currentKeys.mainKey.order !== SortType.NONE
   }
@@ -221,52 +246,3 @@ export const isColumnActive = (
   }
   return false
 }
-
-// export const sorterFn =
-//   (currentKey: Column<RowType>): SorterFn<RowType> =>
-//   (a: RowType, b: RowType): number =>
-//     Number(a[currentKey?.name] > b[currentKey?.name]) - Number(a[currentKey?.name] < b[currentKey?.name])
-
-// // export const setKey = (key: Column<RowType>, columnKey?: KeySort<RowType>): KeySort<RowType> => {
-// //   if (Boolean(key) && key.name === columnKey?.name) {
-// //     return updateParametersKey(columnKey)
-// //   } else {
-// //     return updateParametersKey(key)
-// //   }
-// // }
-
-// const defaultSorter =
-//   <T extends RowType>(key: keyof T) =>
-//   (a: T, b: T): number => {
-//     const valA = a[key]
-//     const valB = b[key]
-
-//     // Числовое сравнение, если оба — числа (или строки-числа)
-//     const numA = Number(valA)
-//     const numB = Number(valB)
-
-//     const isNumA = !isNaN(numA) && valA != null && valA !== ""
-//     const isNumB = !isNaN(numB) && valB != null && valB !== ""
-
-//     if (isNumA && isNumB) {
-//       return numA - numB
-//     }
-
-//     // Иначе — строковое сравнение
-//     return String(valA).localeCompare(String(valB))
-//   }
-
-// export const setKey = <T extends RowType>(column: Column<T>, currentKey?: KeySort<T>): KeySort<T> => {
-//   // Определяем новое направление
-//   const nextOrder =
-//     currentKey?.name === column.name && currentKey.order === SortType.ASCENDING ? SortType.DESCENDING : SortType.ASCENDING
-
-//   // Берём кастомный sorter или создаём fallback
-//   const sorter = column.sorter ? column.sorter : defaultSorter(column.name)
-
-//   return {
-//     name: column.name,
-//     order: nextOrder,
-//     sorter,
-//   }
-// }

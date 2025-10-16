@@ -2,8 +2,10 @@ import React, { TableHTMLAttributes, useEffect, useState } from "react"
 
 import cn from "classnames"
 
+import { RowDensity } from "@/shared/constants"
+
 import { Column, KeySort, KeysSort, NumberColumns, RowType, SaveOrder, SortType } from "../../types"
-import { byKey, byKeys, getKeysNamesColumns, order, restoreOrder, setKey, updateParametersKeys } from "../../utils"
+import { byKey, byKeys, order, setKey, updateParametersKeys } from "../../utils"
 import { TableSortBody } from "../TableSortBody"
 import { TableSortHeader } from "../TableSortHeader"
 
@@ -16,14 +18,14 @@ export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<H
   columns?: Column<T>[]
   /** Функция для получения id строки */
   getRowId?: (row: T) => string | number
-  /** Показывать номер строки */
-  isShowRowIndex?: boolean
   /** Показывать выбор строк */
   isShowSelection?: boolean
   /** Выбор строки */
   onRowSelect?: (id: string | number, checked: boolean) => void
   /** Выбор всех строк */
   onSelectAll?: (checked: boolean) => void
+  /** Высота строки */
+  rowDensity?: RowDensity
   /** Строки */
   rows: T[]
   /** Выбранная строка */
@@ -32,26 +34,26 @@ export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<H
   sortByNumberColumns?: NumberColumns
 }
 
-export const TableSort: React.FC<TableSortProps<any>> = ({
+export const TableSort = <T extends RowType>({
   className = "",
   columns,
-  getRowId = (row: RowType) => row?.id,
-  isShowRowIndex = false,
+  getRowId = (row: T) => row?.id,
   isShowSelection = false,
   onRowSelect,
   onSelectAll,
+  rowDensity,
   rows,
   selectedRow = new Set(),
   sortByNumberColumns = NumberColumns.ZERO,
   ...rest
-}: TableSortProps<any>) => {
-  const [currentKey, setCurrentKey] = useState<KeySort<RowType>>()
-  const [currentKeys, setCurrentKeys] = useState<KeysSort<RowType>>({})
-  const [data, setData] = useState<RowType[]>(rows)
+}: TableSortProps<T>) => {
+  const [currentKey, setCurrentKey] = useState<KeySort<T>>()
+  const [currentKeys, setCurrentKeys] = useState<KeysSort<T>>({})
+  const [data, setData] = useState<T[]>(rows)
   const [orderAscending, setOrderAscending] = useState<SaveOrder[]>([])
   const [orderDescending, setOrderDescending] = useState<SaveOrder[]>([])
 
-  const sortByOneColumn = (key: KeySort<RowType>): void => {
+  const sortByOneColumn = (key: KeySort<T>): void => {
     setCurrentKey(key)
 
     switch (key.order) {
@@ -68,14 +70,15 @@ export const TableSort: React.FC<TableSortProps<any>> = ({
     }
   }
 
-  const sortByTwoColumns = (key: Column<RowType>, updateKeysSort: KeysSort<RowType>): void => {
+  const sortByTwoColumns = (key: Column<T>, updateKeysSort: KeysSort<T>): void => {
     setCurrentKeys(updateKeysSort)
     if (Object.keys(updateKeysSort).length === 0) {
       setData(rows)
+      return
     }
 
-    const mainKey: KeySort<RowType> | undefined = updateKeysSort?.mainKey
-    const secondKey: KeySort<RowType> | undefined = updateKeysSort?.secondKey
+    setData([...data].sort(byKeys(updateKeysSort)))
+    const mainKey: KeySort<T> | undefined = updateKeysSort?.mainKey
 
     if (key.name === mainKey?.name) {
       {
@@ -83,36 +86,24 @@ export const TableSort: React.FC<TableSortProps<any>> = ({
       }
     }
 
-    if (key.name === secondKey?.name) {
-      if (secondKey?.order !== SortType.NONE && mainKey?.order !== SortType.NONE) {
-        setData([...data].sort(byKeys(updateKeysSort)))
-        if (!orderAscending.length && mainKey?.order === SortType.ASCENDING) {
-          setOrderAscending(order([...data]))
-        }
-        if (!orderDescending.length && mainKey?.order === SortType.DESCENDING) {
-          setOrderDescending(order([...data]))
-        }
-      }
-
-      if (secondKey?.order === SortType.NONE) {
-        if (mainKey?.order === SortType.ASCENDING) {
-          setData(restoreOrder(orderAscending, [...data]))
-          setOrderAscending([])
-        } else {
-          setData(restoreOrder(orderDescending, [...data]))
-          setOrderDescending([])
-        }
+    if (mainKey) {
+      if (mainKey.order === SortType.ASCENDING && !orderAscending.length) {
+        setOrderAscending(order([...data]))
+      } else if (mainKey.order === SortType.DESCENDING && !orderDescending.length) {
+        setOrderDescending(order([...data]))
       }
     }
   }
 
-  const setKeySort = (key: Column<RowType>): void => {
-    if (sortByNumberColumns === NumberColumns.ONE) {
-      return sortByOneColumn(setKey(key, currentKey))
-    }
-    if (sortByNumberColumns === NumberColumns.TWO) {
-      const updateKeys = updateParametersKeys(key, currentKeys)
-      return sortByTwoColumns(key, updateKeys)
+  const setKeySort = (key: Column<T>): void => {
+    if (key.type === "data" && key.isSortable) {
+      if (sortByNumberColumns === NumberColumns.ONE) {
+        return sortByOneColumn(setKey(key, currentKey))
+      }
+      if (sortByNumberColumns === NumberColumns.TWO) {
+        const updateKeys = updateParametersKeys(key, currentKeys)
+        return sortByTwoColumns(key, updateKeys)
+      }
     }
   }
 
@@ -128,12 +119,11 @@ export const TableSort: React.FC<TableSortProps<any>> = ({
   return (
     <table {...rest} className={cn("table-sort", className)}>
       {columns?.length && (
-        <TableSortHeader
+        <TableSortHeader<T>
           columns={columns}
           currentKey={currentKey}
           currentKeys={currentKeys}
           isAllSelected={safeIsAllSelected}
-          isShowRowIndex={isShowRowIndex}
           isShowSelection={isShowSelection}
           onSelectAll={onSelectAll}
           setKeySort={setKeySort}
@@ -142,14 +132,13 @@ export const TableSort: React.FC<TableSortProps<any>> = ({
       )}
 
       {data && (
-        <TableSortBody
-          arrKeysNameColumns={columns && getKeysNamesColumns(columns)}
+        <TableSortBody<T>
           columns={columns}
           getRowId={getRowId}
-          isShowRowIndex={isShowRowIndex}
           isShowSelection={isShowSelection}
           nameMainColumnSort={currentKeys?.mainKey?.name}
           onRowSelect={onRowSelect}
+          rowDensity={rowDensity}
           rows={data}
           selectedRow={selectedRow}
           sortByNumberColumns={sortByNumberColumns}

@@ -8,11 +8,27 @@
   }
 
   &__selection-cell {
-    padding: 10px;
+    padding: 0 8px;
   }
 
   &__selected {
     background-color: var(--selected-row-table-color);
+  }
+
+  &_small {
+    height: 32px;
+  }
+
+  &_medium {
+    height: 40px;
+  }
+
+  &_large {
+    height: 48px;
+  }
+
+  &_x-large {
+    height: 56px;
   }
 }
 
