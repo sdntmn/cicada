@@ -8,16 +8,19 @@ import { getCalculatePosition } from "@/shared/lib/helpers/getCalculatePosition/
 import "./styles.scss"
 
 interface PositionedWrapProps {
+  buttonId?: string // ← новый пропс
   children: React.ReactNode
   distanceBetweenElements?: number
   horizontalAlignment?: HORIZONTAL_POSITION
   isClosing: boolean
   isOpen: boolean
   position?: PositionType
-  refParent?: React.RefObject<HTMLDivElement>
+  // Поддерживаем оба варианта:
+  refParent?: React.RefObject<HTMLElement>
 }
 
 export const PositionedWrap: React.FC<PositionedWrapProps> = ({
+  buttonId,
   children,
   distanceBetweenElements,
   horizontalAlignment,
@@ -28,28 +31,46 @@ export const PositionedWrap: React.FC<PositionedWrapProps> = ({
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [stylePosition, setStylePosition] = useState<CSSProperties>({})
-  const calculatePosition = (): void => {
-    if (refParent) {
-      const stylePosition: CSSProperties = getCalculatePosition(refParent, ref, position, distanceBetweenElements, horizontalAlignment)
-      setStylePosition(stylePosition)
+
+  console.info(distanceBetweenElements)
+
+  const getParentElement = (): HTMLElement | null => {
+    if (refParent?.current) {
+      return refParent.current
     }
+    if (buttonId) {
+      return document.getElementById(buttonId)
+    }
+    return null
   }
 
-  useEffect(() => {
-    const hasScroll: boolean = document.body.scrollHeight > window.innerHeight
-    if (hasScroll) {
-      window.addEventListener("scroll", calculatePosition)
+  const calculatePosition = (): void => {
+    const parentElement = getParentElement()
+    console.info(parentElement)
+    if (!parentElement || !ref.current) {
+      return
     }
-    return () => {
-      window.removeEventListener("scroll", calculatePosition)
-    }
-  }, [])
 
+    // Создаём временный ref-объект для совместимости с getCalculatePosition
+    const parentRef = { current: parentElement }
+    const style = getCalculatePosition(parentRef, ref, position, distanceBetweenElements, horizontalAlignment)
+    setStylePosition(style)
+  }
+
+  // Обновляем позицию при скролле
+  useEffect(() => {
+    const handleScroll = () => calculatePosition()
+    window.addEventListener("scroll", handleScroll, true)
+    return () => window.removeEventListener("scroll", handleScroll, true)
+  }, [buttonId, refParent])
+
+  // Пересчитываем при открытии
   useEffect(() => {
     if (isOpen) {
-      calculatePosition()
+      const timer = setTimeout(calculatePosition, 0) // дать время отрендериться
+      return () => clearTimeout(timer)
     }
-  }, [isOpen])
+  }, [isOpen, buttonId, refParent])
 
   return (
     <div

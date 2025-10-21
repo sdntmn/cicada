@@ -1,0 +1,32 @@
+.density-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+
+  &__xLarge {
+    gap: 6px;
+  }
+
+  &__large {
+    gap: 4.5px;
+  }
+
+  &__medium {
+    gap: 3px;
+  }
+
+  &__small {
+    gap: 1.5px;
+  }
+
+  &__line {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    border-radius: 1px;
+  }
+}

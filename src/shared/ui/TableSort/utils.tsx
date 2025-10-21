@@ -157,7 +157,7 @@ export const renderIcon = <T extends RowType>(column: Column<T>, columnKey?: Key
   return null
 }
 
-const renderIconTwoColumns = <T extends RowType>(column: Column<T>, currentKeys?: KeysSort<T>): React.ReactNode => {
+export const renderIconTwoColumns = <T extends RowType>(column: Column<T>, currentKeys?: KeysSort<T>): React.ReactNode => {
   if (column.type === "data" && column.isSortable) {
     const mainKey = currentKeys?.mainKey
     const secondKey = currentKeys?.secondKey

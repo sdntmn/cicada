@@ -94,7 +94,8 @@
   --itpc-primary-hover-color-component-active: #5c53ac;
   --itpc-secondary-hover-color-component: #b2b7c7;
   --itpc-extra-hover-color-component: #e7e7e7;
-  --itpc-table-hover-color-component: #e5e5e5;
+  --itpc-table-hover-color-component: #e7e7e7;
+
   --itpc-danger-hover-color-component: #c9184a;
   --itpc-additional-hover-color-component: #f0f0f0;
 
@@ -153,7 +154,12 @@
 
   // Новые цвета
   --primary-bg-color: #ffffff;
+  --primary-icon-color: #393185;
   --button-color-primary: #726bb5;
   --button-color-primary-rgb: 114, 107, 181;
-  --selected-row-table-color: #f5f5f5;
+  --selected-row-table-color: hsl(0, 0%, 96%);
+  --table-sort-header-cell: hsl(0, 0%, 95%);
+  --itpc-table-header-cell-active: hsl(0, 0%, 92%);
+  --itpc-table-hover-color-component: hsl(0, 0%, 90%);
+  --itpc-table-hover-color-button: hsl(0, 0%, 82%);
 }

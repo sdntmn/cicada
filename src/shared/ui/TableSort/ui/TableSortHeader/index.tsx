@@ -3,29 +3,35 @@ import React, { HTMLAttributes } from "react"
 import cn from "classnames"
 import { Checkbox } from "itpc-ui-kit"
 
+import { Account } from "@/entities/Accounts"
+
 import { Column, KeySort, KeysSort, NumberColumns, RowType } from "../../types"
-import { isColumnActive, renderSortIcon } from "../../utils"
+import { isColumnActive } from "../../utils"
 import { TableHeaderCell } from "../TableHeaderCell/TableHeaderCell"
 
 import "./styles.scss"
 
 interface TableSortHeaderProps<T extends RowType> extends HTMLAttributes<HTMLTableCellElement> {
+  activeFilterColumns?: keyof Account | null
   columns?: Column<T>[]
   currentKey?: KeySort<T>
   currentKeys?: KeysSort<T>
   isAllSelected?: boolean
   isShowSelection?: boolean
+  onFilterIconClick?: (columnName: keyof T) => void
   onSelectAll?: (checked: boolean) => void
   setKeySort?: (key: Column<T>) => void
   sortByNumberColumns?: NumberColumns
 }
 
 export const TableSortHeader = <T extends RowType>({
+  activeFilterColumns,
   columns,
   currentKey,
   currentKeys,
   isAllSelected,
   isShowSelection,
+  onFilterIconClick,
   onSelectAll,
   setKeySort,
   sortByNumberColumns,
@@ -52,7 +58,6 @@ export const TableSortHeader = <T extends RowType>({
       {columns &&
         columns.map((column: Column<T>, index: number) => {
           const isActive = isColumnActive(column, currentKey, currentKeys, sortByNumberColumns)
-          const sortIcon = renderSortIcon(column, currentKey, currentKeys, sortByNumberColumns)
           const isSortable = column.type === "data" && Boolean(column.isSortable)
 
           const align = column.type === "data" && column.align
@@ -60,12 +65,16 @@ export const TableSortHeader = <T extends RowType>({
           if (sortByNumberColumns === NumberColumns.ONE || sortByNumberColumns === NumberColumns.TWO) {
             return (
               <TableHeaderCell<T>
+                activeFilterColumns={activeFilterColumns}
                 column={column}
+                currentKey={currentKey}
+                currentKeys={currentKeys}
                 isActive={isActive}
                 isSortable={isSortable}
                 key={String(column.name) || index}
                 onClick={() => setKeySort?.(column)}
-                sortIcon={sortIcon}
+                onFilterIconClick={onFilterIconClick}
+                sortByNumberColumns={sortByNumberColumns}
               />
             )
           }

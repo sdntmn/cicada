@@ -34,10 +34,12 @@ export const TableSortBody = <T extends RowType>({
       rows.map((row: T, rowIndex) => {
         const rowId = getRowId(row)
         const isSelected = selectedRow?.has(rowId) || false
+        const hasSelectedRows = selectedRow.size > 0
 
         return (
           <TableSortRow<T>
             columns={columns}
+            hasSelectedRows={hasSelectedRows}
             isSelected={isSelected}
             isShowSelection={isShowSelection}
             key={rowId}

@@ -1,4 +1,5 @@
 .table-sort-head {
+  background: var(--table-sort-header-cell);
   &__wrap-cell {
     display: flex;
     align-items: center;
@@ -18,7 +19,7 @@
   }
 
   &_background {
-    background-color: #f0f0f0;
+    background: var(--table-sort-header-cell);
   }
 
   &__content-left {
@@ -30,9 +31,8 @@
   &__content-right {
     flex-direction: row-reverse;
   }
-}
 
-.itpc-table-sort__head .itpc-table-sort__head-no-sort {
-  background-color: transparent;
-  cursor: default;
+  .itpc-checkbox__input + .itpc-checkbox__fake_square:before {
+    background: white;
+  }
 }

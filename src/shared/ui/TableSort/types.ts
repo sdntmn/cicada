@@ -17,6 +17,7 @@ export type TextAlign = "center" | "right" | "left"
 export interface DataColumn<T> {
   align?: TextAlign
   icon?: React.ReactNode
+  isFilterable?: boolean
   isSortable: boolean
   name: keyof T
   render?: (value: T[keyof T], rowData: T, rowIndex: number) => React.ReactNode
@@ -28,6 +29,7 @@ export interface DataColumn<T> {
 export interface VirtualColumn<T = any> {
   align?: TextAlign
   icon?: React.ReactNode
+  isFilterable?: true
   name: string
   render?: (rowData: T, rowIndex: number) => React.ReactNode
   title: string

@@ -7,12 +7,38 @@
     background-color: var(--itpc-table-hover-color-component);
   }
 
+  &:hover {
+    .table-body-cell_back {
+      background-color: var(--itpc-table-hover-color-component) !important;
+    }
+  }
+
   &__selection-cell {
+    width: 36px;
     padding: 0 8px;
+
+    .itpc-checkbox__input + .itpc-checkbox__fake_square:before {
+      background-color: white;
+    }
   }
 
   &__selected {
-    background-color: var(--selected-row-table-color);
+    background-color: #f4f2ff;
+
+    &:hover {
+      background-color: #e4dfff;
+    }
+  }
+
+  &__checkbox {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+
+    &_visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
   }
 
   &_small {
@@ -27,7 +53,7 @@
     height: 48px;
   }
 
-  &_x-large {
+  &_xLarge {
     height: 56px;
   }
 }

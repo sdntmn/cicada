@@ -9,60 +9,87 @@ import { useTableRowSelection } from "@/shared/lib/hooks"
 import { useAppDispatch, useAppSelector } from "@/shared/lib/store"
 import { Flex } from "@/shared/ui/layout/Flex"
 import { TableSort } from "@/shared/ui/TableSort"
-import { Column } from "@/shared/ui/TableSort/types"
 
-import { DEFAULT_VISIBLE, REQUIRED_COLUMNS, SELECTION_TABLE_DISPLAY_ORDER } from "../../lib/constants/columns"
-import { buildVisibleColumns } from "../../lib/helpers/buildVisibleColumns/buildVisibleColumns"
-import { ColumnTableSelect } from "../../lib/types/table"
+import { REQUIRED_COLUMNS, SELECTION_TABLE_DISPLAY_ORDER } from "../../lib/constants/columns"
+import { useAccountTableColumns } from "../../lib/hooks/useAccountTableColumns/useAccountTableColumns"
+import { FiltersColumn } from "../FiltersColumn/FiltersColumn"
 import { MenuVisibilityColumns } from "../MenuVisibilityColumns/MenuVisibilityColumns"
+import { TableSettingsMenu } from "../TableSettingsMenu/TableSettingsMenu"
 
 import "./styles.scss"
 
 export const Table: React.FC = () => {
   const dispatch = useAppDispatch()
   const { accounts } = useAppSelector((state) => state.accounts)
-
-  const [selectedColumns, setSelectedColumns] = useState<Set<ColumnTableSelect>>(new Set(DEFAULT_VISIBLE))
-
   const { handleRowSelect, handleSelectAll, selectedRow } = useTableRowSelection(accounts)
+  const { handleChangeVisibleColumns, selectedColumns, visibleColumns } = useAccountTableColumns()
+  const [activeFilterColumns, setActiveFilterColumns] = useState<keyof Account | null>(null)
+  const [rowDensity, setRowDensity] = useState<RowDensity>(RowDensity.MEDIUM)
 
-  const visibleColumns: Column<Account>[] = buildVisibleColumns(selectedColumns)
+  const [filterAnchor, setFilterAnchor] = useState<{
+    column: keyof Account
+    element: HTMLElement | null
+  } | null>(null)
 
-  const handleChangeVisibleColumns = (newSelectedColumns: Set<ColumnTableSelect>) => {
-    const finalSet = new Set(newSelectedColumns)
-
-    REQUIRED_COLUMNS.forEach((col) => finalSet.add(col))
-
-    setSelectedColumns(finalSet)
+  const handleFilterIconClick = (columnName: keyof Account) => {
+    setActiveFilterColumns(columnName)
   }
+
+  const closeFilter = () => setActiveFilterColumns(null)
+
+  // Закрытие по клику вне
+  useEffect(() => {
+    const handleClickOutside = () => setFilterAnchor(null)
+    if (filterAnchor) {
+      document.addEventListener("click", handleClickOutside)
+      return () => document.removeEventListener("click", handleClickOutside)
+    }
+  }, [filterAnchor])
 
   useEffect(() => {
     dispatch(getAccounts())
   }, [])
 
+  console.info(rowDensity)
+
   return (
     <Flex vertical>
-      <Flex>
+      <Flex className="table__controls" gap={8} justify="end">
         <MenuVisibilityColumns
           allColumns={SELECTION_TABLE_DISPLAY_ORDER.filter((col) => !REQUIRED_COLUMNS.has(col))}
           onChange={handleChangeVisibleColumns}
           selected={selectedColumns}
         />
+        <TableSettingsMenu currentDensity={rowDensity} onChangeDensity={setRowDensity} />
       </Flex>
 
       <Flex className="table">
         <TableSort<Account>
+          activeFilterColumns={activeFilterColumns}
           className="table__sort"
           columns={visibleColumns}
+          // isActiveFilter={activeFilterColumns}
+          onFilterIconClick={handleFilterIconClick}
           onRowSelect={handleRowSelect}
           onSelectAll={handleSelectAll}
-          rowDensity={RowDensity.MEDIUM}
+          rowDensity={rowDensity}
           rows={accounts}
           selectedRow={selectedRow}
           sortByNumberColumns={NumberColumns.TWO}
           isShowSelection
         />
       </Flex>
+      {activeFilterColumns && (
+        <FiltersColumn
+          buttonId={`filter-btn-${String(activeFilterColumns)}`}
+          columnName={activeFilterColumns}
+          // filters={undefined}
+          isOpen={activeFilterColumns !== null}
+          key={activeFilterColumns}
+          onClose={closeFilter}
+          onFilterChange={() => {}}
+        />
+      )}
     </Flex>
   )
 }

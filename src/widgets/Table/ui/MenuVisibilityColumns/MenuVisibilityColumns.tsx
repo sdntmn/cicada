@@ -1,44 +1,50 @@
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 
 import { Typography } from "itpc-ui-kit"
 
-import { useOnClickOutside } from "@/shared/lib/hooks"
-import { Flex } from "@/shared/ui/layout/Flex"
+import { HORIZONTAL_POSITION } from "@/shared/constants"
+import { PositionPortal } from "@/shared/ui/PositionPortal"
 
-import { TableColumnTableSelect } from "../../lib/types/table"
+import { ColumnTableSelect } from "../../lib/types/table"
 import { ColumnSelector } from "../ColumnSelector/ColumnSelector"
 
 import "./styles.scss"
 
 interface ColumnVisibilityMenuProps {
-  allColumns: TableColumnTableSelect[]
-  onChange: (selected: Set<TableColumnTableSelect>) => void
-  selected: Set<TableColumnTableSelect>
+  allColumns: ColumnTableSelect[]
+  onChange: (selected: Set<ColumnTableSelect>) => void
+  selected: Set<ColumnTableSelect>
 }
 
 export const MenuVisibilityColumns: React.FC<ColumnVisibilityMenuProps> = ({ allColumns, onChange, selected }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const menuRef = useRef<HTMLDivElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
 
   const closeMenu = () => {
     setIsOpen(false)
   }
 
   const toggleMenu = () => setIsOpen(!isOpen)
-
-  useOnClickOutside(menuRef, closeMenu, isOpen, dropdownRef)
+  const buttonId = "column-visibility-btn"
 
   return (
-    <Flex className="menu-column" ref={menuRef}>
-      <button onClick={toggleMenu}>Колонки</button>
+    <div className="menu-column">
+      <button className="menu-column__btn" id={buttonId} type="button">
+        <i aria-label="Выбрать колонки таблицы" className="fa-solid fa-table-columns menu-column__icon" onClick={toggleMenu} />
+      </button>
 
       {isOpen && (
-        <Flex className="menu-column__content" ref={dropdownRef} vertical>
+        <PositionPortal
+          className="menu-column__content"
+          componentId={buttonId}
+          distanceBetweenElements={4}
+          horizontalAlignment={HORIZONTAL_POSITION.RIGHT}
+          isOpen={isOpen}
+          onClose={closeMenu}
+        >
           <Typography.Title level={5}>Выбор колонок:</Typography.Title>
           <ColumnSelector allColumns={allColumns} onChange={onChange} selected={selected} />
-        </Flex>
+        </PositionPortal>
       )}
-    </Flex>
+    </div>
   )
 }

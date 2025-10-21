@@ -143,6 +143,7 @@
         ]
       }
     ],
+    "sort-array-values/sort-array-values": "off",
     "prettier/prettier": [
       "error",
       {

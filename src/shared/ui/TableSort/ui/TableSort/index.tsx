@@ -2,6 +2,7 @@ import React, { TableHTMLAttributes, useEffect, useState } from "react"
 
 import cn from "classnames"
 
+import { Account } from "@/entities/Accounts"
 import { RowDensity } from "@/shared/constants"
 
 import { Column, KeySort, KeysSort, NumberColumns, RowType, SaveOrder, SortType } from "../../types"
@@ -12,6 +13,7 @@ import { TableSortHeader } from "../TableSortHeader"
 import "./styles.scss"
 
 export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<HTMLTableElement> {
+  activeFilterColumns?: keyof Account | null
   /** Дополнительный класс */
   className?: string
   /** Колонки */
@@ -20,6 +22,7 @@ export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<H
   getRowId?: (row: T) => string | number
   /** Показывать выбор строк */
   isShowSelection?: boolean
+  onFilterIconClick?: (columnName: keyof T) => void
   /** Выбор строки */
   onRowSelect?: (id: string | number, checked: boolean) => void
   /** Выбор всех строк */
@@ -30,15 +33,18 @@ export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<H
   rows: T[]
   /** Выбранная строка */
   selectedRow?: Set<string | number>
+
   /** Вариант сортировки по столбцам */
   sortByNumberColumns?: NumberColumns
 }
 
 export const TableSort = <T extends RowType>({
+  activeFilterColumns,
   className = "",
   columns,
   getRowId = (row: T) => row?.id,
   isShowSelection = false,
+  onFilterIconClick,
   onRowSelect,
   onSelectAll,
   rowDensity,
@@ -120,11 +126,13 @@ export const TableSort = <T extends RowType>({
     <table {...rest} className={cn("table-sort", className)}>
       {columns?.length && (
         <TableSortHeader<T>
+          activeFilterColumns={activeFilterColumns}
           columns={columns}
           currentKey={currentKey}
           currentKeys={currentKeys}
           isAllSelected={safeIsAllSelected}
           isShowSelection={isShowSelection}
+          onFilterIconClick={onFilterIconClick}
           onSelectAll={onSelectAll}
           setKeySort={setKeySort}
           sortByNumberColumns={sortByNumberColumns}

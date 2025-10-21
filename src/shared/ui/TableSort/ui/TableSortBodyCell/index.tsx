@@ -9,22 +9,24 @@ import "./styles.scss"
 interface TableSortCellProps {
   align?: TextAlign
   isMainColumSort?: boolean
+  isSelected?: boolean
   sortByNumberColumns?: NumberColumns
   value: React.ReactNode
 }
 
-export const TableSortCell: React.FC<TableSortCellProps> = ({
+export const TableSortBodyCell: React.FC<TableSortCellProps> = ({
   align = "left",
   isMainColumSort,
+  isSelected,
   sortByNumberColumns,
   value,
   ...rest
 }: TableSortCellProps) => (
   <td
     className={cn(
-      "itpc-table-sort__cell",
-      `itpc-table-sort__cell-align-${align}`,
-      isMainColumSort && sortByNumberColumns === NumberColumns.TWO && "itpc-table-sort__cell_back"
+      "table-body-cell",
+      `table-body-cell__align-${align}`,
+      isMainColumSort && !isSelected && sortByNumberColumns === NumberColumns.TWO && "table-body-cell_back"
     )}
     {...rest}
   >

@@ -20,7 +20,7 @@ export interface ParentDimensions {
   parentWidth: number
 }
 
-export const getParentDimensions = (ref: HTMLDivElement): ParentDimensions => {
+export const getParentDimensions = (ref: HTMLElement): ParentDimensions => {
   const rect: DOMRect = ref.getBoundingClientRect()
   return {
     parentBottom: rect.bottom,

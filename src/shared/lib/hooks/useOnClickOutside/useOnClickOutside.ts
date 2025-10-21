@@ -38,12 +38,12 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
       return
     }
 
-    document.addEventListener("mouseup", listener)
+    document.addEventListener("mousedown", listener)
     document.addEventListener("touchmove", listener)
     document.addEventListener("touchend", listener)
 
     return () => {
-      document.removeEventListener("mouseup", listener)
+      document.removeEventListener("mousedown", listener)
       document.removeEventListener("touchmove", listener)
       document.removeEventListener("touchend", listener)
     }

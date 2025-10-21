@@ -1,0 +1,27 @@
+.table-body-cell {
+  padding: 0 10px;
+
+  font-weight: var(--itpc-font-weight-normal);
+
+  border: none;
+  border-radius: 0;
+  cursor: default;
+
+  &__align-left {
+    text-align: left;
+  }
+  &__align-center {
+    text-align: center;
+  }
+  &__align-right {
+    text-align: right;
+  }
+
+  &_back {
+    background-color: var(--selected-row-table-color);
+  }
+
+  .table-body-cell_back:not(:hover) {
+    background-color: var(--selected-row-table-color);
+  }
+}

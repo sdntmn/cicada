@@ -10,3 +10,8 @@ export interface Mobile extends Contact<number> {
 export interface Email extends Contact<string> {
   __brand: "email"
 }
+
+export interface DurationAnimation {
+  durationClose?: number
+  durationOpen?: number
+}

@@ -3,10 +3,15 @@
   overflow-y: auto;
 
   border-radius: 4px;
+
+  &__controls {
+    padding: 8px 0 12px;
+  }
+
   &__sort .itpc-table-sort__head {
     background: #e0e0e0;
   }
-  & tr {
+  & tbody tr {
     border-bottom: 1px solid #e0e0e0;
   }
 

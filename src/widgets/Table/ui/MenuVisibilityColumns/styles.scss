@@ -1,17 +1,35 @@
+@use "../../../../app/styles/index.scss";
+
 .menu-column {
+  display: inline-block;
   position: relative;
+  text-align: end;
+
+  &__btn {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    padding: 8px;
+    min-width: auto;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  &__icon {
+    color: var(--primary-icon-color);
+  }
 
   &__content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    margin-top: 8px;
-    padding: 12px;
-    background: white;
-    border: 1px solid #d9d9d9;
+    background: #fff;
+    border: 1px solid #ddd;
     border-radius: 6px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 12px;
     min-width: 200px;
+    z-index: 1000;
   }
 }

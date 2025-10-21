@@ -1,0 +1,63 @@
+.table-settings-menu {
+  &__btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    font-size: 16px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &__dropdown {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    min-width: 152px;
+    z-index: 1000;
+  }
+
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  &__options {
+    display: flex;
+    gap: 4px;
+  }
+
+  &__option {
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 6px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #444;
+    box-shadow: 0 0px 2px rgba(0, 0, 0, 0.15);
+
+    &_active {
+      background-color: #e6f0ff;
+      border-color: #1890ff;
+      color: #1890ff;
+      font-weight: 500;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+}

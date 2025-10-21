@@ -16,7 +16,7 @@ export const getParentDimensions = (ref: HTMLDivElement): ParentDimensions => {
   }
 }
 
-export const getElementDimensions = (ref: HTMLUListElement | HTMLDivElement): ElementDimensions => ({
+export const getElementDimensions = (ref: HTMLUListElement | HTMLElement): ElementDimensions => ({
   elementHeight: ref.offsetHeight,
   elementWidth: ref.offsetWidth,
 })

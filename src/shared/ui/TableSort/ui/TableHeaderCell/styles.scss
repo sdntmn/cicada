@@ -1,10 +1,11 @@
+@use "../../../../../app/styles/index.scss";
 .table-header-cell {
-  background-color: transparent;
+  background-color: var(--table-sort-header-cell);
   cursor: default;
 
   &:hover {
     background-color: var(--itpc-table-hover-color-component);
-    cursor: pointer;
+    // cursor: pointer;
   }
 
   &_clickable {
@@ -16,17 +17,47 @@
   }
 
   &_background-active {
-    background-color: var(--itpc-table-hover-color-component);
-  }
-
-  &_background {
-    background-color: #f0f0f0;
+    background-color: var(--itpc-table-header-cell-active);
   }
 
   &__wrap-cell {
     display: flex;
     align-items: center;
     padding: 10px;
+    gap: 8px;
+  }
+
+  &__btn {
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  &__btn-filter {
+    &:hover {
+      background-color: var(--itpc-table-hover-color-button);
+    }
+
+    &:hover .table-header-cell__filter-icon {
+      color: var(--button-color-primary);
+    }
+  }
+
+  &__filter-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 8px;
+    background-color: transparent;
+    color: var(--itpc-default-icon-color);
+    transition: all ease-in-out 0.3s;
+
+    &_active {
+      color: var(--button-color-primary);
+    }
   }
 
   &__content-left {

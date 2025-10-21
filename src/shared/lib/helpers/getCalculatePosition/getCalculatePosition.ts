@@ -74,8 +74,8 @@ export const getVerticalPosition = (
 }
 
 export const getCalculatePosition = (
-  refParent: React.RefObject<HTMLDivElement>,
-  refChildren: React.RefObject<HTMLUListElement | HTMLDivElement>,
+  refParent: React.RefObject<HTMLElement>,
+  refChildren: React.RefObject<HTMLUListElement | HTMLElement>,
   position: PositionType,
   distanceBetweenElements?: number,
   horizontalAlignment?: HORIZONTAL_POSITION
