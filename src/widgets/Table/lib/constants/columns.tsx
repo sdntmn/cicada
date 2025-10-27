@@ -1,14 +1,28 @@
 import React from "react"
 
-import { Account } from "@/entities/Accounts"
+import { Account } from "@/entities/Account"
 import { DataColumn, VirtualColumn } from "@/shared/ui/TableSort/types"
 
 import { ColumnTableSelect } from "../types/table"
 
 import { BaseColumnTableSelect, VirtualColumnTableSelect } from "./enums"
 
+const parseDebtValue = (value: any): number => {
+  if (value == null || value === "") {
+    return 0
+  }
+  const str = String(value).trim()
+  if (str === "—" || str === "–" || str === "-") {
+    return 0
+  }
+  const normalized = str.replace(/\s+/g, "").replace(",", ".")
+  const num = Number(normalized)
+  return isNaN(num) ? 0 : num
+}
+
 export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<Account>> = {
   [BaseColumnTableSelect.ACCOUNT]: {
+    isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.ACCOUNT,
     title: "Лицевой счет",
@@ -21,15 +35,17 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<A
     type: "data",
   },
   [BaseColumnTableSelect.CITY]: {
+    isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.CITY,
     title: "Город",
     type: "data",
   },
   [BaseColumnTableSelect.DEBT]: {
+    isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.DEBT,
-    sorter: (a, b) => Number(a.debt) - Number(b.debt),
+    sorter: (a, b) => parseDebtValue(a.debt) - parseDebtValue(b.debt),
     title: "Долг",
     type: "data",
   },
@@ -45,28 +61,14 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<A
     isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.PENALTY,
-    sorter: (a, b) => Number(a.penalty) - Number(b.penalty),
+    sorter: (a, b) => parseDebtValue(a.penalty) - parseDebtValue(b.penalty),
     title: "Пени",
-    type: "data",
-  },
-  [BaseColumnTableSelect.STATUS]: {
-    isFilterable: true,
-    isSortable: true,
-    name: BaseColumnTableSelect.STATUS,
-    render: (status) => {
-      const color = status === "active" ? "green" : "red"
-      const text = status === "active" ? "green" : "red"
-      return <span style={{ color }}>{text}</span>
-    },
-    sorter: (a, b) => Number(a.penalty) - Number(b.penalty),
-    title: "Статус",
     type: "data",
   },
 }
 
 export const VIRTUAL_COLUMN: VirtualColumn<Account> = {
   align: "center",
-  isFilterable: true,
   name: "index",
   render: (_, rowIndex) => <span>{Number(rowIndex) + 1}</span>,
   title: "№",
@@ -78,7 +80,9 @@ export const DEFAULT_VISIBLE: ColumnTableSelect[] = [
   BaseColumnTableSelect.FIO,
   BaseColumnTableSelect.ACCOUNT,
   BaseColumnTableSelect.DEBT,
-  BaseColumnTableSelect.STATUS,
+  BaseColumnTableSelect.ADDRESS,
+  BaseColumnTableSelect.CITY,
+  BaseColumnTableSelect.PENALTY,
 ]
 
 export const REQUIRED_COLUMNS = new Set<ColumnTableSelect>([BaseColumnTableSelect.ACCOUNT, BaseColumnTableSelect.FIO])
@@ -91,7 +95,6 @@ export const SELECTION_TABLE_DISPLAY_ORDER: ColumnTableSelect[] = [
   BaseColumnTableSelect.CITY,
   BaseColumnTableSelect.DEBT,
   BaseColumnTableSelect.PENALTY,
-  BaseColumnTableSelect.STATUS,
 ]
 
 export const COLUMN_LABELS: Record<ColumnTableSelect, string> = {
@@ -101,6 +104,5 @@ export const COLUMN_LABELS: Record<ColumnTableSelect, string> = {
   [BaseColumnTableSelect.DEBT]: "Долг",
   [BaseColumnTableSelect.FIO]: "ФИО",
   [BaseColumnTableSelect.PENALTY]: "Пени",
-  [BaseColumnTableSelect.STATUS]: "Статус",
   [VirtualColumnTableSelect.INDEX]: "№",
 }

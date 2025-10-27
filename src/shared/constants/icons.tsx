@@ -27,3 +27,9 @@ export const courtMenuIcon = "fas fa-scale-balanced"
 export const monitoringMenuIcon = "fas fa-file-lines "
 
 export const archiveMenuIcon = "fas fa-file-zipper"
+
+export const closeIcon = "fa-solid fa-xmark"
+
+export const filterIcon = "fa-solid fa-filter"
+
+export const verticaDots = "fa-solid fa-ellipsis-vertical"

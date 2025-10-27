@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 
-import { apiUser, UserApi } from "@/shared/lib/api"
+import { apiUser, UserApi } from "@/shared/api"
 
 export const getUser = createAsyncThunk<UserApi, string>("user/getUser", async (account: string, { rejectWithValue }) => {
   try {

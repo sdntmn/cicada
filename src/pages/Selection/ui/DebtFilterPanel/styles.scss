@@ -1,0 +1,34 @@
+.debt-filter-panel {
+  display: inline-flex;
+
+  &__btn-filters {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 4px;
+    color: #6b7280;
+    font-size: 16px;
+
+    &_active {
+      text-decoration-line: underline;
+    }
+
+    &:hover {
+      color: var(--itpc-primary-text-color);
+      text-decoration-line: underline;
+    }
+  }
+
+  &__content {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 16px;
+    min-width: 200px;
+  }
+}

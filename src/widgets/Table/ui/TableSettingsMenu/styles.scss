@@ -3,13 +3,14 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 6px;
+    padding: 2px 12px;
     border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: inherit;
-    font-size: 16px;
+    font-size: 20px;
+    color: var(--itpc-default-icon-color);
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);

@@ -97,7 +97,7 @@ export const updateParametersKeys = <T extends RowType>(key: Column<T>, currentK
     if (!currentKeys?.secondKey) {
       keys = {
         mainKey: {
-          name: key.name, // keyof T ✅
+          name: key.name,
           order: currentKeys?.mainKey?.order ? toggleSort(currentKeys.mainKey.order) : SortType.ASCENDING,
           sorter: key.sorter ?? sorterFn(key),
         },

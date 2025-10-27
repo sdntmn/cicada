@@ -2,12 +2,13 @@ import React, { useState } from "react"
 
 import cn from "classnames"
 
-import { HORIZONTAL_POSITION, RowDensity } from "@/shared/constants"
+import { HORIZONTAL_POSITION, RowDensity, verticaDots } from "@/shared/constants"
+import { LineHeightIcon } from "@/shared/ui/LineHeightIcon"
 import { PositionPortal } from "@/shared/ui/PositionPortal"
 
-import "./styles.scss"
-import { LineHeightIcon } from "@/shared/ui/LineHeightIcon"
 import { DENSITY_DISPLAY_ORDER } from "../../lib/constants/settings"
+
+import "./styles.scss"
 
 interface Props {
   currentDensity: RowDensity
@@ -29,7 +30,7 @@ export const TableSettingsMenu: React.FC<Props> = ({ currentDensity, onChangeDen
   return (
     <>
       <button aria-label="Настройки таблицы" className="table-settings-menu__btn" id={buttonId} onClick={toggleMenu} type="button">
-        <i className="fa-solid fa-gear table-settings-menu__icon" />
+        <i className={cn(verticaDots, " table-settings-menu__icon")} />
       </button>
 
       <PositionPortal

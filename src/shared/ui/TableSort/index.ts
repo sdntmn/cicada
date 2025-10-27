@@ -1,1 +1,1 @@
-export { TableSort } from "./ui/TableSort"
+export { TableSort } from "./ui/TableSort/TableSort"

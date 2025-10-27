@@ -32,8 +32,6 @@ export const PositionedWrap: React.FC<PositionedWrapProps> = ({
   const ref = useRef<HTMLDivElement>(null)
   const [stylePosition, setStylePosition] = useState<CSSProperties>({})
 
-  console.info(distanceBetweenElements)
-
   const getParentElement = (): HTMLElement | null => {
     if (refParent?.current) {
       return refParent.current
@@ -46,12 +44,10 @@ export const PositionedWrap: React.FC<PositionedWrapProps> = ({
 
   const calculatePosition = (): void => {
     const parentElement = getParentElement()
-    console.info(parentElement)
     if (!parentElement || !ref.current) {
       return
     }
 
-    // Создаём временный ref-объект для совместимости с getCalculatePosition
     const parentRef = { current: parentElement }
     const style = getCalculatePosition(parentRef, ref, position, distanceBetweenElements, horizontalAlignment)
     setStylePosition(style)

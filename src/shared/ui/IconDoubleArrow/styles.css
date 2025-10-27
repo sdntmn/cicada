@@ -1,0 +1,30 @@
+.itpc-icon__double-arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 10px;
+
+  background-color: transparent;
+  cursor: pointer;
+  fill: var(--itpc-primary-icon-color);
+
+  transition: all ease-in-out 0.3s;
+}
+
+.itpc-icon__double-arrow_orientation_top {
+  transform: rotate(180deg);
+}
+
+.itpc-icon__double-arrow_orientation_bottom {
+  transform: rotate(0);
+}
+
+.itpc-icon__double-arrow_orientation_left {
+  transform: rotate(90deg);
+}
+
+.itpc-icon__double-arrow_orientation_right {
+  transform: rotate(-90deg);
+}

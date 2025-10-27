@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import { Tabs, TabsItem } from "itpc-ui-kit"
 
 import { StageName } from "@/shared/constants"
-import { TableStage } from "@/widgets/TableStage"
+import { Table } from "@/widgets/Table"
 
 import "./styles.scss"
 
@@ -12,11 +12,11 @@ export const SwitchingStagePreCourt: React.FC = () => {
 
   const items: TabsItem[] = [
     {
-      content: <TableStage />,
+      content: <Table />,
       title: StageName.START,
     },
     {
-      content: <TableStage />,
+      content: <Table />,
       title: StageName.END,
     },
   ]
@@ -25,5 +25,5 @@ export const SwitchingStagePreCourt: React.FC = () => {
     setSelectedTab(tabTitle)
   }
 
-  return <Tabs changeActiveTab={handleTabChange} items={items} />
+  return <Tabs changeActiveTab={handleTabChange} className="switching-stage" items={items} />
 }

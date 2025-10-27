@@ -2,8 +2,8 @@ import React, { useState } from "react"
 
 import { Tabs, TabsItem } from "itpc-ui-kit"
 
-import { SearchByAddress } from "@/entities/SearchByAddress"
-import { SearchByListHouses } from "@/entities/SearchByListHouses"
+import { HouseMultiSelect } from "@/features/HouseMultiSelect"
+import { SearchByAddress } from "@/features/SearchByAddress"
 import { SelectedSearch } from "@/shared/constants"
 
 import "./styles.scss"
@@ -13,7 +13,7 @@ export const SwitchingSearch: React.FC = () => {
 
   const items: TabsItem[] = [
     {
-      content: <SearchByListHouses />,
+      content: <HouseMultiSelect />,
       title: SelectedSearch.LIST_HOUSES,
     },
     {

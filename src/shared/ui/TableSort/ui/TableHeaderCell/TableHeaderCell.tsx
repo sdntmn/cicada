@@ -3,8 +3,7 @@ import React from "react"
 import cn from "classnames"
 import { Flex } from "itpc-ui-kit"
 
-import { Account } from "@/entities/Accounts"
-import { ColumnTableSelect } from "@/widgets/Table/lib/types/table"
+import { Account } from "@/entities/Account"
 
 import { Column, KeySort, KeysSort, NumberColumns, RowType } from "../../types"
 import { SortIcon } from "../SortIcon/SortIcon"
@@ -14,6 +13,7 @@ import "./styles.scss"
 interface Props<T extends RowType> {
   activeFilterColumns?: keyof Account | null
   column: Column<T>
+  columnFilters?: Partial<Record<keyof T, string>>
   currentKey?: KeySort<T>
   currentKeys?: KeysSort<T>
   isActive: boolean
@@ -26,6 +26,7 @@ interface Props<T extends RowType> {
 export const TableHeaderCell = <T extends RowType>({
   activeFilterColumns,
   column,
+  columnFilters,
   currentKey,
   currentKeys,
   isActive,
@@ -44,10 +45,9 @@ export const TableHeaderCell = <T extends RowType>({
     onFilterIconClick?.(column.name as keyof T)
   }
 
-  console.log(activeFilterColumns)
-  console.log(activeFilterColumns === column.name)
-
   const isActiveFilter = activeFilterColumns === column.name
+  const hasFilter = column.type === "data" && columnFilters?.[column.name] !== undefined && columnFilters[column.name] !== ""
+
   return (
     <th
       className={cn(
@@ -77,7 +77,7 @@ export const TableHeaderCell = <T extends RowType>({
               <i
                 className={cn(
                   "fa-solid fa-filter table-header-cell__filter-icon",
-                  isActiveFilter && "table-header-cell__filter-icon_active"
+                  (isActiveFilter || hasFilter) && "table-header-cell__filter-icon_active"
                 )}
               />
             </button>

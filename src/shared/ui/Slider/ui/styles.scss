@@ -1,0 +1,72 @@
+.filterCard {
+  // ... существующие стили ...
+
+  // Увеличим gap для мультиселекта
+  gap: 32px;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
+}
+
+.slider {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  background: #e5e7eb;
+  outline: none;
+  border-radius: 3px;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 24px;
+    height: 16px;
+    border-radius: 9px;
+    background: #5c40ff;
+    background: radial-gradient(circle, #7263c0 0%, #6a5abf 50%, #5c53ac 100%);
+    box-shadow: 0 2px 6px rgba(92, 64, 255, 0.3);
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 2px 3px rgba(92, 64, 255, 0.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #5c40ff;
+    background: radial-gradient(circle, #7263c0 0%, #6a5abf 50%, #5c53ac 100%);
+    box-shadow: 0 2px 6px rgba(92, 64, 255, 0.3);
+    cursor: pointer;
+    border: none;
+
+    &:hover {
+      box-shadow: 0 0 0 3px rgba(92, 64, 255, 0.2);
+    }
+  }
+}
+
+.slider-track {
+  height: 6px;
+  background: #e5e7eb;
+  border-radius: 3px;
+  position: relative;
+}
+
+.slider-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #5c40ff;
+  position: absolute;
+  top: -6px;
+  transform: translateX(-50%);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slider-thumb:hover {
+  box-shadow: 0 0 0 4px rgba(92, 64, 255, 0.2);
+}

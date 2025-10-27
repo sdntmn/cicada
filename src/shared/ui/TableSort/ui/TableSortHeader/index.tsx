@@ -3,7 +3,7 @@ import React, { HTMLAttributes } from "react"
 import cn from "classnames"
 import { Checkbox } from "itpc-ui-kit"
 
-import { Account } from "@/entities/Accounts"
+import { Account } from "@/entities/Account"
 
 import { Column, KeySort, KeysSort, NumberColumns, RowType } from "../../types"
 import { isColumnActive } from "../../utils"
@@ -13,6 +13,7 @@ import "./styles.scss"
 
 interface TableSortHeaderProps<T extends RowType> extends HTMLAttributes<HTMLTableCellElement> {
   activeFilterColumns?: keyof Account | null
+  columnFilters?: Partial<Record<keyof T, string>>
   columns?: Column<T>[]
   currentKey?: KeySort<T>
   currentKeys?: KeysSort<T>
@@ -26,6 +27,7 @@ interface TableSortHeaderProps<T extends RowType> extends HTMLAttributes<HTMLTab
 
 export const TableSortHeader = <T extends RowType>({
   activeFilterColumns,
+  columnFilters,
   columns,
   currentKey,
   currentKeys,
@@ -67,6 +69,7 @@ export const TableSortHeader = <T extends RowType>({
               <TableHeaderCell<T>
                 activeFilterColumns={activeFilterColumns}
                 column={column}
+                columnFilters={columnFilters}
                 currentKey={currentKey}
                 currentKeys={currentKeys}
                 isActive={isActive}

@@ -11,7 +11,6 @@ import { updateScroll } from "@/shared/lib/hooks/updateScroll"
 import { useHoveredIndex } from "@/shared/lib/hooks/useHoveredIndex"
 import { IconArrow } from "@/shared/ui/IconArrow"
 import { ListBox } from "@/shared/ui/ListBox"
-import { Placeholder } from "@/shared/ui/Placeholder"
 import { Portal } from "@/shared/ui/Portal"
 import { PositionedWrap } from "@/shared/ui/PositionedWrap"
 import { SelectItem } from "@/shared/ui/SelectItem"
@@ -29,8 +28,10 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> 
   items: Item[]
   /** Обработчик изменения значения */
   onChange(values: string[]): void
+  onSearch?: (query: string) => void
   /** Подпись */
   placeholder?: string
+  searchQuery?: string
   /** Выбранные элементы */
   selectedItems?: string[]
 }
@@ -44,7 +45,9 @@ export const MultiSelectField: React.FC<Props> = ({
   },
   items,
   onChange,
+  onSearch,
   placeholder = "",
+  searchQuery,
   selectedItems = [],
   ...rest
 }) => {
@@ -52,11 +55,24 @@ export const MultiSelectField: React.FC<Props> = ({
   const { isClosing } = useAnimation(isOpen, durationAnimation)
 
   const ref = useRef<HTMLDivElement>(null)
-  const refButton = useRef<HTMLButtonElement>(null)
+  const refInput = useRef<HTMLInputElement>(null)
   const refChildren = useRef<HTMLUListElement>(null)
 
   const onClose = (): void => {
     setIsOpen(false)
+    if (onSearch) {
+      onSearch("")
+    }
+  }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (onSearch) {
+      onSearch(value)
+    }
+    if (!isOpen) {
+      setIsOpen(true)
+    }
   }
 
   const handleOpen = (): void => {
@@ -66,9 +82,13 @@ export const MultiSelectField: React.FC<Props> = ({
   }
 
   const onChangeValue = (value: string): void => {
+    if (!value) {
+      return
+    }
+
     if (typeof onChange === "function") {
-      const select = new Set<string>(selectedItems)
-      console.log(select)
+      const current = Array.isArray(selectedItems) ? selectedItems : []
+      const select = new Set<string>(current)
 
       if (select.has(value)) {
         select.delete(value)
@@ -82,7 +102,7 @@ export const MultiSelectField: React.FC<Props> = ({
 
   const selectText = (): string => {
     if (selectedItems?.length > 1) {
-      return `Выбрано ${selectedItems?.length} элементов`
+      return `${selectedItems?.length} выбрано `
     }
 
     if (selectedItems?.length === 1) {
@@ -100,10 +120,18 @@ export const MultiSelectField: React.FC<Props> = ({
 
   const handleMouseSelection = (value: string) => {
     onChangeValue(value)
+
+    // Сброс поиска при выборе
+    if (onSearch) {
+      onSearch("")
+    }
+
     setIsMouseMoved(false)
     const index = items.findIndex((item) => item.id === value)
     setActiveIndex(index)
-    refButton.current?.focus()
+
+    // Фокус можно оставить на input, но с пустым значением
+    refInput.current?.focus()
   }
 
   const onMouseEnter = (index: number): void => {
@@ -112,27 +140,36 @@ export const MultiSelectField: React.FC<Props> = ({
     }
   }
 
-  const handleEnterKey = (event: React.KeyboardEvent<HTMLButtonElement | HTMLDivElement>) => {
-    event.preventDefault()
-    onChangeValue(items[activeIndex]?.id)
-  }
-
-  const handleKey = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!isOpen) {
+      if (e.key === KeyCode.ENTER || e.key === KeyCode.ARROW_DOWN) {
+        e.preventDefault()
+        setIsOpen(true)
+        return
+      }
       return
     }
 
-    if (isMouseMoved) {
-      setIsMouseMoved(false)
-    }
-    switch (event.key) {
+    switch (e.key) {
       case KeyCode.ARROW_UP:
       case KeyCode.ARROW_DOWN:
-        handleKeyUpAndDown(event)
+        e.preventDefault()
+        handleKeyUpAndDown(e)
         break
 
       case KeyCode.ENTER:
-        handleEnterKey(event)
+        e.preventDefault()
+        if (items[activeIndex]?.id) {
+          onChangeValue(items[activeIndex].id)
+          if (onSearch) {
+            onSearch("")
+          }
+        }
+        break
+
+      case KeyCode.ESCAPE:
+        e.preventDefault()
+        onClose()
         break
 
       default:
@@ -149,8 +186,6 @@ export const MultiSelectField: React.FC<Props> = ({
       handleOpen()
       return
     }
-
-    handleKey(event)
   }
 
   useEffect(() => {
@@ -195,21 +230,31 @@ export const MultiSelectField: React.FC<Props> = ({
       onKeyDown={handleContainerKeyDown}
       ref={ref}
       role="combobox"
-      tabIndex={disabled ? -1 : 0}
+      tabIndex={-1}
     >
-      <button
-        className={cn("itpc-multi-select__button", isOpen && "itpc-multi-select__button_focused")}
-        disabled={disabled}
-        onClick={handleOpen}
-        ref={refButton}
-        type="button"
-      >
-        <Placeholder disabled={disabled} focused={isOpen || !!selectedItems?.length}>
-          {placeholder}
-        </Placeholder>
-
-        {selectText()}
-      </button>
+      <div className="itpc-multi-select__input-wrapper">
+        {!isOpen && selectedItems.length > 0 && (
+          <div className="itpc-multi-select__selected-preview">
+            {/* {selectedItems.map((id) => (
+              <span className="tag" key={id}>
+                {items.find((i) => i.id === id)?.value}
+              </span>
+            ))} */}
+            {selectText()}
+          </div>
+        )}
+        <input
+          className={cn("itpc-multi-select__input", isOpen && "itpc-multi-select__input_focused")}
+          disabled={disabled}
+          onChange={handleInputChange}
+          onClick={handleOpen}
+          onKeyDown={handleInputKeyDown}
+          placeholder={!selectedItems.length ? placeholder : ""}
+          readOnly={!onSearch}
+          ref={refInput}
+          value={searchQuery}
+        />
+      </div>
 
       <IconArrow disabled={disabled} onClick={handleOpen} orientation={isOpen ? "top" : "bottom"} />
 

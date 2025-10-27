@@ -5,3 +5,7 @@ declare module "*.svg" {
   const content: string
   export default content
 }
+
+type OptionalRecord<K extends keyof any, T> = {
+  [P in K]?: T
+}

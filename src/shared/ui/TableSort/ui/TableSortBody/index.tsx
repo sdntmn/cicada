@@ -5,6 +5,8 @@ import { RowDensity } from "@/shared/constants"
 import { Column, NumberColumns, RowType } from "../../types"
 import { TableSortRow } from "../TableSortRow"
 
+import "./styles.scss"
+
 interface TableSortBodyProps<T extends RowType> {
   columns?: Column<T>[]
   getRowId?: (row: T) => string | number
@@ -29,8 +31,8 @@ export const TableSortBody = <T extends RowType>({
   sortByNumberColumns,
   ...rest
 }: TableSortBodyProps<T>) => (
-  <tbody className="itpc-table-sort__body" {...rest}>
-    {rows &&
+  <tbody className="table-sort-body" {...rest}>
+    {rows.length ? (
       rows.map((row: T, rowIndex) => {
         const rowId = getRowId(row)
         const isSelected = selectedRow?.has(rowId) || false
@@ -52,6 +54,13 @@ export const TableSortBody = <T extends RowType>({
             sortByNumberColumns={sortByNumberColumns}
           />
         )
-      })}
+      })
+    ) : (
+      <tr>
+        <td className="table-sort-body__empty" colSpan={isShowSelection ? columns?.length + 1 || 1 : columns?.length}>
+          Нет данных
+        </td>
+      </tr>
+    )}
   </tbody>
 )

@@ -53,3 +53,40 @@
 .itpc-multi-select__button_focused {
   border-color: var(--itpc-primary-border-color);
 }
+
+// styles.scss (для MultiSelectField)
+
+.itpc-multi-select__input-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.itpc-multi-select__input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+
+  &_focused {
+    border-color: #007bff;
+  }
+}
+
+.itpc-multi-select__selected-preview {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 12px;
+  pointer-events: none;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itpc-multi-select__no-results {
+  padding: 8px 12px;
+  color: #999;
+  font-style: italic;
+}

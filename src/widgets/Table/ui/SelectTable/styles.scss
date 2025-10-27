@@ -1,11 +1,27 @@
 .table {
-  height: 672px;
+  max-height: 772px;
   overflow-y: auto;
 
   border-radius: 4px;
 
   &__controls {
-    padding: 8px 0 12px;
+    gap: 8px;
+    /* background: #d4d6e7; */
+    padding: 0 10px;
+    border-radius: 4px 4px 0 0;
+    /* background-color: var(--table-sort-header-cell); */
+    border-left: 1px solid #f0f0f0;
+    border-top: 1px solid #f0f0f0;
+    border-right: 1px solid #f0f0f0;
+
+    .itpc-pagination {
+      margin-bottom: 0;
+      gap: 4px;
+
+      &__btn:disabled {
+        pointer-events: none;
+      }
+    }
   }
 
   &__sort .itpc-table-sort__head {
@@ -19,6 +35,50 @@
     position: sticky;
     top: 0;
     transform: translateZ(0);
+  }
+
+  &__pagination {
+    .itpc-pagination__btn_page_active {
+      height: 32px;
+      min-width: 32px;
+    }
+
+    .itpc-pagination__btn_left {
+      height: 32px;
+      width: 32px;
+    }
+
+    .itpc-pagination__btn_right {
+      height: 32px;
+      width: 32px;
+    }
+
+    .itpc-pagination__btn_page {
+      height: 32px;
+      min-width: 32px;
+    }
+
+    .itpc-pagination__btn_page_active {
+      background: radial-gradient(circle, #7263c0 0%, #6a5abf 50%, #5c53ac 100%);
+      box-shadow: 0 2px 6px rgba(92, 64, 255, 0.3);
+    }
+
+    .itpc-pagination__pages {
+      gap: 4px;
+    }
+  }
+
+  &__page-size-select {
+    padding: 6px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: white;
+    font-size: 14px;
+    cursor: pointer;
+
+    &:hover {
+      border-color: #9ca3af;
+    }
   }
 }
 
