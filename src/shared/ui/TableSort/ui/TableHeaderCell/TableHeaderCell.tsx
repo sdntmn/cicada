@@ -1,7 +1,6 @@
 import React from "react"
 
 import cn from "classnames"
-import { Flex } from "itpc-ui-kit"
 
 import { Account } from "@/entities/Account"
 
@@ -21,6 +20,7 @@ interface Props<T extends RowType> {
   onClick: (column: Column<T>) => void
   onFilterIconClick?: (columnName: keyof T) => void
   sortByNumberColumns?: NumberColumns
+  verticalBorders?: boolean
 }
 
 export const TableHeaderCell = <T extends RowType>({
@@ -34,6 +34,7 @@ export const TableHeaderCell = <T extends RowType>({
   onClick,
   onFilterIconClick,
   sortByNumberColumns,
+  verticalBorders,
 }: Props<T>) => {
   const handleSorterClick = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -47,42 +48,46 @@ export const TableHeaderCell = <T extends RowType>({
 
   const isActiveFilter = activeFilterColumns === column.name
   const hasFilter = column.type === "data" && columnFilters?.[column.name] !== undefined && columnFilters[column.name] !== ""
+  const hasControls = isSortable || (column.isFilterable && column.type === "data")
 
   return (
     <th
       className={cn(
         "table-header-cell",
         isSortable ? "table-header-cell_clickable" : "table-header-cell_pointer-none",
-        isActive ? "table-header-cell_background-active" : "table-header-cell_background"
+        isActive ? "table-header-cell_background-active" : "table-header-cell_background",
+        verticalBorders && "table-header-cell__vertical-border"
       )}
       onClick={isSortable ? handleSorterClick : undefined}
     >
-      <div className={cn("table-header-cell__wrap-cell", `table-header-cell__content-${column.align || "left"}`)}>
+      <div className={cn("table-header-cell__wrap-cell", `table-header-cell__content_${column.align || "left"}`)}>
         {column.title}
         {column.icon}
-        <Flex align="center" gap={4}>
-          {isSortable && (
-            <SortIcon column={column} currentKey={currentKey} currentKeys={currentKeys} sortByNumberColumns={sortByNumberColumns} />
-          )}
-          {column.isFilterable && column.type === "data" && (
-            <button
-              className={cn(
-                "table-header-cell__btn table-header-cell__btn-filter",
-                isActiveFilter && "table-header-cell__btn-filter_active"
-              )}
-              id={`filter-btn-${String(column.name)}`}
-              onClick={handleFilterClick}
-              type="button"
-            >
-              <i
+        {hasControls && (
+          <div className={cn("table-header-cell__icons", `table-header-cell__content_${column.align || "left"}`)}>
+            {isSortable && (
+              <SortIcon column={column} currentKey={currentKey} currentKeys={currentKeys} sortByNumberColumns={sortByNumberColumns} />
+            )}
+            {column.isFilterable && column.type === "data" && (
+              <button
                 className={cn(
-                  "fa-solid fa-filter table-header-cell__filter-icon",
-                  (isActiveFilter || hasFilter) && "table-header-cell__filter-icon_active"
+                  "table-header-cell__btn table-header-cell__btn-filter",
+                  isActiveFilter && "table-header-cell__btn-filter_active"
                 )}
-              />
-            </button>
-          )}
-        </Flex>
+                id={`filter-btn-${String(column.name)}`}
+                onClick={handleFilterClick}
+                type="button"
+              >
+                <i
+                  className={cn(
+                    "fa-solid fa-filter table-header-cell__filter-icon",
+                    (isActiveFilter || hasFilter) && "table-header-cell__filter-icon_active"
+                  )}
+                />
+              </button>
+            )}
+          </div>
+        )}
       </div>
     </th>
   )

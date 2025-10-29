@@ -8,6 +8,14 @@
     // cursor: pointer;
   }
 
+  &__vertical-border {
+    border-right: 1px solid var(--table-cell-border-color, #e0e0e0);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
   &_clickable {
     cursor: pointer;
   }
@@ -25,6 +33,12 @@
     align-items: center;
     padding: 10px;
     gap: 8px;
+  }
+
+  &__icons {
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
   }
 
   &__btn {
@@ -60,13 +74,14 @@
     }
   }
 
-  &__content-left {
+  &__content_left {
     justify-content: flex-start;
   }
-  &__content-center {
+  &__content_center {
     justify-content: center;
   }
-  &__content-right {
+  &__content_right {
     flex-direction: row-reverse;
+    justify-content: flex-start;
   }
 }

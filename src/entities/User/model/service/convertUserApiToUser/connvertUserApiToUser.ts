@@ -1,4 +1,4 @@
-import { UserApi } from "@/shared/lib/api"
+import { UserApi } from "@/shared/api"
 
 import { User } from "../../types/user"
 

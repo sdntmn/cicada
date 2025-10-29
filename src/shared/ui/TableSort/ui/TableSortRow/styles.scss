@@ -13,6 +13,10 @@
     }
   }
 
+  &__striped {
+    background-color: var(--table-row-stripe-bg, #f7f7f7);
+  }
+
   &__selection-cell {
     width: 36px;
     padding: 0 8px;
@@ -27,6 +31,14 @@
 
     &:hover {
       background-color: #e4dfff;
+    }
+  }
+
+  &__vertical-border {
+    border-right: 1px solid var(--table-cell-border-color, #e0e0e0);
+
+    &:last-child {
+      border-right: none;
     }
   }
 

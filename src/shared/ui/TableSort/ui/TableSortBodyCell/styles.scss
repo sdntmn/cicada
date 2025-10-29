@@ -24,4 +24,12 @@
   .table-body-cell_back:not(:hover) {
     background-color: var(--selected-row-table-color);
   }
+
+  &__vertical-border {
+    border-right: 1px solid var(--table-cell-border-color, #e0e0e0);
+
+    &:last-child {
+      border-right: none;
+    }
+  }
 }

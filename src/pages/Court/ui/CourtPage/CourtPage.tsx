@@ -1,6 +1,6 @@
 import React from "react"
 
-import { Flex } from "itpc-ui-kit"
+import { Flex } from "@/shared/ui/layout/Flex"
 
 import "./styles.scss"
 

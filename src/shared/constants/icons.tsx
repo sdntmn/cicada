@@ -33,3 +33,7 @@ export const closeIcon = "fa-solid fa-xmark"
 export const filterIcon = "fa-solid fa-filter"
 
 export const verticaDots = "fa-solid fa-ellipsis-vertical"
+
+export const borderIcon = "fa-solid fa-rectangle-list"
+
+export const stripedIcon = "fa-solid fa-border-all"

@@ -16,7 +16,7 @@ export const SelectionPage: React.FC = () => {
   }, [])
 
   return (
-    <Flex className="selection-page" gap={16} vertical>
+    <Flex className="selection-page" gap={8} vertical>
       <Flex className="selection-page__wrap" gap={32}>
         <SwitchingSearch />
       </Flex>

@@ -3,7 +3,7 @@ import React, { TableHTMLAttributes, useEffect, useState } from "react"
 import cn from "classnames"
 
 import { Account } from "@/entities/Account"
-import { RowDensity } from "@/shared/constants"
+import { FontSize, RowDensity } from "@/shared/constants"
 
 import { Column, KeySort, KeysSort, NumberColumns, RowType, SaveOrder, SortType } from "../../types"
 import { byKey, byKeys, order, setKey, updateParametersKeys } from "../../utils"
@@ -20,6 +20,8 @@ export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<H
   columnFilters?: Partial<Record<keyof T, string>>
   /** Колонки */
   columns?: Column<T>[]
+  /** Размер шрифта таблицы */
+  fontSize?: FontSize
   /** Функция для получения id строки */
   getRowId?: (row: T) => string | number
   /** Показывать выбор строк */
@@ -37,6 +39,10 @@ export interface TableSortProps<T extends RowType> extends TableHTMLAttributes<H
   selectedRow?: Set<string | number>
   /** Вариант сортировки по столбцам */
   sortByNumberColumns?: NumberColumns
+  /** Включить чередующуюся раскраску строк (зебру) */
+  striped?: boolean
+  /** Включить вертикальные разделители между ячейками */
+  verticalBorders?: boolean
 }
 
 export const TableSort = <T extends RowType>({
@@ -44,6 +50,7 @@ export const TableSort = <T extends RowType>({
   className = "",
   columnFilters,
   columns,
+  fontSize = "normal",
   getRowId = (row: T) => row?.id,
   isShowSelection = false,
   onFilterIconClick,
@@ -53,6 +60,8 @@ export const TableSort = <T extends RowType>({
   rows,
   selectedRow = new Set(),
   sortByNumberColumns = NumberColumns.ZERO,
+  striped = false,
+  verticalBorders = false,
   ...rest
 }: TableSortProps<T>) => {
   const [currentKey, setCurrentKey] = useState<KeySort<T>>()
@@ -125,7 +134,7 @@ export const TableSort = <T extends RowType>({
   const safeIsAllSelected = Boolean(isAllSelected)
 
   return (
-    <table {...rest} className={cn("table-sort", className)}>
+    <table {...rest} className={cn("table-sort", striped && "table-sort__striped", className)}>
       {columns?.length && (
         <TableSortHeader<T>
           activeFilterColumns={activeFilterColumns}
@@ -139,12 +148,14 @@ export const TableSort = <T extends RowType>({
           onSelectAll={onSelectAll}
           setKeySort={setKeySort}
           sortByNumberColumns={sortByNumberColumns}
+          verticalBorders={verticalBorders}
         />
       )}
 
       {data && (
         <TableSortBody<T>
           columns={columns}
+          fontSize={fontSize}
           getRowId={getRowId}
           isShowSelection={isShowSelection}
           nameMainColumnSort={currentKeys?.mainKey?.name}
@@ -153,6 +164,8 @@ export const TableSort = <T extends RowType>({
           rows={data}
           selectedRow={selectedRow}
           sortByNumberColumns={sortByNumberColumns}
+          striped={striped}
+          verticalBorders={verticalBorders}
         />
       )}
     </table>

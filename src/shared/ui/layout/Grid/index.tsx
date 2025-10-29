@@ -1,9 +1,9 @@
 import React, { HTMLAttributes } from "react"
 
-import { RowAlign, RowJustify } from "../../../enums"
+import { RowAlign, RowJustify } from "itpc-ui-kit"
 
 import { RowContext, RowContextState } from "./RowContext"
-import "./styles.css"
+import "./styles.scss"
 import { generateColClassList, generateColStyle, generateRowClassList, generateRowStyle } from "./utils"
 
 export interface ColProps extends HTMLAttributes<HTMLDivElement> {

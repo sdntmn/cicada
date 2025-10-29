@@ -38,11 +38,11 @@ export const useTableRowSelection = <T extends { id: string | number }>(rows: T[
     const rowIds = new Set(rows.map((row) => row.id))
     setSelectedRow((prev) => {
       const synced = new Set<string | number>()
-      for (const id of prev) {
+      prev.forEach((id) => {
         if (rowIds.has(id)) {
           synced.add(id)
         }
-      }
+      })
       return synced
     })
   }, [rows])

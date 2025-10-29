@@ -14,6 +14,8 @@ export enum RowDensity {
   X_LARGE = "xLarge",
 }
 
+export type FontSize = "normal" | "xlarge" | "small" | "large"
+
 export enum MenuName {
   archive = "Архив",
   cardIndex = "Поиск",

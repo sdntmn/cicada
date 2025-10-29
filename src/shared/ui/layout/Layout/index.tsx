@@ -2,7 +2,7 @@ import React, { HTMLAttributes } from "react"
 
 import cn from "classnames"
 
-import "./styles.css"
+import "./styles.scss"
 
 export interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   /** Контент */

@@ -1,21 +1,38 @@
 import React, { useState } from "react"
 
 import cn from "classnames"
+import { Checkbox } from "itpc-ui-kit"
 
-import { HORIZONTAL_POSITION, RowDensity, verticaDots } from "@/shared/constants"
-import { LineHeightIcon } from "@/shared/ui/LineHeightIcon"
+import { FontSize, HORIZONTAL_POSITION, RowDensity, verticaDots } from "@/shared/constants"
+import { Flex } from "@/shared/ui/layout/Flex"
 import { PositionPortal } from "@/shared/ui/PositionPortal"
 
-import { DENSITY_DISPLAY_ORDER } from "../../lib/constants/settings"
+import { FontSizeMenu } from "../FontSizeMenu/FontSizeMenu"
+import { RowDensityMenu } from "../RowDensityMenu/RowDensityMenu"
 
 import "./styles.scss"
 
 interface Props {
   currentDensity: RowDensity
+  currentFontSize?: FontSize
   onChangeDensity: (density: RowDensity) => void
+  onChangeFontSize?: (fontSize: FontSize) => void
+  onToggleStriped?: () => void
+  onToggleVerticalBorders?: () => void
+  striped?: boolean
+  verticalBorders?: boolean
 }
 
-export const TableSettingsMenu: React.FC<Props> = ({ currentDensity, onChangeDensity }) => {
+export const TableSettingsMenu: React.FC<Props> = ({
+  currentDensity,
+  currentFontSize,
+  onChangeDensity,
+  onChangeFontSize,
+  onToggleStriped,
+  onToggleVerticalBorders,
+  striped,
+  verticalBorders,
+}) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const closeMenu = () => setIsOpen(false)
@@ -29,9 +46,17 @@ export const TableSettingsMenu: React.FC<Props> = ({ currentDensity, onChangeDen
 
   return (
     <>
-      <button aria-label="Настройки таблицы" className="table-settings-menu__btn" id={buttonId} onClick={toggleMenu} type="button">
-        <i className={cn(verticaDots, " table-settings-menu__icon")} />
-      </button>
+      <div className="table-settings-menu__btn-wrap">
+        <button
+          aria-label="Настройки таблицы"
+          className={cn("table-settings-menu__btn", isOpen && "table-settings-menu__btn_active")}
+          id={buttonId}
+          onClick={toggleMenu}
+          type="button"
+        >
+          <i className={cn(verticaDots, " table-settings-menu__icon")} />
+        </button>
+      </div>
 
       <PositionPortal
         className="table-settings-menu__dropdown"
@@ -41,20 +66,46 @@ export const TableSettingsMenu: React.FC<Props> = ({ currentDensity, onChangeDen
         isOpen={isOpen}
         onClose={closeMenu}
       >
-        <p className="table-settings-menu__title">Высота строк:</p>
+        <Flex gap={16} vertical>
+          <RowDensityMenu currentDensity={currentDensity} onChangeDensity={handleSelectDensity} />
+          <FontSizeMenu currentFontSize={currentFontSize} onChangeFontSize={onChangeFontSize} />
 
-        <div className="table-settings-menu__options">
-          {DENSITY_DISPLAY_ORDER.map((density) => (
-            <button
-              className={cn("table-settings-menu__option", density === currentDensity && "table-settings-menu__option_active")}
-              key={density}
-              onClick={() => handleSelectDensity(density)}
-              type="button"
-            >
-              <LineHeightIcon density={density} />
-            </button>
-          ))}
-        </div>
+          {/* 👇 Новые переключатели */}
+          {onToggleStriped && (
+            <Checkbox
+              id={"striped"}
+              isChecked={striped}
+              label="Зебра"
+              name={"striped"}
+              onClick={() => onToggleStriped()}
+              variant="square"
+            />
+            // <div className="table-settings-menu__option">
+            //   <Icon className={cn(stripedIcon)} />
+            //   <label className="table-settings-menu__label">
+            //     <input checked={striped} onChange={onToggleStriped} type="checkbox" />
+            //     Зебра (чередование строк)
+            //   </label>
+            // </div>
+          )}
+
+          {onToggleVerticalBorders && (
+            <Checkbox
+              id={"Borders"}
+              isChecked={verticalBorders}
+              label="Вертикальные границы"
+              name={"Borders"}
+              onClick={() => onToggleVerticalBorders()}
+              variant="square"
+            />
+            // <div className="table-settings-menu__option">
+            //   <label className="table-settings-menu__label">
+            //     <input checked={verticalBorders} onChange={onToggleVerticalBorders} type="checkbox" />
+            //     Вертикальные границы
+            //   </label>
+            // </div>
+          )}
+        </Flex>
       </PositionPortal>
     </>
   )

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
-import { UserApi } from "@/shared/lib/api"
-import { ErrorResponse } from "@/shared/lib/api/types"
+import { UserApi } from "@/shared/api"
+import { ErrorResponse } from "@/shared/api/types"
 
 import { convertUserApiToUser } from "../service/convertUserApiToUser/connvertUserApiToUser"
 import { getUser } from "../thunk/thunk"

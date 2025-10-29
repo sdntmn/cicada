@@ -1,4 +1,4 @@
-import { Account } from "@/entities/Accounts"
+import { Account } from "@/entities/Account"
 import { Column } from "@/shared/ui/TableSort/types"
 
 import { SELECTION_TABLE_COLUMNS, SELECTION_TABLE_DISPLAY_ORDER, VIRTUAL_COLUMN } from "../../constants/columns"

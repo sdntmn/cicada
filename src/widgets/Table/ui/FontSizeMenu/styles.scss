@@ -1,0 +1,45 @@
+.font-size-menu {
+  &__title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+  }
+
+  &__option {
+    background: none;
+    border: none;
+    padding: 4px 6px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &_active {
+      background-color: #e6f0ff;
+      border-color: #1890ff;
+      color: #1890ff;
+      font-weight: 500;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+  &__font {
+    &_normal {
+      font-size: 14px;
+    }
+
+    &_small {
+      font-size: 13px;
+    }
+
+    &_large {
+      font-size: 15px;
+    }
+
+    &_xlarge {
+      font-size: 16px;
+    }
+  }
+}

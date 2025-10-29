@@ -20,6 +20,13 @@ const parseDebtValue = (value: any): number => {
   return isNaN(num) ? 0 : num
 }
 
+const formatCurrency = (value: number): React.ReactNode => {
+  const formatted = value.toLocaleString("ru-RU", {
+    maximumFractionDigits: 2,
+    minimumFractionDigits: 2,
+  })
+  return <span className="table-number">{formatted}</span>
+}
 export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<Account>> = {
   [BaseColumnTableSelect.ACCOUNT]: {
     isFilterable: true,
@@ -42,9 +49,11 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<A
     type: "data",
   },
   [BaseColumnTableSelect.DEBT]: {
+    align: "right",
     isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.DEBT,
+    render: (value) => formatCurrency(parseDebtValue(value)),
     sorter: (a, b) => parseDebtValue(a.debt) - parseDebtValue(b.debt),
     title: "Долг",
     type: "data",
@@ -58,9 +67,11 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<A
     type: "data",
   },
   [BaseColumnTableSelect.PENALTY]: {
+    align: "right",
     isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.PENALTY,
+    render: (value) => formatCurrency(parseDebtValue(value)),
     sorter: (a, b) => parseDebtValue(a.penalty) - parseDebtValue(b.penalty),
     title: "Пени",
     type: "data",

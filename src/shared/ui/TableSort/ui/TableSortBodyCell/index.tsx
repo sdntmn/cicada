@@ -12,6 +12,7 @@ interface TableSortCellProps {
   isSelected?: boolean
   sortByNumberColumns?: NumberColumns
   value: React.ReactNode
+  verticalBorders?: boolean
 }
 
 export const TableSortBodyCell: React.FC<TableSortCellProps> = ({
@@ -20,13 +21,15 @@ export const TableSortBodyCell: React.FC<TableSortCellProps> = ({
   isSelected,
   sortByNumberColumns,
   value,
+  verticalBorders,
   ...rest
 }: TableSortCellProps) => (
   <td
     className={cn(
       "table-body-cell",
       `table-body-cell__align-${align}`,
-      isMainColumSort && !isSelected && sortByNumberColumns === NumberColumns.TWO && "table-body-cell_back"
+      isMainColumSort && !isSelected && sortByNumberColumns === NumberColumns.TWO && "table-body-cell_back",
+      verticalBorders && "table-body-cell__vertical-border"
     )}
     {...rest}
   >

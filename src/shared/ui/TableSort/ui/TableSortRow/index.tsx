@@ -23,6 +23,8 @@ interface TableSortRowProps<T extends RowType> {
   rowIndex?: number
   selectedRow?: Set<string | number>
   sortByNumberColumns?: NumberColumns
+  striped?: boolean
+  verticalBorders?: boolean
 }
 
 export const TableSortRow = <T extends RowType>({
@@ -37,6 +39,8 @@ export const TableSortRow = <T extends RowType>({
   rowIndex,
   selectedRow,
   sortByNumberColumns,
+  striped,
+  verticalBorders,
 }: TableSortRowProps<T>) => {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -46,13 +50,14 @@ export const TableSortRow = <T extends RowType>({
         "table-sort-row",
         isSelected && "table-sort-row__selected",
         rowDensity && `table-sort-row_${rowDensity}`,
-        !hasSelectedRows && "table-sort-row__hover-only-checkbox"
+        !hasSelectedRows && "table-sort-row__hover-only-checkbox",
+        striped && rowIndex !== undefined && rowIndex % 2 === 0 && "table-sort-row__striped"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {isShowSelection && onCheck && (
-        <td className="table-sort-row__selection-cell">
+        <td className={cn("table-sort-row__selection-cell", verticalBorders && "table-sort-row__vertical-border")}>
           <Checkbox
             className={cn("table-sort-row__checkbox", (hasSelectedRows || isHovered) && "table-sort-row__checkbox_visible")}
             id={`check-${rowData.id}`}
@@ -86,6 +91,7 @@ export const TableSortRow = <T extends RowType>({
             key={String(column.name)}
             sortByNumberColumns={sortByNumberColumns}
             value={cellContent}
+            verticalBorders={verticalBorders}
           />
         )
       })}

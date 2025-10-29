@@ -1,9 +1,15 @@
 .table-settings-menu {
+  &__btn-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__btn {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 2px 12px;
+    padding: 6px 12px;
     border-radius: 4px;
     display: flex;
     align-items: center;
@@ -14,6 +20,12 @@
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &_active {
+      color: #5c53ac;
+      // background-color: rgba(0, 0, 0, 0.05);
+      // box-shadow: 0 2px 6px rgba(220, 215, 255, 0.3);
     }
   }
 

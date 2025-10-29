@@ -23,6 +23,7 @@ interface TableSortHeaderProps<T extends RowType> extends HTMLAttributes<HTMLTab
   onSelectAll?: (checked: boolean) => void
   setKeySort?: (key: Column<T>) => void
   sortByNumberColumns?: NumberColumns
+  verticalBorders?: boolean
 }
 
 export const TableSortHeader = <T extends RowType>({
@@ -37,11 +38,17 @@ export const TableSortHeader = <T extends RowType>({
   onSelectAll,
   setKeySort,
   sortByNumberColumns,
+  verticalBorders,
 }: TableSortHeaderProps<T>) => (
   <thead className={cn("table-sort-head")}>
     <tr>
       {isShowSelection && onSelectAll && (
-        <th className="table-sort-head__selection-cell table-sort-head_background">
+        <th
+          className={cn(
+            "table-sort-head__selection-cell table-sort-head_background",
+            verticalBorders && "table-sort-head__vertical-border"
+          )}
+        >
           <div className="table-sort-head__wrap-cell">
             <Checkbox
               className="table-sort-checkbox"
@@ -78,12 +85,16 @@ export const TableSortHeader = <T extends RowType>({
                 onClick={() => setKeySort?.(column)}
                 onFilterIconClick={onFilterIconClick}
                 sortByNumberColumns={sortByNumberColumns}
+                verticalBorders={verticalBorders}
               />
             )
           }
 
           return (
-            <th className={cn("table-sort-head__head-no-sort")} key={String(column.name) || index}>
+            <th
+              className={cn("table-sort-head__head-no-sort", verticalBorders && "table-sort-head__vertical-border")}
+              key={String(column.name) || index}
+            >
               <div className={cn("table-sort-head__wrap-cell", `table-sort-head__content-${align || "left"}`)}>{column.title}</div>
             </th>
           )

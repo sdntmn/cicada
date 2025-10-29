@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import { NumberColumns, Typography } from "itpc-ui-kit"
 
 import { Account, getAccounts } from "@/entities/Account"
-import { RowDensity } from "@/shared/constants"
+import { FontSize, RowDensity } from "@/shared/constants"
 import { useTableRowSelection } from "@/shared/lib/hooks"
 import { useAppDispatch, useAppSelector } from "@/shared/lib/store"
 import { Flex } from "@/shared/ui/layout/Flex"
@@ -30,9 +30,16 @@ export const Table: React.FC = () => {
 
   const [activeFilterColumns, setActiveFilterColumns] = useState<keyof Account | null>(null)
   const [rowDensity, setRowDensity] = useState<RowDensity>(RowDensity.MEDIUM)
+  const [fontSize, setFontSize] = useState<FontSize>("normal")
 
   const [columnFilters, setColumnFilters] = useState<Partial<Record<keyof Account, string>>>({})
   const [numbersRenderLines, setNumbersRenderLines] = useState<PageSize>(20)
+
+  const [striped, setStriped] = useState(true)
+  const [verticalBorders, setVerticalBorders] = useState(false)
+
+  const toggleStriped = () => setStriped((prev) => !prev)
+  const toggleVerticalBorders = () => setVerticalBorders((prev) => !prev)
 
   const handleRemoveFilter = (column: keyof Account) => {
     setColumnFilters((prev) => {
@@ -99,70 +106,82 @@ export const Table: React.FC = () => {
   }, [])
 
   return (
-    <Flex style={{ width: "100%" }} vertical>
-      <Flex className="table__controls" gap={8} justify="space-between">
-        <Flex align="center" gap={8}>
-          <Typography.Text>Всего записей: {filteredAccounts.length}</Typography.Text>
-          <ActiveFilters
-            filters={columnFilters}
-            onRemoveFilter={handleRemoveFilter}
-            onResetAll={handleResetAllFilters}
-            visibleColumns={visibleColumns}
+    <>
+      <Flex style={{ width: "100%" }} vertical>
+        <Flex className="table__controls" gap={8} justify="space-between">
+          <Flex align="center" gap={8}>
+            <Typography.Text>Всего записей: {filteredAccounts.length}</Typography.Text>
+            <ActiveFilters
+              filters={columnFilters}
+              onRemoveFilter={handleRemoveFilter}
+              onResetAll={handleResetAllFilters}
+              visibleColumns={visibleColumns}
+            />
+          </Flex>
+
+          <Flex gap={8}>
+            <Pagination
+              callback={() => console.info("Пагинация")}
+              className="table__pagination"
+              dataLength={filteredAccounts.length}
+              step={numbersRenderLines}
+            />
+            <PageSizeSelector className="table__page-size-selector" onChange={setNumbersRenderLines} value={numbersRenderLines} />
+            <MenuVisibilityColumns
+              allColumns={SELECTION_TABLE_DISPLAY_ORDER.filter((col) => !REQUIRED_COLUMNS.has(col))}
+              onChange={handleChangeVisibleColumns}
+              selected={selectedColumns}
+            />
+            <TableSettingsMenu
+              currentDensity={rowDensity}
+              currentFontSize={fontSize}
+              onChangeDensity={setRowDensity}
+              onChangeFontSize={setFontSize}
+              onToggleStriped={toggleStriped}
+              onToggleVerticalBorders={toggleVerticalBorders}
+              striped={striped}
+              verticalBorders={verticalBorders}
+            />
+          </Flex>
+        </Flex>
+
+        <Flex className="table">
+          <TableSort<Account>
+            activeFilterColumns={activeFilterColumns}
+            className="table__sort"
+            columnFilters={columnFilters}
+            columns={visibleColumnObjects}
+            fontSize={fontSize}
+            onFilterIconClick={handleFilterIconClick}
+            onRowSelect={handleRowSelect}
+            onSelectAll={handleSelectAll}
+            rowDensity={rowDensity}
+            rows={filteredAccounts}
+            selectedRow={selectedRow}
+            sortByNumberColumns={NumberColumns.TWO}
+            striped={striped}
+            verticalBorders={verticalBorders}
+            isShowSelection
           />
         </Flex>
 
-        <Flex gap={8}>
-          <Pagination
-            callback={() => console.info("Пагинация")}
-            className="table__pagination"
-            dataLength={filteredAccounts.length}
-            step={numbersRenderLines}
+        {activeFilterColumns && (
+          <FiltersColumn
+            buttonId={`filter-btn-${String(activeFilterColumns)}`}
+            columnName={activeFilterColumns}
+            currentValue={columnFilters[activeFilterColumns] || ""}
+            isOpen={activeFilterColumns !== null}
+            key={activeFilterColumns}
+            onClose={closeFilter}
+            onFilterChange={handleFilterChange}
           />
-          <PageSizeSelector className="table__page-size-selector" onChange={setNumbersRenderLines} value={numbersRenderLines} />
-          <MenuVisibilityColumns
-            allColumns={SELECTION_TABLE_DISPLAY_ORDER.filter((col) => !REQUIRED_COLUMNS.has(col))}
-            onChange={handleChangeVisibleColumns}
-            selected={selectedColumns}
-          />
-          <TableSettingsMenu currentDensity={rowDensity} onChangeDensity={setRowDensity} />
-        </Flex>
+        )}
       </Flex>
-
-      <Flex className="table">
-        <TableSort<Account>
-          activeFilterColumns={activeFilterColumns}
-          className="table__sort"
-          columnFilters={columnFilters}
-          columns={visibleColumnObjects}
-          onFilterIconClick={handleFilterIconClick}
-          onRowSelect={handleRowSelect}
-          onSelectAll={handleSelectAll}
-          rowDensity={rowDensity}
-          rows={filteredAccounts}
-          selectedRow={selectedRow}
-          sortByNumberColumns={NumberColumns.TWO}
-          isShowSelection
-        />
-      </Flex>
-      {selectedRow.size > 0 && (
-        <BulkActionsPanel
-          onClearSelection={clearSelection}
-          onDelete={handleDeleteSelected}
-          selectedCount={selectedRow.size}
-          // onExport={() => console.log("Экспорт")}
-        />
-      )}
-      {activeFilterColumns && (
-        <FiltersColumn
-          buttonId={`filter-btn-${String(activeFilterColumns)}`}
-          columnName={activeFilterColumns}
-          currentValue={columnFilters[activeFilterColumns] || ""}
-          isOpen={activeFilterColumns !== null}
-          key={activeFilterColumns}
-          onClose={closeFilter}
-          onFilterChange={handleFilterChange}
-        />
-      )}
-    </Flex>
+      <>
+        {selectedRow.size > 0 && (
+          <BulkActionsPanel onClearSelection={clearSelection} onDelete={handleDeleteSelected} selectedCount={selectedRow.size} />
+        )}
+      </>
+    </>
   )
 }

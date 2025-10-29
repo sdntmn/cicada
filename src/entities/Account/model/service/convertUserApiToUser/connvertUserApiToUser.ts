@@ -1,6 +1,5 @@
-import { UserApi } from "@/shared/lib/api"
-
-import { User } from "../../types/account"
+import { User } from "@/entities/User"
+import { UserApi } from "@/shared/api"
 
 export const convertUserApiToUser = ({ first_name, last_name, ...rest }: UserApi): User => ({
   ...rest,

@@ -1,4 +1,4 @@
-import { ErrorResponse } from "@/shared/lib/api/types"
+import { ErrorResponse } from "@/shared/api/types"
 import { Email, Mobile } from "@/shared/lib/types/types"
 
 export interface User {

@@ -1,4 +1,4 @@
-import { Email, Mobile } from "../../types/types"
+import { Email, Mobile } from "@/shared/lib/types/types"
 
 export interface UserApi {
   email: Email | null

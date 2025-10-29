@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
 
-import { Flex, TextField } from "itpc-ui-kit"
+import { TextField } from "itpc-ui-kit"
 
 import { Account } from "@/entities/Account"
 import { HORIZONTAL_POSITION } from "@/shared/constants"
+import { Flex } from "@/shared/ui/layout/Flex"
 import { PositionPortal } from "@/shared/ui/PositionPortal"
 
 import "./styles.scss"
