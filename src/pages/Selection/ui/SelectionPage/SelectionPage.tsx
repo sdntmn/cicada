@@ -1,10 +1,11 @@
 import React, { useEffect } from "react"
 
 import { getUser } from "@/entities/User"
-import { SwitchingSearch } from "@/features/SwitchingSearch"
 import { useAppDispatch } from "@/shared/lib/store"
 import { Flex } from "@/shared/ui/layout/Flex"
-import { Table } from "@/widgets/Table"
+
+import { SelectionTable } from "../SelectionTable/SelectionTable"
+import { SwitchingSearch } from "../SwitchingSearch/SwitchingSearch"
 
 import "./styles.scss"
 
@@ -20,7 +21,7 @@ export const SelectionPage: React.FC = () => {
       <Flex className="selection-page__wrap" gap={32}>
         <SwitchingSearch />
       </Flex>
-      <Table />
+      <SelectionTable />
     </Flex>
   )
 }

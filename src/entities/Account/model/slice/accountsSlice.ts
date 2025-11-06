@@ -6,18 +6,17 @@ import { getAccounts } from "../thunk/thunk"
 import { Account, AccountsStorage } from "../types/account"
 
 const transformRawAccount = (raw: any): Account => {
-  const { city, house, street } = raw.address || {}
+  const { apartment: flat, city, house, street } = raw.address || {}
 
-  const addressStr = [street, house].filter(Boolean).join(", ") || ""
+  const addressStr = [street, `д. ${house}`, `кв. ${flat}`].filter(Boolean).join(", ") || ""
 
   return {
-    account: raw.accountNumber, // ← переименовываем accountNumber → account
+    account: raw.account_number, // ← переименовываем accountNumber → account
     address: addressStr,
     city: city || "",
     debt: String(raw.debt), // или оставить как number, если в типе number
     fio: raw.fio,
     id: raw.id,
-    judicialDistrict: raw.judicialDistrict, // если есть
     penalty: String(raw.penalty),
   }
 }

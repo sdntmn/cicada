@@ -17,3 +17,5 @@ export const WIDTH = {
   SCREEN_768: 768,
   SCREEN_800: 800,
 } as const
+
+export const PAGE_SIZES = [10, 20, 50, 100] as const

@@ -1,3 +1,5 @@
+import { PAGE_SIZES } from "@/shared/constants"
+
 export interface Contact<T> {
   confirmed: boolean
   oid: T
@@ -15,3 +17,5 @@ export interface DurationAnimation {
   durationClose?: number
   durationOpen?: number
 }
+
+export type PageSize = (typeof PAGE_SIZES)[number]

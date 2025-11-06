@@ -4,6 +4,7 @@ import { Typography } from "itpc-ui-kit"
 
 import { Flex } from "@/shared/ui/layout/Flex"
 
+import { STEP, SUM, TERM } from "../../lib/constants"
 import { DebtFilter } from "../DebtFilter/DebtFilter"
 
 import "./styles.scss"
@@ -24,38 +25,31 @@ export const DebtFilters: React.FC<Props> = ({
   onChangeTermSlider,
   sumValue,
   termValue,
-}) => {
-  const SUM_MIN = 0
-  const SUM_MAX = 10_000
-  const TERM_MIN = 0
-  const TERM_MAX = 36
+}) => (
+  <Flex gap={12} vertical>
+    <Typography.Text className="debt-filters__title">Задолженность более</Typography.Text>
+    <Flex gap={32} vertical>
+      <DebtFilter
+        id="sum"
+        label="Сумма / руб."
+        max={SUM.MAX}
+        min={SUM.MIN}
+        onChangeSlider={onChangeSumSlider}
+        onChangeText={onChangeSum}
+        step={STEP.SUM}
+        value={sumValue}
+      />
 
-  return (
-    <Flex gap={12} vertical>
-      <Typography.Text className="debt-filters__title">Задолженность более</Typography.Text>
-      <Flex gap={32} vertical>
-        <DebtFilter
-          id="sum"
-          label="Сумма / руб."
-          max={SUM_MAX}
-          min={SUM_MIN}
-          onChangeSlider={onChangeSumSlider}
-          onChangeText={onChangeSum}
-          step={100}
-          value={sumValue}
-        />
-
-        <DebtFilter
-          id="term"
-          label="Срок / мес."
-          max={TERM_MAX}
-          min={TERM_MIN}
-          onChangeSlider={onChangeTermSlider}
-          onChangeText={onChangeTerm}
-          step={1}
-          value={termValue}
-        />
-      </Flex>
+      <DebtFilter
+        id="term"
+        label="Срок / мес."
+        max={TERM.MAX}
+        min={TERM.MIN}
+        onChangeSlider={onChangeTermSlider}
+        onChangeText={onChangeTerm}
+        step={STEP.TERM}
+        value={termValue}
+      />
     </Flex>
-  )
-}
+  </Flex>
+)

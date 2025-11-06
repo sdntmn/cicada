@@ -1,44 +1,61 @@
 import React from "react"
 
-import { SearchMode } from "@/features/HouseMultiSelect/lib/types/types"
+import { HORIZONTAL_POSITION } from "@/shared/constants"
 import { Flex } from "@/shared/ui/layout/Flex"
+import { PositionPortal } from "@/shared/ui/PositionPortal"
 
+import { FilterMode } from "../../lib/constants/enum"
 import { DebtFilters } from "../DebtFilters/DebtFilters"
-import { SearchModeSelector } from "../SearchModeSelector/SearchModeSelector"
+import { FilterLogicSwitch } from "../FilterLogicSwitch/FilterLogicSwitch"
 
 import "./styles.scss"
 
 interface Props {
-  onChangeMode: (mode: SearchMode) => void
+  anchorRef: React.RefObject<HTMLButtonElement>
+  filterMode: FilterMode
+  isOpen?: boolean
+  onChangeMode: (mode: FilterMode) => void
   onChangeSum: (value: string) => void
   onChangeSumSlider: (value: number) => void
   onChangeTerm: (value: string) => void
   onChangeTermSlider: (value: number) => void
-  searchMode: SearchMode
+  onClose: () => void
   sumValue: string
   termValue: string
 }
 
 export const DebtFiltersDropdown: React.FC<Props> = ({
+  anchorRef,
+  filterMode,
+  isOpen,
   onChangeMode,
   onChangeSum,
   onChangeSumSlider,
   onChangeTerm,
   onChangeTermSlider,
-  searchMode,
+  onClose,
   sumValue,
   termValue,
 }) => (
-  <Flex gap={32} vertical>
-    <DebtFilters
-      onChangeSum={onChangeSum}
-      onChangeSumSlider={onChangeSumSlider}
-      onChangeTerm={onChangeTerm}
-      onChangeTermSlider={onChangeTermSlider}
-      sumValue={sumValue}
-      termValue={termValue}
-    />
+  <PositionPortal
+    anchorRef={anchorRef}
+    className="debt-filter-panel__content"
+    distanceBetweenElements={0}
+    horizontalAlignment={HORIZONTAL_POSITION.LEFT}
+    isOpen={isOpen}
+    onClose={onClose}
+  >
+    <Flex gap={32} vertical>
+      <DebtFilters
+        onChangeSum={onChangeSum}
+        onChangeSumSlider={onChangeSumSlider}
+        onChangeTerm={onChangeTerm}
+        onChangeTermSlider={onChangeTermSlider}
+        sumValue={sumValue}
+        termValue={termValue}
+      />
 
-    <SearchModeSelector onChange={onChangeMode} value={searchMode} />
-  </Flex>
+      <FilterLogicSwitch onChange={onChangeMode} value={filterMode} />
+    </Flex>
+  </PositionPortal>
 )

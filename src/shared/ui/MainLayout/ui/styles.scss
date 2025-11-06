@@ -1,0 +1,60 @@
+@use "../../../../app/styles/index";
+
+.main-layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 74px 1fr;
+  grid-template-columns: 1fr; // по умолчанию одна колонка
+  grid-template-areas:
+    "header"
+    "content";
+  box-sizing: border-box;
+  font-size: 2rem;
+
+  &__header {
+    grid-area: header;
+    padding: var(--space-m);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 3px 8px -2px #726bb542;
+  }
+
+  &__content {
+    grid-area: content;
+    display: grid;
+    grid-template-areas: "main";
+    grid-template-columns: 1fr;
+    height: 100%;
+    padding: var(--space-m);
+    box-sizing: border-box;
+  }
+
+  &__main {
+    grid-area: main;
+    display: flex;
+    flex-direction: column;
+    min-height: 0; // важно для вложенных скроллов
+  }
+
+  &__rightbar {
+    grid-area: rightbar;
+    width: 320px;
+    background: #f5f5f5;
+    padding: var(--space-xl);
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+
+  &__rightbar--hidden {
+    display: none;
+  }
+
+  // === Вариант: без правой панели ===
+  &--no-rightbar {
+    .main-layout__content {
+      grid-template-areas: "sidebar main";
+      grid-template-columns: 230px 1fr;
+    }
+  }
+}

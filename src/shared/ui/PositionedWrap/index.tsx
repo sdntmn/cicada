@@ -8,19 +8,16 @@ import { getCalculatePosition } from "@/shared/lib/helpers/getCalculatePosition/
 import "./styles.scss"
 
 interface PositionedWrapProps {
-  buttonId?: string // ← новый пропс
   children: React.ReactNode
   distanceBetweenElements?: number
   horizontalAlignment?: HORIZONTAL_POSITION
   isClosing: boolean
   isOpen: boolean
   position?: PositionType
-  // Поддерживаем оба варианта:
   refParent?: React.RefObject<HTMLElement>
 }
 
 export const PositionedWrap: React.FC<PositionedWrapProps> = ({
-  buttonId,
   children,
   distanceBetweenElements,
   horizontalAlignment,
@@ -32,41 +29,40 @@ export const PositionedWrap: React.FC<PositionedWrapProps> = ({
   const ref = useRef<HTMLDivElement>(null)
   const [stylePosition, setStylePosition] = useState<CSSProperties>({})
 
-  const getParentElement = (): HTMLElement | null => {
-    if (refParent?.current) {
-      return refParent.current
-    }
-    if (buttonId) {
-      return document.getElementById(buttonId)
-    }
-    return null
-  }
-
   const calculatePosition = (): void => {
-    const parentElement = getParentElement()
-    if (!parentElement || !ref.current) {
+    const parentElement = refParent.current
+    const selfElement = ref.current
+
+    if (!parentElement || !selfElement) {
       return
     }
 
-    const parentRef = { current: parentElement }
-    const style = getCalculatePosition(parentRef, ref, position, distanceBetweenElements, horizontalAlignment)
+    const style = getCalculatePosition(
+      { current: parentElement },
+      { current: selfElement },
+      position,
+      distanceBetweenElements,
+      horizontalAlignment
+    )
     setStylePosition(style)
   }
 
-  // Обновляем позицию при скролле
   useEffect(() => {
+    if (!isOpen) {
+      return
+    }
+
     const handleScroll = () => calculatePosition()
     window.addEventListener("scroll", handleScroll, true)
     return () => window.removeEventListener("scroll", handleScroll, true)
-  }, [buttonId, refParent])
+  }, [isOpen, refParent])
 
-  // Пересчитываем при открытии
   useEffect(() => {
     if (isOpen) {
-      const timer = setTimeout(calculatePosition, 0) // дать время отрендериться
+      const timer = setTimeout(calculatePosition, 0)
       return () => clearTimeout(timer)
     }
-  }, [isOpen, buttonId, refParent])
+  }, [isOpen, refParent])
 
   return (
     <div

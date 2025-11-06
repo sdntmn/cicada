@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react"
+import React, { useCallback, useRef } from "react"
 
 import { HORIZONTAL_POSITION } from "@/shared/constants"
 import { useAnimation, useOnClickOutside } from "@/shared/lib/hooks"
@@ -6,9 +6,9 @@ import { Portal } from "@/shared/ui/Portal"
 import { PositionedWrap } from "@/shared/ui/PositionedWrap"
 
 interface Props {
+  anchorRef: React.RefObject<HTMLElement>
   children: React.ReactNode
   className: string
-  componentId: string
   distanceBetweenElements: number
   horizontalAlignment?: HORIZONTAL_POSITION
   isOpen: boolean
@@ -16,18 +16,16 @@ interface Props {
 }
 
 export const PositionPortal: React.FC<Props> = ({
+  anchorRef,
   children,
   className,
-  componentId,
   distanceBetweenElements,
   horizontalAlignment,
   isOpen,
   onClose,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null)
-  const refParent = useRef<HTMLElement | null>(null)
 
-  // Анимация
   const { isClosing } = useAnimation(isOpen, {
     durationClose: 200,
   })
@@ -38,20 +36,7 @@ export const PositionPortal: React.FC<Props> = ({
     }
   }, [isOpen, onClose])
 
-  // Синхронизируем buttonRef
-  useEffect(() => {
-    refParent.current = document.getElementById(componentId)
-  }, [componentId])
-
-  // Закрытие по клику вне
-  useOnClickOutside(
-    contentRef,
-    () => {
-      handleClose()
-    },
-    isOpen,
-    refParent as React.RefObject<HTMLElement>
-  )
+  useOnClickOutside(contentRef, handleClose, isOpen, anchorRef)
 
   if (!isOpen && isClosing) {
     return null
@@ -65,7 +50,7 @@ export const PositionPortal: React.FC<Props> = ({
         isClosing={isClosing}
         isOpen={isOpen}
         position={"absolute"}
-        refParent={refParent}
+        refParent={anchorRef}
       >
         <div className={className} ref={contentRef}>
           {children}

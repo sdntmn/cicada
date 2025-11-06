@@ -1,0 +1,9 @@
+.table-header-number {
+  // font-family: "Roboto Mono", "SF Mono", "Consolas", "Liberation Mono", monospace;
+  font-family: tabular-nums;
+  font-feature-settings: "tnum";
+  font-size: inherit;
+  font-family: "Inter", "Roboto", system-ui;
+  // Или, если у вас есть системный табличный шрифт:
+  // font-feature-settings: "tnum"; // tabular figures (если поддерживается)
+}

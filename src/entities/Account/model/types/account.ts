@@ -7,7 +7,6 @@ export interface Account {
   debt: string
   fio: string
   id: string
-  judicialDistrict?: string
   penalty: string
 }
 

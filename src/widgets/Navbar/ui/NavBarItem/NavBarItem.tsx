@@ -2,8 +2,6 @@ import React, { memo } from "react"
 
 import cn from "classnames"
 
-// import "./styles.scss"
-
 interface Props {
   className?: string
   icon?: React.ReactNode

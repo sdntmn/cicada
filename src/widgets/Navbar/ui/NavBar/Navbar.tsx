@@ -12,7 +12,7 @@ import {
   monitoringMenuIcon,
   searchIcon,
 } from "@/shared/constants"
-import { Icon } from "@/shared/ui/Icon/Icon"
+import { Icon } from "@/shared/ui/Icon/ui/Icon"
 
 import "./styles.scss"
 interface Props {

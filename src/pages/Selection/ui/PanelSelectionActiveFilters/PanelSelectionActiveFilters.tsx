@@ -2,30 +2,26 @@ import React from "react"
 
 import cn from "classnames"
 
-import { SearchMode } from "@/features/HouseMultiSelect/lib/types/types"
 import { closeIcon } from "@/shared/constants"
-import { Icon } from "@/shared/ui/Icon/Icon"
+import { Icon } from "@/shared/ui/Icon/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
+
+import { FilterMode } from "../../lib/constants/enum"
 
 import "./styles.scss"
 
-export interface HouseOption {
-  id: string
-  name: string
-}
-
 interface ActiveFiltersProps {
+  filterMode?: FilterMode
   onClearSum?: () => void
   onClearTerm?: () => void
-  searchMode?: SearchMode
   sumValue?: string
   termValue?: string
 }
 
 export const PanelSelectionActiveFilters: React.FC<ActiveFiltersProps> = ({
+  filterMode,
   onClearSum,
   onClearTerm,
-  searchMode,
   sumValue,
   termValue,
 }) => {
@@ -50,7 +46,9 @@ export const PanelSelectionActiveFilters: React.FC<ActiveFiltersProps> = ({
           </button>
         </span>
       )}
-      {showCondition && <span className="panel-selection-active-filters__condition">{searchMode === "any" ? "или" : "и"}</span>}
+      {showCondition && (
+        <span className="panel-selection-active-filters__condition">{filterMode === FilterMode.ANY ? "или" : "и"}</span>
+      )}
       {/* Срок долга */}
       {hasTerm && (
         <span className="panel-selection-active-filters__tag-wrap">

@@ -1,0 +1,18 @@
+@use "../../../../app/styles/index.scss";
+
+.filters-column {
+  background: #fff;
+  border: 1px solid var(--filter-border);
+  box-shadow: var(--filter-shadow);
+  color: var(--filter-text);
+  border-radius: 6px;
+  padding: 12px;
+  min-width: 180px;
+  font-size: 14px;
+  font-family: inherit;
+  opacity: 1;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

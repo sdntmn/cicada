@@ -4,7 +4,8 @@ import { defineConfig } from "vite"
 export default defineConfig({
   base: "/cicada/",
   define: {
-    __API__: JSON.stringify("http://localhost:8080"),
+    // __API__: JSON.stringify("http://localhost:8080"),
+    __API__: JSON.stringify("https://cicada-server.onrender.com"),
     __IS_DEV__: JSON.stringify(true),
   },
   plugins: [react()],

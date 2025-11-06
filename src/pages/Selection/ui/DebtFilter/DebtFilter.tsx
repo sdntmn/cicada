@@ -7,7 +7,7 @@ import { Slider } from "@/shared/ui/Slider"
 
 import "./styles.scss"
 
-export interface DebtFilterProps {
+export interface Props {
   id: string
   label: string
   max: number
@@ -19,17 +19,7 @@ export interface DebtFilterProps {
   value: string
 }
 
-export const DebtFilter: React.FC<DebtFilterProps> = ({
-  id,
-  label,
-  max,
-  min,
-  onChangeSlider,
-  onChangeText,
-  placeholder,
-  step,
-  value,
-}) => {
+export const DebtFilter: React.FC<Props> = ({ id, label, max, min, onChangeSlider, onChangeText, placeholder, step, value }) => {
   const numValue = value === "" ? min : Number(value)
   const clampedValue = isNaN(numValue) ? min : Math.min(Math.max(numValue, min), max)
 

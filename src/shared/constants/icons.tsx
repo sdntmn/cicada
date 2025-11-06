@@ -37,3 +37,11 @@ export const verticaDots = "fa-solid fa-ellipsis-vertical"
 export const borderIcon = "fa-solid fa-rectangle-list"
 
 export const stripedIcon = "fa-solid fa-border-all"
+
+export const sortedSmallToLargest = "fa-solid fa-arrow-down-short-wide"
+
+export const sortedLargestToSmall = "fa-solid fa-arrow-down-wide-short"
+
+{
+  /* <i class="fa-solid fa-arrow-down-short-wide"></i> */
+}

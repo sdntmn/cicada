@@ -1,0 +1,57 @@
+@use "../../../../app/styles/index.scss";
+
+.tag-panel-active-filters {
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f7f6ff;
+    border: 1px solid var(--itpc-primary-bg-color-component);
+    border-radius: 16px;
+    padding: 4px 8px;
+    font-size: 14px;
+    color: var(--itpc-primary-bg-color-component);
+  }
+
+  &__label {
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  &__value {
+    font-weight: normal;
+    line-height: 1.4;
+  }
+
+  &__remove {
+    background: none;
+    border: none;
+    color: var(--icon-color-gray-l);
+    cursor: pointer;
+
+    font-size: 14px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: var(--icon-color-gray);
+      background: var(--itpc-table-hover-color-button-close);
+      border-radius: 4px;
+    }
+  }
+
+  &__reset {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
