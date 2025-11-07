@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 
 import cn from "classnames"
 
@@ -15,7 +15,6 @@ export interface Props {
 }
 
 export const PageSizeSelector: React.FC<Props> = ({ className, onChange, value }) => {
-  const dropdownRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
   const [isOpen, setIsOpen] = useState(false)
@@ -28,20 +27,8 @@ export const PageSizeSelector: React.FC<Props> = ({ className, onChange, value }
     close()
   }
 
-  // Закрытие при клике вне
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        close()
-      }
-    }
-
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
-
   return (
-    <div className={cn("page-size-selector", className)} ref={dropdownRef}>
+    <div className={cn("page-size-selector", className)}>
       <button
         aria-expanded={isOpen}
         aria-haspopup="listbox"

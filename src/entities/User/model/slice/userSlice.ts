@@ -12,12 +12,13 @@ const initialState: UserStorage = {
   isLoading: false,
   user: {
     email: null,
-    firstName: null,
-    id: null,
-    lastName: null,
+    firstName: "",
+    id: "",
+    lastName: "",
     mobile: null,
-    patronymicName: null,
-    username: null,
+    patronymicName: "",
+    settings: {},
+    username: "",
   },
 }
 

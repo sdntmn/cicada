@@ -1,7 +1,7 @@
 import React, { HTMLAttributes, type RefObject, useEffect, useRef, useState } from "react"
 
 import cn from "classnames"
-import { KeyCode, useAnimation, useMouseMovement } from "itpc-ui-kit"
+import { KeyCode, Preloader, useAnimation, useMouseMovement } from "itpc-ui-kit"
 import { DurationAnimation, Item } from "itpc-ui-kit/dist/components/types"
 
 import { HORIZONTAL_POSITION } from "@/shared/constants"
@@ -24,6 +24,8 @@ export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> 
   disabled?: boolean
   /** Задержка анимации */
   durationAnimation?: DurationAnimation
+  /** Загрузка */
+  isLoading?: boolean
   /** Список элементов */
   items: Item[]
   /** Обработчик изменения значения */
@@ -43,6 +45,7 @@ export const MultiSelectField: React.FC<Props> = ({
     durationClose: 200,
     durationOpen: 300,
   },
+  isLoading,
   items,
   onChange,
   onSearch,
@@ -101,12 +104,28 @@ export const MultiSelectField: React.FC<Props> = ({
   }
 
   const selectText = (): string => {
+    if (isLoading) {
+      return "Загрузка..."
+    }
+
     if (selectedItems?.length > 1) {
-      return `${selectedItems?.length} выбрано `
+      return `${selectedItems.length} выбрано`
     }
 
     if (selectedItems?.length === 1) {
       return items.find((item) => item.id === selectedItems[0])?.value ?? ""
+    }
+
+    if (!searchQuery) {
+      if (items.length === 0) {
+        return "Список пуст"
+      } else {
+        return "Выбрать из списка"
+      }
+    }
+
+    if (searchQuery && items.length === 0) {
+      return "Ничего не найдено"
     }
 
     return ""
@@ -233,16 +252,7 @@ export const MultiSelectField: React.FC<Props> = ({
       tabIndex={-1}
     >
       <div className="itpc-multi-select__input-wrapper">
-        {!isOpen && selectedItems.length > 0 && (
-          <div className="itpc-multi-select__selected-preview">
-            {/* {selectedItems.map((id) => (
-              <span className="tag" key={id}>
-                {items.find((i) => i.id === id)?.value}
-              </span>
-            ))} */}
-            {selectText()}
-          </div>
-        )}
+        {!isOpen && <div className="itpc-multi-select__selected-preview">{selectText()}</div>}
         <input
           className={cn("itpc-multi-select__input", isOpen && "itpc-multi-select__input_focused")}
           disabled={disabled}
@@ -256,7 +266,11 @@ export const MultiSelectField: React.FC<Props> = ({
         />
       </div>
 
-      <IconArrow disabled={disabled} onClick={handleOpen} orientation={isOpen ? "top" : "bottom"} />
+      {isLoading ? (
+        <Preloader className="itpc-multi-select__preloader" />
+      ) : (
+        <IconArrow disabled={disabled} onClick={handleOpen} orientation={isOpen ? "top" : "bottom"} />
+      )}
 
       <Portal element={document.body}>
         <PositionedWrap horizontalAlignment={HORIZONTAL_POSITION.LEFT} isClosing={isClosing} isOpen={isOpen} refParent={ref}>
@@ -266,20 +280,26 @@ export const MultiSelectField: React.FC<Props> = ({
             refChildren={refChildren}
             refParent={ref}
           >
-            {items.map((item, itemIndex) => (
-              <SelectItem
-                activeIndex={activeIndex}
-                disabled={item.disabled}
-                id={item.id}
-                isActive={selectedItems?.includes(item.id) ?? false}
-                itemIndex={itemIndex}
-                key={item.id}
-                onChange={handleMouseSelection}
-                onMouseEnter={onMouseEnter}
-              >
-                {item.value}
+            {!Boolean(items.length) ? (
+              <SelectItem id="empty-id" itemIndex={0} disabled>
+                {searchQuery ? "Ничего не найдено" : "Список пуст"}
               </SelectItem>
-            ))}
+            ) : (
+              items.map((item, itemIndex) => (
+                <SelectItem
+                  activeIndex={activeIndex}
+                  disabled={item.disabled}
+                  id={item.id}
+                  isActive={selectedItems?.includes(item.id) ?? false}
+                  itemIndex={itemIndex}
+                  key={item.id}
+                  onChange={handleMouseSelection}
+                  onMouseEnter={onMouseEnter}
+                >
+                  {item.value}
+                </SelectItem>
+              ))
+            )}
           </ListBox>
         </PositionedWrap>
       </Portal>

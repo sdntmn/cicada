@@ -1,9 +1,63 @@
 .profile {
+  &__trigger {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    font-size: 20px;
+    color: var(--itpc-default-icon-color);
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &_active {
+      color: #5c53ac;
+      // background-color: rgba(0, 0, 0, 0.05);
+      // box-shadow: 0 2px 6px rgba(220, 215, 255, 0.3);
+    }
+  }
+
+  &__dropdown {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    min-width: 152px;
+    z-index: 1000;
+  }
+}
+
+.profile__trigger {
   display: flex;
   align-items: center;
-  gap: var(--space-m);
+  gap: 8px;
+  user-select: none;
+}
 
-  &__icon {
-    font-size: 36px;
+.profile__icon {
+  font-size: 1.25rem;
+}
+
+.profile__logout-btn {
+  width: 100%;
+  padding: 8px 12px;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-danger);
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--surface-hover);
   }
 }

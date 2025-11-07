@@ -17,6 +17,10 @@ class Endpoints {
     return "houses"
   }
 
+  searchDebtorByHouses(): string {
+    return `search-accounts`
+  }
+
   urlFor(endpoint: string): string {
     return `${API_BASE_URL}/${endpoint}`
   }

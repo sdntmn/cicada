@@ -9,7 +9,7 @@ import { SELECTION_COLUMNS_CONFIG } from "../../lib/config/selectionTableConfig"
 import { BaseColumnTableSelect, VirtualColumnTableSelect } from "../../lib/constants"
 
 export const SelectionTable: React.FC = () => {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
   const { accounts, isLoading } = useAppSelector((state) => state.accounts)
   const { defaultVisible, displayOrder, requiredColumns } = SELECTION_COLUMNS_CONFIG
   const { handleChangeVisibleColumns, selectedColumns, visibleColumns } = useTableColumns({
@@ -18,16 +18,16 @@ export const SelectionTable: React.FC = () => {
     requiredColumns,
   })
 
-  const handleFetch = () => dispatch(getAccounts())
+  // const handleFetch = () => dispatch(getAccounts())
 
   const handleBulkDelete = (ids: (string | number)[]) => {
     // dispatch(deleteAccounts(ids));
     console.log("Удалить аккаунты:", ids)
   }
 
-  useEffect(() => {
-    handleFetch()
-  }, [])
+  // useEffect(() => {
+  //   handleFetch()
+  // }, [])
 
   return (
     <BaseTable<Account, BaseColumnTableSelect, VirtualColumnTableSelect>

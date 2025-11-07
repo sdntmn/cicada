@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 
-import { FilterMode } from "@/pages/Selection/lib/constants/enum"
+import { FilterMode } from "@/shared/api/AccountsApi"
 
 interface UseDebtFiltersOptions {
   initialMode?: FilterMode

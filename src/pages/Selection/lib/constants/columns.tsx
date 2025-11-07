@@ -57,6 +57,15 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<A
     title: "Пени",
     type: "data",
   },
+  [BaseColumnTableSelect.TERM_DEBT]: {
+    align: "right",
+    isFilterable: true,
+    isSortable: true,
+    name: BaseColumnTableSelect.TERM_DEBT,
+    sorter: (a, b) => parseDebtValue(a.debtTermMounts) - parseDebtValue(b.debtTermMounts),
+    title: "Срок / мес.",
+    type: "data",
+  },
 }
 
 export const VIRTUAL_COLUMN: VirtualColumn<Account> = {
@@ -80,6 +89,7 @@ export const DEFAULT_VISIBLE: ColumnTableSelect[] = [
   BaseColumnTableSelect.ADDRESS,
   BaseColumnTableSelect.CITY,
   BaseColumnTableSelect.PENALTY,
+  BaseColumnTableSelect.TERM_DEBT,
 ]
 
 export const REQUIRED_COLUMNS = new Set<ColumnTableSelect>([BaseColumnTableSelect.ACCOUNT, BaseColumnTableSelect.FIO])
@@ -90,6 +100,7 @@ export const SELECTION_TABLE_DISPLAY_ORDER: ColumnTableSelect[] = [
   BaseColumnTableSelect.FIO,
   BaseColumnTableSelect.ADDRESS,
   BaseColumnTableSelect.CITY,
+  BaseColumnTableSelect.TERM_DEBT,
   BaseColumnTableSelect.DEBT,
   BaseColumnTableSelect.PENALTY,
 ]
@@ -101,5 +112,6 @@ export const SELECT_COLUMN_LABELS: Record<ColumnTableSelect, string> = {
   [BaseColumnTableSelect.DEBT]: "Долг",
   [BaseColumnTableSelect.FIO]: "ФИО",
   [BaseColumnTableSelect.PENALTY]: "Пени",
+  [BaseColumnTableSelect.TERM_DEBT]: "Срок / мес.",
   [VirtualColumnTableSelect.INDEX]: "№",
 }

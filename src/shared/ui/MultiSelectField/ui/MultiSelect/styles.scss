@@ -11,6 +11,10 @@
   border-radius: 4px;
   background-color: var(--itpc-primary-bg-color);
   box-shadow: none;
+
+  &__preloader {
+    margin: 0 4px;
+  }
 }
 
 .itpc-multi-select_disabled {

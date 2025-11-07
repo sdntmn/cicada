@@ -4,6 +4,7 @@ export interface HouseItem {
   apartment?: string
   city: string
   house: string
+  houseId: string
   id: string
   judicial: string
   street: string

@@ -4,7 +4,7 @@ import { getUser } from "@/entities/User"
 import Logo from "@/shared/assets/logo.svg"
 import { Menu, MenuName } from "@/shared/constants"
 import { getSectionFromUrl } from "@/shared/lib/helpers"
-import { useAppDispatch } from "@/shared/lib/store"
+import { useAppDispatch, useAppSelector } from "@/shared/lib/store"
 import { MainLayout } from "@/shared/ui/MainLayout"
 import { Profile } from "@/shared/ui/Profile/Profile"
 import { Section } from "@/shared/ui/Section"
@@ -14,6 +14,9 @@ import { sections } from "./lib/constants/constants"
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
+
+  const { user } = useAppSelector((state) => state.user)
+  console.info(user)
 
   const [currentSection, setCurrentSection] = useState<Menu>(getSectionFromUrl())
 
@@ -50,7 +53,7 @@ export const App: React.FC = () => {
         <>
           <img alt="Логотип" className="app__logo" src={Logo} />
           <Navbar currentSection={currentSection} switchSection={switchSection} />
-          <Profile />
+          <Profile userName={user} />
         </>
       }
       className="app app_default_theme"

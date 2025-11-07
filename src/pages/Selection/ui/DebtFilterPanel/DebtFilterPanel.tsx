@@ -4,8 +4,7 @@ import cn from "classnames"
 
 import { DebtFiltersDropdown } from "@/pages/Selection/ui/DebtFiltersDropdown/DebtFiltersDropdown"
 import { PanelSelectionActiveFilters } from "@/pages/Selection/ui/PanelSelectionActiveFilters/PanelSelectionActiveFilters"
-
-import { FilterMode } from "../../lib/constants/enum"
+import { FilterMode } from "@/shared/api/AccountsApi"
 
 import "./styles.scss"
 
@@ -40,10 +39,12 @@ export const DebtFilterPanel: React.FC<Props> = ({
   const toggle = () => setIsOpen((prev) => !prev)
   const close = () => setIsOpen(false)
 
+  const isActive = Boolean(sumValue) || Boolean(termValue) || isOpen
+
   return (
     <div className="debt-filter-panel">
       <button
-        className={cn("debt-filter-panel__btn-filters", isOpen && "debt-filter-panel__btn-filters_active")}
+        className={cn("debt-filter-panel__btn-filters", isActive && "debt-filter-panel__btn-filters_active")}
         onClick={toggle}
         ref={ref}
       >

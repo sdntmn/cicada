@@ -1,0 +1,33 @@
+@use "../../../../app/styles/index.scss";
+.multi-select-houses {
+  width: 100%;
+
+  &__input-wrap {
+    max-width: 560px;
+    width: 100%;
+  }
+
+  &__checkbox {
+    .itpc-checkbox__label {
+      margin-left: 8px;
+      color: #6b7280;
+      font-size: 15px;
+    }
+
+    &_active {
+      .itpc-checkbox__label {
+        margin-left: 8px;
+        color: var(--itpc-primary-text-color);
+      }
+    }
+  }
+
+  &__btn-apply {
+    max-height: 40px;
+    font-size: 20px;
+  }
+
+  &__filter {
+    display: inline-flex;
+  }
+}

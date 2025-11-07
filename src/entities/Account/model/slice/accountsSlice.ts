@@ -2,24 +2,9 @@ import { createSlice } from "@reduxjs/toolkit"
 
 import { ErrorResponse } from "@/shared/api/types"
 
-import { getAccounts } from "../thunk/thunk"
-import { Account, AccountsStorage } from "../types/account"
-
-const transformRawAccount = (raw: any): Account => {
-  const { apartment: flat, city, house, street } = raw.address || {}
-
-  const addressStr = [street, `д. ${house}`, `кв. ${flat}`].filter(Boolean).join(", ") || ""
-
-  return {
-    account: raw.account_number, // ← переименовываем accountNumber → account
-    address: addressStr,
-    city: city || "",
-    debt: String(raw.debt), // или оставить как number, если в типе number
-    fio: raw.fio,
-    id: raw.id,
-    penalty: String(raw.penalty),
-  }
-}
+import { transformRawAccount } from "../service/transformRawAccount/transformRawAccount"
+import { getAccounts, searchAccounts } from "../thunk/thunk"
+import { AccountsStorage } from "../types/account"
 
 const initialState: AccountsStorage = {
   accounts: [],
@@ -38,13 +23,30 @@ export const accountsSlice = createSlice({
         state.errorResponse = action.payload as ErrorResponse
       })
       .addCase(getAccounts.fulfilled, (state, action) => {
-        const accounts = action.payload as unknown as Account[]
+        const accounts = action.payload
         state.accounts = accounts.map(transformRawAccount)
         state.isLoading = false
+      })
+      .addCase(searchAccounts.pending, (state) => {
+        state.isLoading = true
+        state.errorResponse = null
+      })
+      .addCase(searchAccounts.fulfilled, (state, action) => {
+        state.accounts = action.payload.map(transformRawAccount)
+        state.isLoading = false
+      })
+      .addCase(searchAccounts.rejected, (state, action) => {
+        state.isLoading = false
+        state.errorResponse = action.payload
       }),
   initialState,
-  name: "user",
-  reducers: {},
+  name: "accounts",
+  reducers: {
+    clearSearchedAccounts: (state) => {
+      state.accounts = []
+      state.errorResponse = null
+    },
+  },
 })
 
 export const { actions: accountsActions, reducer: accountsReducer } = accountsSlice

@@ -1,3 +1,4 @@
+import { UserProfileSettings } from "@/shared/api"
 import { ErrorResponse } from "@/shared/api/types"
 import { Email, Mobile } from "@/shared/lib/types/types"
 
@@ -8,6 +9,7 @@ export interface User {
   lastName: string
   mobile: Mobile | null
   patronymicName: string
+  settings: UserProfileSettings
   username: string
 }
 

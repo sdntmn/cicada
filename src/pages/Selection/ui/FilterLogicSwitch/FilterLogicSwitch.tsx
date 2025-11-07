@@ -2,9 +2,8 @@ import React from "react"
 
 import { Checkbox, Typography } from "itpc-ui-kit"
 
+import { FilterMode } from "@/shared/api/AccountsApi"
 import { Flex } from "@/shared/ui/layout/Flex"
-
-import { FilterMode } from "../../lib/constants/enum"
 
 import "./styles.scss"
 

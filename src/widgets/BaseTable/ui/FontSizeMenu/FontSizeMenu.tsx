@@ -5,20 +5,13 @@ import cn from "classnames"
 import { FontSize } from "@/shared/constants"
 import { Flex } from "@/shared/ui/layout/Flex"
 
-import { FONT_SIZE_DISPLAY_ORDER } from "../../lib/constants/settings"
+import { FONT_SIZE_DISPLAY_ORDER, FONT_SIZE_LABELS } from "../../lib/constants/settings"
 
 import "./styles.scss"
 
 interface Props {
   currentFontSize: FontSize
   onChangeFontSize: (size: FontSize) => void
-}
-
-export const FONT_SIZE_LABELS: Record<FontSize, string> = {
-  large: "Крупный",
-  normal: "Обычный",
-  small: "Мелкий",
-  xlarge: "Очень крупный",
 }
 
 export const FontSizeMenu: React.FC<Props> = ({ currentFontSize, onChangeFontSize }) => (

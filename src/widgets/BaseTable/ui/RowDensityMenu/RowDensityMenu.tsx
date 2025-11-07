@@ -1,4 +1,3 @@
-// src/shared/ui/TableSettingsMenu/RowDensityMenu.tsx
 import React from "react"
 
 import cn from "classnames"

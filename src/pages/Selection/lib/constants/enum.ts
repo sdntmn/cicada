@@ -1,8 +1,3 @@
-export enum FilterMode {
-  ALL = "all",
-  ANY = "any",
-}
-
 export enum BaseColumnTableSelect {
   ACCOUNT = "account",
   ADDRESS = "address",
@@ -10,6 +5,7 @@ export enum BaseColumnTableSelect {
   DEBT = "debt",
   FIO = "fio",
   PENALTY = "penalty",
+  TERM_DEBT = "debtTermMounts",
 }
 
 export enum VirtualColumnTableSelect {

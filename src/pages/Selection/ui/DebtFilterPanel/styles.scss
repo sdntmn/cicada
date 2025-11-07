@@ -11,10 +11,11 @@
     padding: 8px 12px;
     border-radius: 4px;
     color: #6b7280;
-    font-size: 16px;
+    font-size: 15px;
 
     &_active {
       text-decoration-line: underline;
+      color: var(--itpc-primary-text-color);
     }
 
     &:hover {
