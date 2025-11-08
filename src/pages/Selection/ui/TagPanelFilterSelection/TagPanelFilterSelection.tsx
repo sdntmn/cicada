@@ -2,11 +2,10 @@ import React from "react"
 
 import cn from "classnames"
 
+import { FilterMode } from "@/shared/api/AccountsApi"
 import { closeIcon } from "@/shared/constants"
 import { Icon } from "@/shared/ui/Icon/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
-
-import { FilterMode } from "../../lib/constants/enum"
 
 import "./styles.scss"
 

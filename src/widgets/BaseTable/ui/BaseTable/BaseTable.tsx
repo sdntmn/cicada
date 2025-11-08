@@ -23,25 +23,34 @@ import "./styles.scss"
 interface Props<T extends RowType, C extends string, V extends string = string> {
   changeVisibleColumns: (columns: Set<C | V>) => void
   config: ColumnConfig<T, C, V>
-  // Данные
+  currentPage: number
   data: T[]
   getRowId: (row: T) => string | number
   isFetching?: boolean
   onBulkDelete?: (ids: (string | number)[]) => void
   onBulkExport?: () => void
+  onPageChange: (page: number) => void
+  onPageSizeChange: (size: number) => void
   selectedColumns: Set<C | V>
+  step: PageSize
+  total: number // общее количество записей (для пагинации)
   visibleColumns: (C | V)[]
 }
 
 export const BaseTable = <T extends RowType, C extends string, V extends string = string>({
   changeVisibleColumns,
   config,
+  currentPage,
   data,
   getRowId,
   isFetching = false,
   onBulkDelete,
   onBulkExport,
+  onPageChange,
+  onPageSizeChange,
   selectedColumns,
+  step,
+  total,
   visibleColumns,
 }: Props<T, C, V>) => {
   const { columnLabels, columns: dataColumns, displayOrder: allColumns, requiredColumns, virtualColumns } = config
@@ -59,8 +68,7 @@ export const BaseTable = <T extends RowType, C extends string, V extends string 
 
   const [rowDensity, setRowDensity] = useState<RowDensity>(RowDensity.MEDIUM)
   const [fontSize, setFontSize] = useState<FontSize>("normal")
-  const [numbersRenderLines, setNumbersRenderLines] = useState<PageSize>(20)
-  const [striped, setStriped] = useState(true)
+  const [striped, setStriped] = useState(false)
   const [verticalBorders, setVerticalBorders] = useState(false)
 
   const toggleStriped = () => setStriped((prev) => !prev)
@@ -107,7 +115,7 @@ export const BaseTable = <T extends RowType, C extends string, V extends string 
       <Flex style={{ width: "100%" }} vertical>
         <Flex className="table__controls" gap={8} justify="space-between">
           <Flex align="center" gap={8}>
-            <Typography.Text>Всего записей: {isFetching ? "Загрузка..." : filteredData.length}</Typography.Text>
+            <Typography.Text>Всего записей: {isFetching ? "Загрузка..." : total}</Typography.Text>
             <TagPanelActiveFilters
               columnLabels={columnLabels}
               filters={columnFilters}
@@ -119,12 +127,13 @@ export const BaseTable = <T extends RowType, C extends string, V extends string 
 
           <Flex gap={8}>
             <Pagination
-              callback={() => console.info("Пагинация")}
+              callback={(result) => onPageChange(result.currentPage - 1)}
               className="table__pagination"
-              dataLength={filteredData.length}
-              step={numbersRenderLines}
+              currentPage={currentPage + 1}
+              dataLength={total}
+              step={step}
             />
-            <PageSizeSelector className="table__page-size-selector" onChange={setNumbersRenderLines} value={numbersRenderLines} />
+            <PageSizeSelector className="table__page-size-selector" onChange={onPageSizeChange} value={step} />
             <MenuVisibilityColumns
               allColumns={allColumns.filter((col) => !requiredColumns.has(col))}
               getColumnLabel={(col) => columnLabels[col]}

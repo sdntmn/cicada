@@ -1,15 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 import { ErrorResponse } from "@/shared/api/types"
+import { PageSize } from "@/shared/lib/types/types"
 
 import { transformRawAccount } from "../service/transformRawAccount/transformRawAccount"
 import { getAccounts, searchAccounts } from "../thunk/thunk"
-import { AccountsStorage } from "../types/account"
+import { AccountsStorage, SearchParams } from "../types/account"
 
 const initialState: AccountsStorage = {
   accounts: [],
   errorResponse: null,
   isLoading: false,
+  page: 0,
+  pageSize: 20,
+  rowIndex: 0,
+  searchParams: {},
+  total: 0,
 }
 
 export const accountsSlice = createSlice({
@@ -32,7 +38,11 @@ export const accountsSlice = createSlice({
         state.errorResponse = null
       })
       .addCase(searchAccounts.fulfilled, (state, action) => {
-        state.accounts = action.payload.map(transformRawAccount)
+        const { data, page, pageSize, total } = action.payload as any
+        state.accounts = data.map(transformRawAccount)
+        state.total = total
+        state.page = page
+        state.pageSize = pageSize
         state.isLoading = false
       })
       .addCase(searchAccounts.rejected, (state, action) => {
@@ -45,6 +55,19 @@ export const accountsSlice = createSlice({
     clearSearchedAccounts: (state) => {
       state.accounts = []
       state.errorResponse = null
+    },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload
+    },
+    setPageSize: (state, action: PayloadAction<PageSize>) => {
+      state.pageSize = action.payload
+      state.page = 0 // сброс на первую страницу при смене размера
+    },
+    setSearchParams: (state, action: PayloadAction<SearchParams>) => {
+      state.searchParams = action.payload
+    },
+    updateSearchParams: (state, action: PayloadAction<SearchParams>) => {
+      state.searchParams = action.payload
     },
   },
 })

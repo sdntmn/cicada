@@ -16,7 +16,6 @@ export const App: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const { user } = useAppSelector((state) => state.user)
-  console.info(user)
 
   const [currentSection, setCurrentSection] = useState<Menu>(getSectionFromUrl())
 

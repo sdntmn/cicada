@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useState } from "react"
 import cn from "classnames"
 import { Button, Checkbox } from "itpc-ui-kit"
 
-import { SearchParams } from "@/entities/Account"
+import { accountsActions, SearchParams } from "@/entities/Account"
 import { searchAccounts } from "@/entities/Account/model/thunk/thunk"
 import { getHouses } from "@/entities/House"
 import { houseSelectionActions } from "@/features/HouseMultiSelect/model/slice/housesSlice"
@@ -93,20 +93,21 @@ export const MultiSelectHouses: React.FC = () => {
       params.houseIds = selectedHouseIds
     }
 
-    if (Boolean(sumValue) && Number(sumValue) > 0) {
-      params.minDebt = Number(sumValue)
+    const debt = Number(sumValue)
+    if (sumValue && !isNaN(debt) && debt > 0) {
+      params.minDebt = debt
     }
 
-    if (Boolean(termValue) && Number(termValue) > 0) {
-      params.minTerm = Number(termValue)
+    const term = Number(termValue)
+    if (termValue && !isNaN(term) && term > 0) {
+      params.minTerm = term
     }
 
-    // filterMode передавать ТОЛЬКО если заданы ОБА фильтра
-    if (params.minDebt !== undefined && params.minTerm !== undefined && Number(params.minDebt) > 0 && Number(params.minTerm) > 0) {
+    if (params.minDebt !== undefined && params.minTerm !== undefined) {
       params.filterMode = filterMode
     }
-
-    dispatch(searchAccounts(params))
+    dispatch(accountsActions.updateSearchParams(params))
+    dispatch(searchAccounts({ ...params, page: 0, pageSize: 20 }))
   }
 
   const isDisabled = isLoading || !houses.length || (!isAllHousesSelected && !Boolean(selectedHouseIds.length))

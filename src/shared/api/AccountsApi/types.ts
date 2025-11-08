@@ -12,6 +12,7 @@ export interface AccountApi {
   house_id: string
   id: string
   penalty: string
+  rowIndex: number
 }
 
 export interface AccountAddressApi {
@@ -26,4 +27,6 @@ export interface SearchAccountsParams {
   houseIds?: string[]
   minDebt?: number
   minTerm?: number
+  page: number
+  pageSize: number
 }

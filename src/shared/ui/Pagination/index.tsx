@@ -18,15 +18,27 @@ export interface Props extends HTMLAttributes<HTMLDivElement> {
   callback: (pagination: PaginationResult) => void
   /** Дополнительный класс */
   className?: string
+  currentPage?: number
   /** Длина массива, данные которого необходимо разделить */
   dataLength: number
+
   /** Количество элементов на странице */
   step?: number
 }
 
-export const Pagination: FC<Props> = ({ callback, className = "", dataLength, step = 10, ...rest }) => {
+export const Pagination: FC<Props> = ({
+  callback,
+  className = "",
+  currentPage: externalCurrentPage,
+  dataLength,
+  step = 10,
+  ...rest
+}) => {
   const totalPages = useMemo(() => Math.max(1, Math.ceil(dataLength / step)), [dataLength, step])
-  const [currentPage, setCurrentPage] = useState(1)
+  // Если передана внешняя страница — используем её, иначе локальное состояние
+  const [internalPage, setInternalPage] = useState(1)
+  const isControlled = externalCurrentPage !== undefined
+  const currentPage = isControlled ? externalCurrentPage : internalPage
 
   // Сбрасываем на первую страницу, если текущая вышла за пределы
   useEffect(() => {
@@ -37,7 +49,10 @@ export const Pagination: FC<Props> = ({ callback, className = "", dataLength, st
 
   const goToPage = (page: number) => {
     const newPage = Math.max(1, Math.min(page, totalPages))
-    setCurrentPage(newPage)
+    // Обновляем внутреннее состояние только если не controlled
+    if (!isControlled) {
+      setInternalPage(newPage)
+    }
 
     const start = (newPage - 1) * step
     const end = Math.min(newPage * step, dataLength)

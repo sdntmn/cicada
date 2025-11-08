@@ -1,5 +1,6 @@
 import { FilterMode } from "@/shared/api/AccountsApi"
 import { ErrorResponse } from "@/shared/api/types"
+import { PageSize } from "@/shared/lib/types/types"
 
 export interface Account {
   account: string
@@ -11,6 +12,7 @@ export interface Account {
   houseId: string
   id: string
   penalty: string
+  rowIndex: number
 }
 
 export interface AccountAddress {
@@ -33,4 +35,9 @@ export interface AccountsStorage {
   accounts?: Account[]
   errorResponse: ErrorResponse
   isLoading: boolean
+  page: number
+  pageSize: PageSize
+  rowIndex: number
+  searchParams: SearchParams
+  total: number
 }

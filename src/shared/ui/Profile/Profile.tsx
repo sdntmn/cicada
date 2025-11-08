@@ -11,14 +11,13 @@ import { PositionPortal } from "@/shared/ui/PositionPortal"
 import "./styles.scss"
 
 interface Props {
-  className?: string
   isDarkTheme?: boolean
   onLogout?: () => void
   onToggleTheme?: () => void
   userName?: User
 }
 
-export const Profile: React.FC<Props> = memo(({ className, isDarkTheme, onLogout, onToggleTheme, userName }) => {
+export const Profile: React.FC<Props> = memo(({ isDarkTheme, onLogout, onToggleTheme, userName }) => {
   const [isOpen, setIsOpen] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
@@ -48,7 +47,7 @@ export const Profile: React.FC<Props> = memo(({ className, isDarkTheme, onLogout
         role="button"
         tabIndex={0}
       >
-        <span>{userName ? userName.username : "Гость"}</span>
+        <span className="profile__name">{userName ? userName.username : "Гость"}</span>
         <i className="fa-regular fa-circle-user profile__icon" />
       </button>
 
@@ -61,7 +60,6 @@ export const Profile: React.FC<Props> = memo(({ className, isDarkTheme, onLogout
         onClose={closeMenu}
       >
         <Flex className="profile__menu" gap={8} vertical>
-          {/* {onToggleTheme && ( */}
           <Checkbox
             id="dark-theme-toggle"
             isChecked={isDarkTheme}
@@ -71,13 +69,10 @@ export const Profile: React.FC<Props> = memo(({ className, isDarkTheme, onLogout
             type="checkbox"
             variant="android"
           />
-          {/* )} */}
 
-          {onLogout && (
-            <button className="profile__logout-btn" onClick={handleLogout} type="button">
-              Выйти
-            </button>
-          )}
+          <button className="profile__logout-btn" onClick={handleLogout} type="button">
+            Выйти
+          </button>
         </Flex>
       </PositionPortal>
     </>

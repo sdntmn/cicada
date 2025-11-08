@@ -51,7 +51,7 @@ export const TableRow = <T extends RowType>({
         isSelected && "table-row__selected",
         rowDensity && `table-row_${rowDensity}`,
         !hasSelectedRows && "table-row__hover-only-checkbox",
-        striped && rowIndex !== undefined && rowIndex % 2 === 0 && "table-row__striped"
+        striped && rowIndex !== undefined && rowIndex % 2 !== 0 && "table-row__striped"
       )}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

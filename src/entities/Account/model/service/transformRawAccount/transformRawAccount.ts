@@ -4,7 +4,6 @@ import { Account } from "../../types/account"
 
 export const transformRawAccount = (raw: AccountApi): Account => {
   const { apartment: flat, city, house, street } = raw.address || {}
-  console.info(city)
 
   const addressStr = [street, `д. ${house}`, `кв. ${flat}`].filter(Boolean).join(", ") || ""
 
@@ -18,5 +17,6 @@ export const transformRawAccount = (raw: AccountApi): Account => {
     houseId: raw.house_id,
     id: raw.id,
     penalty: String(raw.penalty),
+    rowIndex: raw.rowIndex,
   }
 }
