@@ -3,30 +3,34 @@ import React, { useEffect, useMemo, useState } from "react"
 import cn from "classnames"
 import { Button, Checkbox } from "itpc-ui-kit"
 
-import { accountsActions, SearchParams } from "@/entities/Account"
-import { searchAccounts } from "@/entities/Account/model/thunk/thunk"
-import { getHouses } from "@/entities/House"
+import { debtorsActions, searchDebtorCandidates, SearchParams } from "@/entities/Debtor"
+import { getPremises } from "@/entities/Premises"
 import { houseSelectionActions } from "@/features/HouseMultiSelect/model/slice/housesSlice"
 import { searchIcon } from "@/shared/constants"
+import { getSelectItems, mapSelectedHouses } from "@/shared/lib/helpers"
 import { useAppDispatch, useAppSelector } from "@/shared/lib/store"
 import { Icon } from "@/shared/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
 import { MultiSelectField } from "@/shared/ui/MultiSelectField/ui/MultiSelect"
 
-import { getSelectItems, mapSelectedHouses } from "../../lib/helpers"
 import { useDebtFilters } from "../../lib/hooks"
 import { DebtFilterPanel } from "../DebtFilterPanel/DebtFilterPanel"
 import { TagPanelSelectedHouses } from "../TagPanelSelectedHouses/TagPanelSelectedHouses"
 
 import "./styles.scss"
-
+// - по сумме долга
+// - по дате
+// - по поставщику услуг
+// - по адресу
+// - есть оплаты недавние
+// - признак исключкения - это из Гелиоса есть такой признак, я тут не знаю про что он
 export const MultiSelectHouses: React.FC = () => {
   const dispatch = useAppDispatch()
 
   const [searchQuery, setSearchQuery] = useState("")
   const [isAllHousesSelected, setIsAllHousesSelected] = useState(false)
 
-  const { houses, isLoading } = useAppSelector((state) => state.house)
+  const { isLoading, premises } = useAppSelector((state) => state.premises)
   const { selectedHouseIds } = useAppSelector((state) => state.houseSelection)
 
   const {
@@ -42,7 +46,7 @@ export const MultiSelectHouses: React.FC = () => {
     termValue,
   } = useDebtFilters()
 
-  const selectItems = useMemo(() => getSelectItems(houses), [houses])
+  const selectItems = useMemo(() => getSelectItems(premises), [premises])
 
   const filteredSelectItems = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -52,7 +56,7 @@ export const MultiSelectHouses: React.FC = () => {
     return selectItems.filter((item) => item.value.toLowerCase().includes(query))
   }, [selectItems, searchQuery])
 
-  const selectedHouses = useMemo(() => mapSelectedHouses(houses || [], selectedHouseIds), [houses, selectedHouseIds])
+  const selectedHouses = useMemo(() => mapSelectedHouses(premises || [], selectedHouseIds), [premises, selectedHouseIds])
 
   const handleSetSelectedHouse = (newSelectedIds: string[]) => {
     dispatch(houseSelectionActions.setSelectedHouseIds(newSelectedIds))
@@ -106,14 +110,17 @@ export const MultiSelectHouses: React.FC = () => {
     if (params.minDebt !== undefined && params.minTerm !== undefined) {
       params.filterMode = filterMode
     }
-    dispatch(accountsActions.updateSearchParams(params))
-    dispatch(searchAccounts({ ...params, page: 0, pageSize: 20 }))
+    dispatch(debtorsActions.updateSearchParams(params))
+    dispatch(searchDebtorCandidates({ ...params, page: 0, pageSize: 20 }))
   }
 
-  const isDisabled = isLoading || !houses.length || (!isAllHousesSelected && !Boolean(selectedHouseIds.length))
+  const isDisabled = isLoading || !premises.length || (!isAllHousesSelected && !Boolean(selectedHouseIds.length))
 
   useEffect(() => {
-    dispatch(getHouses())
+    dispatch(getPremises())
+    return () => {
+      dispatch(houseSelectionActions.clearHousesResults())
+    }
   }, [dispatch])
 
   return (
@@ -132,7 +139,7 @@ export const MultiSelectHouses: React.FC = () => {
         <Flex align="center" gap={4}>
           <Checkbox
             className={cn("multi-select-houses__checkbox", isAllHousesSelected && "multi-select-houses__checkbox_active")}
-            disabled={isLoading || !Boolean(houses.length)}
+            disabled={isLoading || !Boolean(premises.length)}
             id={"checked_all"}
             isChecked={isAllHousesSelected}
             label="По всем"

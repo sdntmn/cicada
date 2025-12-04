@@ -1,0 +1,309 @@
+.slide-panel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+
+  &--modal {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &--panel {
+    background: rgba(0, 0, 0, 0.3);
+    pointer-events: none; // Позволяет кликать на таблицу в режиме панели
+  }
+}
+
+.slide-panel {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 16px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+
+  // Подсветка выбранной строки в таблице (только для режима панели)
+  &--has-selection:not(.slide-panel--modal) {
+    &::before {
+      content: "";
+      position: fixed;
+      left: 0;
+      width: 4px;
+      height: 40px;
+      background: #3b82f6;
+      border-radius: 0 2px 2px 0;
+      z-index: 1002;
+      animation: slideIn 0.3s ease-out;
+    }
+  }
+
+  // Режим боковой панели
+  &--left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  &--right {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  // Режим модального окна
+  &--modal {
+    top: 50%;
+    left: 50%;
+    height: auto;
+    max-height: 90vh;
+    width: 90%;
+    border-radius: 8px;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  &--open {
+    // Для боковой панели
+    transform: translateX(0);
+
+    // Для модального окна
+    &.slide-panel--modal {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  &__header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e5e7eb;
+    flex-shrink: 0;
+
+    .slide-panel--modal & {
+      border-radius: 8px 8px 0 0;
+    }
+  }
+
+  &__title-wrapper {
+    flex: 1;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  &__row-info {
+    margin-top: 4px;
+    font-size: 14px;
+    color: #6b7280;
+  }
+
+  &__row-title {
+    font-weight: 500;
+    color: #374151;
+  }
+
+  &__row-subtitle {
+    color: #9ca3af;
+  }
+
+  // Стили для заголовка в модальном режиме
+  &__modal-title {
+    &-main {
+      font-size: 18px;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    &-sub {
+      margin-top: 2px;
+      font-size: 14px;
+      color: #6b7280;
+      font-weight: normal;
+    }
+  }
+
+  &__mode-btn,
+  &__close-btn {
+    padding: 4px;
+    min-width: auto;
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+
+    &--modal {
+      max-height: 60vh;
+    }
+  }
+
+  &__footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e5e7eb;
+    flex-shrink: 0;
+
+    .slide-panel--modal & {
+      border-radius: 0 0 8px 8px;
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+// Адаптивность
+@media (max-width: 768px) {
+  .slide-panel {
+    // На мобильных всегда показываем как модальное окно
+    width: 95% !important;
+    top: 50%;
+    left: 50%;
+    height: auto;
+    max-height: 85vh;
+    border-radius: 8px;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+
+    &--open {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+
+    &--left,
+    &--right {
+      transform: translate(-50%, -50%) scale(0.9);
+
+      &.slide-panel--open {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+
+    &__content {
+      max-height: 50vh;
+    }
+
+    // Скрываем кнопку переключения режима на мобильных
+    &__mode-btn {
+      display: none;
+    }
+  }
+
+  // На мобильных убираем подсветку строки
+  .slide-panel--has-selection::before {
+    display: none;
+  }
+}
+
+// styles.scss
+.slide-panel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+
+  &--modal {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  &--panel {
+    background: rgba(0, 0, 0, 0.5);
+
+    // Затемняем всю таблицу, кроме редактируемой строки
+    :global(.table-row) {
+      opacity: 0.5;
+      transition: opacity 0.3s ease;
+
+      // Исключаем редактируемую строку из затемнения
+      &:global(.table-row__editing) {
+        opacity: 1;
+        position: relative;
+        z-index: 1002;
+      }
+    }
+  }
+}
+
+.slide-panel {
+  position: fixed;
+  top: 0;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 16px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease-in-out;
+
+  // Режим боковой панели
+  &--left {
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  &--right {
+    right: 0;
+    transform: translateX(100%);
+  }
+
+  // Режим модального окна
+  &--modal {
+    top: 50%;
+    left: 50%;
+    height: auto;
+    max-height: 90vh;
+    border-radius: 8px;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0;
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  &--open {
+    // Для боковой панели
+    transform: translateX(0);
+
+    // Для модального окна
+    &.slide-panel--modal {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+  }
+
+  // ... остальные стили без изменений
+}

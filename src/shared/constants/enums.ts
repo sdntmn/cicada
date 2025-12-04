@@ -1,10 +1,25 @@
 export enum Menu {
   archive = "archive",
-  cardIndex = "cardIndex",
+  case = "case",
+  caseDetail = "caseDetail",
   court = "court",
   dashboard = "dashboard",
-  expertise = "expertise",
+  debtorDetail = "debtorDetail",
+  debtors = "debtors",
   monitoring = "monitoring",
+  preparation = "preparation",
+  selection = "selection",
+}
+
+export enum DetailType {
+  CASE = "case",
+  DEBTOR = "debtor",
+  DOCUMENT = "document",
+}
+
+export enum ViewType {
+  DETAIL = "detail",
+  MAIN = "main",
 }
 
 export enum RowDensity {
@@ -14,15 +29,14 @@ export enum RowDensity {
   X_LARGE = "xLarge",
 }
 
-export type FontSize = "normal" | "xlarge" | "small" | "large"
-
 export enum MenuName {
   archive = "Архив",
-  cardIndex = "Поиск",
-  court = "Судебные",
+  court = "Суд",
   dashboard = "Дашборд",
-  expertise = "Досудебка",
-  monitoring = "Исполнительные",
+  debtors = "Должники",
+  monitoring = "Исполнение",
+  preparation = "Подготовка", // Формирование
+  selection = "Отбор", // Кандидаты
 }
 
 export enum SelectedSearch {
@@ -37,28 +51,16 @@ export enum StatusDebtor {
 }
 
 export enum StageName {
-  END = "Последняя",
-  START = "Первая стадия",
+  ANALYSIS = "Анализ и сбор данных",
+  CLAIM = "Претензия",
+  COURT = "Судебное производство",
+  PRE_TRIAL = "Подготовка к суду",
+  SETTLEMENT = "Урегулирование",
 }
-
-export type PositionType = "absolute" | "fixed"
 
 export enum ALLOWED_POSITIONS {
   ABSOLUTE = "absolute",
   FIXED = "fixed",
-}
-
-export interface DocumentDimensions {
-  documentHeight: number
-  documentWidth: number
-}
-
-export interface ParentDimensions {
-  parentBottom: number
-  parentHeight: number
-  parentLeft: number
-  parentTop: number
-  parentWidth: number
 }
 
 export interface ElementDimensions {
@@ -75,15 +77,16 @@ export enum HORIZONTAL_POSITION {
 
 export enum VERTICAL_POSITION {
   BOTTOM = "bottom",
+  CENTER = "center",
   TOP = "top",
 }
 
-export interface GetHorizontalPositionArg {
-  defaultParentWidth?: number
-  distanceRight: number
-  documentWidth: number
-  elementWidth: number
-  parentLeft: number
-  parentWidth: number
-  scrollbarWidth: number
+export enum DebtStage {
+  CANDIDATE = "candidate",
+  CLAIM = "claim",
+  NEW = "new",
+}
+
+export enum BaseColumnKey {
+  INDEX = "index",
 }

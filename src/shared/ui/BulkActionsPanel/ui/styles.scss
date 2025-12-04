@@ -1,0 +1,18 @@
+.bulk-actions-panel {
+  background: #f9fafb;
+  // border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px 16px;
+  max-width: max-content;
+  margin: 0 auto;
+
+  &__text {
+    font-size: 14px;
+    color: #374151;
+  }
+
+  &__btn {
+    font-size: 14px;
+    padding: 4px 16px;
+  }
+}

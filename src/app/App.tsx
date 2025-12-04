@@ -1,62 +1,73 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo } from "react"
 
 import { getUser } from "@/entities/User"
+import { GlobalSearch } from "@/features/GlobalSearch"
 import Logo from "@/shared/assets/logo.svg"
-import { Menu, MenuName } from "@/shared/constants"
-import { getSectionFromUrl } from "@/shared/lib/helpers"
+import { DetailType, ViewType } from "@/shared/constants"
 import { useAppDispatch, useAppSelector } from "@/shared/lib/store"
+import { Flex } from "@/shared/ui/layout/Flex"
 import { MainLayout } from "@/shared/ui/MainLayout"
 import { Profile } from "@/shared/ui/Profile/Profile"
-import { Section } from "@/shared/ui/Section"
-import { Navbar } from "@/widgets/Navbar"
+import { TopNav } from "@/widgets/Navbar/ui/NavBar/NavBarNew"
+import { NotificationList } from "@/widgets/Notifications"
+import { SubNav } from "@/widgets/SubNav"
 
-import { sections } from "./lib/constants/constants"
+import { renderContent } from "./lib/helpers/renderContent/renderContent"
+import { useAppNavigation } from "./lib/hooks/useAppNavigation/useAppNavigation"
 
 export const App: React.FC = () => {
   const dispatch = useAppDispatch()
-
   const { user } = useAppSelector((state) => state.user)
 
-  const [currentSection, setCurrentSection] = useState<Menu>(getSectionFromUrl())
-
-  const switchSection = (newSection: Menu): void => {
-    setCurrentSection(newSection)
-    window.location.hash = newSection
-  }
-
-  const sectionName = useMemo(
-    () =>
-      ({
-        [Menu.archive]: MenuName.archive,
-        [Menu.cardIndex]: MenuName.cardIndex,
-        [Menu.court]: MenuName.court,
-        [Menu.dashboard]: MenuName.dashboard,
-        [Menu.expertise]: MenuName.expertise,
-        [Menu.monitoring]: MenuName.monitoring,
-      })[currentSection] || MenuName.dashboard,
-    [currentSection]
-  )
-
-  const renderSection = (): React.ReactNode => {
-    const SectionComponent = sections[currentSection]
-    return SectionComponent ? <SectionComponent /> : null
-  }
+  const { activeMainMenuSection, currentView, navigateToItem, switchSection, switchSubSection } = useAppNavigation()
 
   useEffect(() => {
     dispatch(getUser("1"))
-  }, [])
+  }, [dispatch])
+
+  const content = useMemo(() => {
+    if (currentView.type === ViewType.DETAIL) {
+      if (currentView.detailType === DetailType.CASE) {
+        // return <CaseDetailPage caseId={currentView.caseId} />
+        return <div> Карточка долга </div>
+      }
+      if (currentView.detailType === DetailType.DEBTOR) {
+        // return <DebtorDetailPage debtorId={currentView.debtorId} />
+        return <div> Карточка дела</div>
+      }
+    }
+
+    if (currentView.type === ViewType.MAIN) {
+      return renderContent({
+        caseId: currentView.caseId,
+        onNavigateToItem: navigateToItem,
+        section: currentView.section,
+        subSection: currentView.subSection,
+      })
+    }
+
+    return <div>Недопустимое состояние</div>
+  }, [currentView, navigateToItem])
 
   return (
     <MainLayout
       header={
         <>
-          <img alt="Логотип" className="app__logo" src={Logo} />
-          <Navbar currentSection={currentSection} switchSection={switchSection} />
-          <Profile userName={user} />
+          <Flex className="app__header">
+            <img alt="Логотип" className="app__logo" src={Logo} />
+            <TopNav currentSection={activeMainMenuSection} onSectionChange={switchSection} />
+            <Flex className="app__search" gap={16}>
+              <GlobalSearch />
+              <Profile userName={user} />
+            </Flex>
+
+            <NotificationList />
+          </Flex>
+          <SubNav currentView={currentView} onSectionChange={switchSection} onSubSectionChange={switchSubSection} />
         </>
       }
       className="app app_default_theme"
-      content={<Section section={renderSection()} sectionName={sectionName} />}
+      content={content}
     />
   )
 }

@@ -3,21 +3,21 @@
 .main-layout {
   min-height: 100vh;
   display: grid;
-  grid-template-rows: 74px 1fr;
-  grid-template-columns: 1fr; // по умолчанию одна колонка
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 1fr;
   grid-template-areas:
     "header"
     "content";
   box-sizing: border-box;
   font-size: 2rem;
+  gap: 8px;
 
   &__header {
     grid-area: header;
-    padding: var(--space-m);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 3px 8px -2px #726bb542;
+    background: var(--primary-bg-color);
+    position: relative;
+    z-index: 100;
+    padding: 0;
   }
 
   &__content {
@@ -26,7 +26,6 @@
     grid-template-areas: "main";
     grid-template-columns: 1fr;
     height: 100%;
-    padding: var(--space-m);
     box-sizing: border-box;
   }
 
@@ -34,7 +33,7 @@
     grid-area: main;
     display: flex;
     flex-direction: column;
-    min-height: 0; // важно для вложенных скроллов
+    min-height: 0;
   }
 
   &__rightbar {

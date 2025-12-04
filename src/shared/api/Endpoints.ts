@@ -13,12 +13,23 @@ class Endpoints {
     return `addresses/autocomplete?q=${encodeURIComponent(address)}`
   }
 
-  houses(): string {
+  debtorNew(): string {
+    return `debts/new`
+  }
+
+  premises(): string {
     return "houses"
   }
 
   searchDebtorByHouses(): string {
-    return `search-accounts`
+    return `debts/candidates`
+  }
+
+  stageDebtToCandidates(): string {
+    return "debts/batch-to-candidates"
+  }
+  stageDebtToNew(): string {
+    return "debts/batch-to-new"
   }
 
   urlFor(endpoint: string): string {

@@ -2,7 +2,7 @@ import React from "react"
 
 import cn from "classnames"
 
-import { FilterMode } from "@/shared/api/AccountsApi"
+import { FilterMode } from "@/shared/api/DebtorApi"
 import { closeIcon } from "@/shared/constants"
 import { Icon } from "@/shared/ui/Icon/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"

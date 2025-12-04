@@ -2,25 +2,28 @@ import React, { MutableRefObject, TableHTMLAttributes, useEffect, useState } fro
 
 import cn from "classnames"
 
-import { FontSize, RowDensity } from "@/shared/constants"
+import { RowDensity } from "@/shared/constants"
 import { byKey, byKeys, order, setKey, updateParametersKeys } from "@/shared/lib/helpers/sort/sort"
 import { Column, KeySort, KeysSort, NumberColumns, RowType, SaveOrder, SortType } from "@/shared/lib/types/table"
+import { FontSize } from "@/shared/lib/types/types"
 
-import { TableSortBody } from "../TableBody"
+import { TableBody } from "../TableBody"
 import { TableHeader } from "../TableHeader"
 
 import "./styles.scss"
 
 export interface Props<T extends RowType> extends TableHTMLAttributes<HTMLTableElement> {
+  activeCellKey?: string
   activeFilterColumns?: keyof T | null
   className?: string
   columnFilters?: Partial<Record<keyof T, string>>
   columns?: Column<T>[]
   filterButtonRefs?: MutableRefObject<Record<string, HTMLButtonElement | null>>
   fontSize?: FontSize
-  getRowId?: (row: T) => string | number
+  isLoading?: boolean
+  isOpenExpandedInfoCell?: boolean
   isShowSelection?: boolean
-  onFilterIconClick?: (columnName: keyof T) => void
+  onFilterIconClick?: (columnName: keyof T | string) => void
   onRowSelect?: (id: string | number, checked: boolean) => void
   onSelectAll?: (checked: boolean) => void
   rowDensity?: RowDensity
@@ -32,13 +35,15 @@ export interface Props<T extends RowType> extends TableHTMLAttributes<HTMLTableE
 }
 
 export const Table = <T extends RowType>({
+  activeCellKey,
   activeFilterColumns,
   className = "",
   columnFilters,
   columns,
   filterButtonRefs,
   fontSize = "normal",
-  getRowId = (row: T) => row?.id,
+  isLoading = false,
+  isOpenExpandedInfoCell,
   isShowSelection = false,
   onFilterIconClick,
   onRowSelect,
@@ -141,10 +146,12 @@ export const Table = <T extends RowType>({
       )}
 
       {data && (
-        <TableSortBody<T>
+        <TableBody<T>
+          activeCellKey={activeCellKey}
           columns={columns}
           fontSize={fontSize}
-          getRowId={getRowId}
+          isLoading={isLoading}
+          isOpenExpandedInfoCell={isOpenExpandedInfoCell}
           isShowSelection={isShowSelection}
           nameMainColumnSort={currentKeys?.mainKey?.name}
           onRowSelect={onRowSelect}

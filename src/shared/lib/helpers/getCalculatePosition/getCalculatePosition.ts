@@ -4,12 +4,11 @@ import {
   ALLOWED_POSITIONS,
   DEFAULT_DISTANCE_BETWEEN_ELEMENTS,
   DIVIDER_IN_TWO,
-  GetHorizontalPositionArg,
   HORIZONTAL_POSITION,
-  PositionType,
   VERTICAL_POSITION,
 } from "@/shared/constants"
 
+import { GetHorizontalPositionArg, PositionType } from "../../types/types"
 import { getElementDimensions } from "../getDemensions"
 import { getDocumentDimensions, getParentDimensions } from "../getVerticalPosition/getVerticalPosition"
 

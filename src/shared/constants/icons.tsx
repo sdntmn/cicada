@@ -42,6 +42,21 @@ export const sortedSmallToLargest = "fa-solid fa-arrow-down-short-wide"
 
 export const sortedLargestToSmall = "fa-solid fa-arrow-down-wide-short"
 
+export const eyeIcon = "fa-regular fa-eye"
+export const letterIcon = "fa-regular fa-envelope"
+export const downloadIcon = "fa-solid fa-download"
+export const editDataIcon = "fa-solid fa-file-pen"
+export const editIcon = "fa-solid fa-pen"
+export const phoneIcon = "fa-solid fa-phone"
+export const emailIcon = "fa-solid fa-at"
+export const actualLocationIcon = "fa-solid fa-location-dot"
+export const registrationLocationIcon = "fa-solid fa-map-location-dot"
+export const shareIcon = "fa-solid fa-circle-half-stroke"
+export const arrowLongIcon = "fa-solid fa-arrow-right-long"
+export const copyLinkIcon = "fa-solid fa-link"
+export const debtorIcon = "fa-solid fa-id-badge"
+export const selectionIcon = "fa-solid fa-square-check"
+
 {
   /* <i class="fa-solid fa-arrow-down-short-wide"></i> */
 }

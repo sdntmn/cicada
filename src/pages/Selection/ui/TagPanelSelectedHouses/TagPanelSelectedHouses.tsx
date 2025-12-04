@@ -3,18 +3,17 @@ import React, { useRef, useState } from "react"
 import cn from "classnames"
 
 import { closeIcon, HORIZONTAL_POSITION } from "@/shared/constants"
+import type { PremisesOption } from "@/shared/lib/types/types"
 import { Icon } from "@/shared/ui/Icon/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
 import { PositionPortal } from "@/shared/ui/PositionPortal"
-
-import { HouseOption } from "../../lib/types/types"
 
 import "./styles.scss"
 
 interface Props {
   onClearAll?: () => void
   onRemoveHouse?: (houseId: string) => void
-  selectedHouses?: HouseOption[]
+  selectedHouses?: PremisesOption[]
 }
 
 export const TagPanelSelectedHouses: React.FC<Props> = ({ onClearAll, onRemoveHouse, selectedHouses = [] }) => {

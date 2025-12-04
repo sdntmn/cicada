@@ -1,1 +1,1 @@
-export { CourtPage } from "./ui/CourtPage/CourtPage"
+export { CourtPage } from "./ui/PreTrialRecoveryPage/PreTrialRecoveryPage"

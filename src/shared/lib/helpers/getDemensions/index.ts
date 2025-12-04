@@ -1,4 +1,6 @@
-import { DocumentDimensions, ElementDimensions, ParentDimensions } from "@/shared/constants"
+import { ElementDimensions } from "@/shared/constants"
+
+import { DocumentDimensions, ParentDimensions } from "../../types/types"
 
 export const getDocumentDimensions = (): DocumentDimensions => ({
   documentHeight: document.documentElement.clientHeight,

@@ -1,18 +1,14 @@
-.table {
-  max-height: 658px;
+.base-table {
   overflow-y: auto;
 
   border-radius: 4px;
+  padding: 0 8px;
 
   &__controls {
     gap: 8px;
-    /* background: #d4d6e7; */
-    padding: 0 10px;
-    border-radius: 4px 4px 0 0;
-    /* background-color: var(--table-sort-header-cell); */
-    border-left: 1px solid #f0f0f0;
-    border-top: 1px solid #f0f0f0;
-    border-right: 1px solid #f0f0f0;
+    background: #efefef;
+    padding: 0 16px;
+    height: 40px;
 
     .itpc-pagination {
       margin-bottom: 0;
@@ -24,18 +20,8 @@
     }
   }
 
-  &__sort .itpc-table-sort__head {
+  &__component .itpc-table-sort__head {
     background: #e0e0e0;
-  }
-
-  // & tbody tr {
-  //   border-bottom: 1px solid #e0e0e0;
-  // }
-
-  & th {
-    position: sticky;
-    top: 0;
-    transform: translateZ(0);
   }
 
   &__pagination {

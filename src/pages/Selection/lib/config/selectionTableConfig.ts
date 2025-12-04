@@ -1,4 +1,4 @@
-import { Account } from "@/entities/Account"
+import { Debtor } from "@/entities/Debtor"
 import { ColumnConfig } from "@/shared/lib/types/table"
 
 import { BaseColumnTableSelect, VirtualColumnTableSelect } from "../constants"
@@ -11,7 +11,7 @@ import {
   VIRTUAL_COLUMN,
 } from "../constants/columns"
 
-export const SELECTION_COLUMNS_CONFIG: ColumnConfig<Account, BaseColumnTableSelect, VirtualColumnTableSelect> = {
+export const SELECTION_COLUMNS_CONFIG: ColumnConfig<Debtor, BaseColumnTableSelect, VirtualColumnTableSelect> = {
   columnLabels: SELECT_COLUMN_LABELS,
   columns: SELECTION_TABLE_COLUMNS,
   defaultVisible: DEFAULT_VISIBLE,

@@ -1,0 +1,28 @@
+.notifications {
+  display: inline-flex;
+  position: absolute;
+  gap: 8px;
+  z-index: 20;
+  top: 86px;
+  right: 16px;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 1440px) {
+  .notifications {
+    right: 16px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .notifications {
+    top: auto;
+    bottom: 16px;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .notifications {
+    right: 8px;
+  }
+}

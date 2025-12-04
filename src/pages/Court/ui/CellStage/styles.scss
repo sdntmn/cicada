@@ -1,0 +1,31 @@
+.stage-cell {
+  &__btn {
+    display: inline-flex;
+    align-items: center;
+    // gap: 4px;
+    background: none;
+    border: none;
+    cursor: default;
+    gap: 8px; /* Расстояние между иконкой и текстом */
+    padding: 2px 8px;
+    border: none;
+    background: transparent;
+    transition: all 0.2s ease;
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  &__btn-label {
+    color: #cccccc;
+    white-space: nowrap; /* Запрещаем перенос текста */
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  &__icon {
+    height: 9px;
+    flex-shrink: 0; /* Запрещаем сжатие иконки */
+  }
+}

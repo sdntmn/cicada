@@ -2,9 +2,10 @@ import React, { useState } from "react"
 
 import cn from "classnames"
 
-import { DebtFiltersDropdown } from "@/pages/Selection/ui/DebtFiltersDropdown/DebtFiltersDropdown"
-import { PanelSelectionActiveFilters } from "@/pages/Selection/ui/PanelSelectionActiveFilters/PanelSelectionActiveFilters"
-import { FilterMode } from "@/shared/api/AccountsApi"
+import { FilterMode } from "@/shared/api/DebtorApi"
+
+import { DebtFiltersDropdown } from "../DebtFiltersDropdown/DebtFiltersDropdown"
+import { PanelSelectionActiveFilters } from "../PanelSelectionActiveFilters/PanelSelectionActiveFilters"
 
 import "./styles.scss"
 

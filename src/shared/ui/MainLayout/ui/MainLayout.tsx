@@ -6,7 +6,7 @@ import "./styles.scss"
 
 interface Props {
   className?: string
-  content: ReactElement
+  content: React.ReactNode
   header: ReactElement
 }
 

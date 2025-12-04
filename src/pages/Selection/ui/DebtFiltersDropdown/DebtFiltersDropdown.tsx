@@ -1,6 +1,6 @@
 import React from "react"
 
-import { FilterMode } from "@/shared/api/AccountsApi"
+import { FilterMode } from "@/shared/api/DebtorApi"
 import { HORIZONTAL_POSITION } from "@/shared/constants"
 import { Flex } from "@/shared/ui/layout/Flex"
 import { PositionPortal } from "@/shared/ui/PositionPortal"

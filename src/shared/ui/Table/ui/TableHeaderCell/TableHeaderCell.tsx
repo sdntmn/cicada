@@ -18,7 +18,7 @@ interface Props<T extends RowType> {
   isActive: boolean
   isSortable: boolean
   onClick: (column: Column<T>) => void
-  onFilterIconClick?: (columnName: keyof T) => void
+  onFilterIconClick?: (columnName: keyof T | string) => void
   sortByNumberColumns?: NumberColumns
   verticalBorders?: boolean
 }
@@ -44,18 +44,23 @@ export const TableHeaderCell = <T extends RowType>({
 
   const handleFilterClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    onFilterIconClick?.(String(column.name) as keyof T)
+    if (column.type === "data") {
+      onFilterIconClick?.(column.name)
+    } else {
+      const columnName: string = column.name
+      onFilterIconClick?.(columnName)
+    }
   }
 
   const isActiveFilter = activeFilterColumn === column.name
   const hasFilter = column.type === "data" && columnFilters?.[column.name] !== undefined && columnFilters[column.name] !== ""
-  const hasControls = isSortable || (column.isFilterable && column.type === "data")
+  const hasControls = isSortable || column.isFilterable
 
   return (
     <th
       className={cn(
         "table-header-cell",
-        isSortable ? "table-header-cell_clickable" : "table-header-cell_pointer-none",
+        hasControls ? "table-header-cell_clickable" : "table-header-cell_pointer-none",
         isActive ? "table-header-cell_background-active" : "table-header-cell_background",
         verticalBorders && "table-header-cell__vertical-border"
       )}
@@ -69,7 +74,7 @@ export const TableHeaderCell = <T extends RowType>({
             {isSortable && (
               <SortIcon column={column} currentKey={currentKey} currentKeys={currentKeys} sortByNumberColumns={sortByNumberColumns} />
             )}
-            {column.isFilterable && column.type === "data" && (
+            {column.isFilterable && (
               <button
                 className={cn(
                   "table-header-cell__btn table-header-cell__btn-filter",

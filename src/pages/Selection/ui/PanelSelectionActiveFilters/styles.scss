@@ -2,7 +2,6 @@
   &__tag-wrap {
     display: flex;
     align-items: center;
-    background: #e0e7ff;
     color: #4f46e5;
     padding: 4px 12px;
     border-radius: 20px;
@@ -10,6 +9,8 @@
     font-weight: 500;
     gap: 6px;
     max-width: 100%;
+    border: 1px solid var(--itpc-primary-bg-color-component);
+    line-height: 1;
   }
 
   &__btn-remove {
@@ -35,6 +36,7 @@
 
   &__icon-remove {
     font-size: 16px;
+    color: var(--icon-color-gray-2);
   }
 
   &__condition {

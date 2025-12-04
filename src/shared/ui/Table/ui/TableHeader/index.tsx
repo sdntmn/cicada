@@ -19,7 +19,7 @@ interface Props<T extends RowType> extends HTMLAttributes<HTMLTableCellElement> 
   filterButtonRefs?: MutableRefObject<Record<string, HTMLButtonElement | null>>
   isAllSelected?: boolean
   isShowSelection?: boolean
-  onFilterIconClick?: (columnName: keyof T) => void
+  onFilterIconClick?: (columnName: keyof T | string) => void
   onSelectAll?: (checked: boolean) => void
   setKeySort?: (key: Column<T>) => void
   sortByNumberColumns?: NumberColumns

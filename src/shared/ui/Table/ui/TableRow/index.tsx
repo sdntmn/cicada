@@ -11,9 +11,11 @@ import { TableBodyCell } from "../TableBodyCell"
 import "./styles.scss"
 
 interface Props<T extends RowType> {
+  activeCellKey?: string
   columns?: Column<T>[]
   hasSelectedRows?: boolean
   isChecked?: boolean
+  isOpenExpandedInfoCell?: boolean
   isSelected?: boolean
   isShowSelection?: boolean
   nameMainColumnSort?: keyof T
@@ -28,8 +30,10 @@ interface Props<T extends RowType> {
 }
 
 export const TableRow = <T extends RowType>({
+  activeCellKey,
   columns,
   hasSelectedRows,
+  isOpenExpandedInfoCell,
   isSelected,
   isShowSelection,
   nameMainColumnSort,
@@ -53,6 +57,7 @@ export const TableRow = <T extends RowType>({
         !hasSelectedRows && "table-row__hover-only-checkbox",
         striped && rowIndex !== undefined && rowIndex % 2 !== 0 && "table-row__striped"
       )}
+      data-row-id={rowData.id}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -73,9 +78,16 @@ export const TableRow = <T extends RowType>({
       {columns?.map((column) => {
         const align = column.align || "left"
         const isMainColumSort = nameMainColumnSort === column.name
+        const currentCellKey = `${rowData.id}-${String(column.name)}`
+
+        const isActive = activeCellKey === currentCellKey && isOpenExpandedInfoCell
 
         let cellContent: React.ReactNode
-
+        const handleCellClick = (e: React.MouseEvent<HTMLTableCellElement>) => {
+          if (column.onCellClick) {
+            column.onCellClick(rowData, column, e)
+          }
+        }
         if (column.type === "virtual") {
           cellContent = column.render?.(rowData, rowIndex) ?? null
         } else {
@@ -86,9 +98,12 @@ export const TableRow = <T extends RowType>({
         return (
           <TableBodyCell
             align={align}
+            isActive={isActive}
+            isClickable={Boolean(column.onCellClick)}
             isMainColumSort={isMainColumSort}
             isSelected={isSelected}
             key={String(column.name)}
+            onCellClick={handleCellClick}
             sortByNumberColumns={sortByNumberColumns}
             value={cellContent}
             verticalBorders={verticalBorders}

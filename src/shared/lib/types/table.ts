@@ -13,13 +13,16 @@ export type RowType<T = object> = {
 export type SorterFn<T> = (a: T, b: T) => number
 export type TextAlign = "center" | "right" | "left"
 export type TypeDataColumn = "virtual" | "data"
+export type CellClickableFn<T> = (rowData: T, column: Column<T>, e: React.MouseEvent<HTMLTableCellElement>) => void
 
 export interface DataColumn<T> {
   align?: TextAlign
+  getFilterValue?: never
   icon?: React.ReactNode
   isFilterable?: boolean
   isSortable: boolean
   name: keyof T
+  onCellClick?: CellClickableFn<T>
   render?: (value: T[keyof T], rowData: T, rowIndex: number) => React.ReactNode
   sorter?: SorterFn<T>
   title: string
@@ -28,9 +31,11 @@ export interface DataColumn<T> {
 
 export interface VirtualColumn<T = any> {
   align?: TextAlign
+  getFilterValue?: (rowData: T, rowIndex: number) => undefined | string | null
   icon?: React.ReactNode
   isFilterable?: true
   name: string
+  onCellClick?: CellClickableFn<T>
   render?: (rowData: T, rowIndex: number) => React.ReactNode
   title: string
   type: "virtual"
@@ -38,7 +43,7 @@ export interface VirtualColumn<T = any> {
 
 export type Column<T> = VirtualColumn<T> | DataColumn<T>
 
-export interface ColumnConfig<T, C extends string, V extends string = string> {
+export interface ColumnConfig<T extends RowType, C extends string, V extends string = string> {
   // Метки для всех колонок (и data, и virtual)
   columnLabels: Record<C | V, string>
 

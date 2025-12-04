@@ -2,7 +2,7 @@ import React from "react"
 
 import { Checkbox, Typography } from "itpc-ui-kit"
 
-import { FilterMode } from "@/shared/api/AccountsApi"
+import { FilterMode } from "@/shared/api/DebtorApi"
 import { Flex } from "@/shared/ui/layout/Flex"
 
 import "./styles.scss"

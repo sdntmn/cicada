@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react"
 
-import { FilterMode } from "@/shared/api/AccountsApi"
+import { FilterMode } from "@/shared/api/DebtorApi"
 
 interface UseDebtFiltersOptions {
   initialMode?: FilterMode

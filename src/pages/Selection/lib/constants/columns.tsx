@@ -1,14 +1,14 @@
 import React from "react"
 
-import { Account } from "@/entities/Account"
+import { Debtor } from "@/entities/Debtor"
+import { formatCurrency, parseDebtValue } from "@/shared/lib/helpers"
 import { Column, DataColumn, VirtualColumn } from "@/shared/lib/types/table"
 
-import { formatCurrency, parseDebtValue } from "../helpers/parseDebtValue/parseDebtValue"
 import { ColumnTableSelect } from "../types/types"
 
 import { BaseColumnTableSelect, VirtualColumnTableSelect } from "./enum"
 
-export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<Account>> = {
+export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<Debtor>> = {
   [BaseColumnTableSelect.ACCOUNT]: {
     isFilterable: true,
     isSortable: true,
@@ -59,16 +59,16 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<A
   },
   [BaseColumnTableSelect.TERM_DEBT]: {
     align: "right",
-    isFilterable: true,
+    isFilterable: false,
     isSortable: true,
     name: BaseColumnTableSelect.TERM_DEBT,
-    sorter: (a, b) => parseDebtValue(a.debtTermMounts) - parseDebtValue(b.debtTermMounts),
+    sorter: (a, b) => parseDebtValue(a.debt - term - mounts) - parseDebtValue(b.debt - term - mounts),
     title: "Срок / мес.",
     type: "data",
   },
 }
 
-export const VIRTUAL_COLUMN: VirtualColumn<Account> = {
+export const VIRTUAL_COLUMN: VirtualColumn<Debtor> = {
   align: "center",
   name: "index",
   render: (_: any, rowIndex: number) => <span>{Number(rowIndex) + 1}</span>,
@@ -76,7 +76,7 @@ export const VIRTUAL_COLUMN: VirtualColumn<Account> = {
   type: "virtual",
 }
 
-export const ALL_COLUMNS_CONFIG: Record<ColumnTableSelect, Column<Account>> = {
+export const ALL_COLUMNS_CONFIG: Record<ColumnTableSelect, Column<Debtor>> = {
   ...SELECTION_TABLE_COLUMNS,
   [VirtualColumnTableSelect.INDEX]: VIRTUAL_COLUMN,
 }

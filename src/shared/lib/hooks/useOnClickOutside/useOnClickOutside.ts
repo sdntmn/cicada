@@ -1,35 +1,35 @@
 import { RefObject, useEffect, useRef } from "react"
 
-type Event = MouseEvent | TouchEvent
+type UIEvent = MouseEvent | TouchEvent
 
 export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
   ref: RefObject<T>,
-  handler: (event: Event) => void,
+  handler: () => void,
   show: boolean = true,
   handlerRef?: RefObject<T>
 ): void => {
   const isScrollingRef = useRef(false)
 
-  const listener = (event: Event) => {
-    if ("touches" in event && event.type === "touchmove") {
-      isScrollingRef.current = true
-      return
-    }
-
-    if ("touches" in event && event.type === "touchend" && isScrollingRef.current) {
-      isScrollingRef.current = false
-      return
+  const clickListener = (event: UIEvent) => {
+    // Обработка тач-скролла (опционально)
+    if ("touches" in event) {
+      if (event.type === "touchmove") {
+        isScrollingRef.current = true
+        return
+      }
+      if (event.type === "touchend" && isScrollingRef.current) {
+        isScrollingRef.current = false
+        return
+      }
     }
 
     const target = ref.current
     const handlerTarget = handlerRef?.current
 
-    if (
-      target &&
-      !target.contains(event.target as HTMLElement) &&
-      (!handlerTarget || !handlerTarget.contains(event.target as HTMLElement))
-    ) {
-      handler(event)
+    const clickedInside = target?.contains(event.target as Node) || handlerTarget?.contains(event.target as Node)
+
+    if (!clickedInside) {
+      handler()
     }
   }
 
@@ -38,14 +38,16 @@ export const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
       return
     }
 
-    document.addEventListener("mousedown", listener)
-    document.addEventListener("touchmove", listener)
-    document.addEventListener("touchend", listener)
+    const events: (keyof DocumentEventMap)[] = ["mousedown", "touchstart", "touchend"]
+
+    events.forEach((event) => {
+      document.addEventListener(event, clickListener as EventListener, true)
+    })
 
     return () => {
-      document.removeEventListener("mousedown", listener)
-      document.removeEventListener("touchmove", listener)
-      document.removeEventListener("touchend", listener)
+      events.forEach((event) => {
+        document.removeEventListener(event, clickListener as EventListener, true)
+      })
     }
   }, [show])
 }

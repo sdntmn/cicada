@@ -6,6 +6,7 @@ import {
   archiveMenuIcon,
   courtMenuIcon,
   dashboardMenuIcon,
+  debtorIcon,
   expertiseMenuIcon,
   Menu,
   MenuName,
@@ -27,7 +28,7 @@ export const Navbar: React.FC<Props> = memo(({ className, currentSection, switch
       className={cn("navbar__item", currentSection === sectionItem && "navbar__item_active")}
       onClick={() => switchSection(sectionItem)}
     >
-      <Icon className={cn(icon, currentSection === sectionItem && "navbar__icon_active")} />
+      <Icon className={cn("navbar__icon", icon, currentSection === sectionItem && "navbar__icon_active")} />
       <p className="menu__text">{title}</p>
     </li>
   )
@@ -36,11 +37,12 @@ export const Navbar: React.FC<Props> = memo(({ className, currentSection, switch
     <nav className={cn("navbar", className)}>
       <ul className="navbar__menu">
         {renderItem(Menu.dashboard, MenuName.dashboard, dashboardMenuIcon)}
-        {renderItem(Menu.cardIndex, MenuName.cardIndex, searchIcon)}
-        {renderItem(Menu.expertise, MenuName.expertise, expertiseMenuIcon)}
+        {renderItem(Menu.selection, MenuName.selection, searchIcon)}
+        {renderItem(Menu.preparation, MenuName.preparation, expertiseMenuIcon)}
         {renderItem(Menu.court, MenuName.court, courtMenuIcon)}
         {renderItem(Menu.monitoring, MenuName.monitoring, monitoringMenuIcon)}
         {renderItem(Menu.archive, MenuName.archive, archiveMenuIcon)}
+        {renderItem(Menu.debtors, MenuName.debtors, debtorIcon)}
       </ul>
     </nav>
   )

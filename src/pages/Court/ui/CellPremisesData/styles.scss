@@ -1,0 +1,21 @@
+.cell-premises-data {
+  padding: 8px;
+  cursor: pointer;
+
+  // .table-body-cell {
+  //   padding: 0;
+  // }
+
+  // &:hover {
+  //   background: red;
+  // }
+
+  &__row-icon {
+    position: relative;
+  }
+
+  &__btn-icon {
+    position: absolute;
+    right: 0;
+  }
+}

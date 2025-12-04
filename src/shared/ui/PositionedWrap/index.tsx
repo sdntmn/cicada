@@ -2,8 +2,9 @@ import React, { type CSSProperties, useEffect, useRef, useState } from "react"
 
 import cn from "classnames"
 
-import { ALLOWED_POSITIONS, HORIZONTAL_POSITION, PositionType } from "@/shared/constants"
+import { ALLOWED_POSITIONS, HORIZONTAL_POSITION } from "@/shared/constants"
 import { getCalculatePosition } from "@/shared/lib/helpers/getCalculatePosition/getCalculatePosition"
+import { PositionType } from "@/shared/lib/types/types"
 
 import "./styles.scss"
 

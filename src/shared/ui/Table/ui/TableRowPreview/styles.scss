@@ -1,0 +1,11 @@
+// shared/ui/TableRowPreview/styles.scss
+.table-row-preview {
+  width: 100%;
+  overflow: hidden;
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+}
