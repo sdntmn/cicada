@@ -1,7 +1,7 @@
 .itpc-multi-select {
   position: relative;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   box-sizing: border-box;
   width: 100%;
@@ -15,6 +15,14 @@
   &__preloader {
     margin: 0 4px;
   }
+
+  // &_open {
+  //   z-index: 1000; // Важно для правильного позиционирования
+  // }
+
+  // &-dropdown {
+  //   z-index: 1001; // Дропдаун должен быть выше всего
+  // }
 }
 
 .itpc-multi-select_disabled {

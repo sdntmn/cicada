@@ -1,13 +1,7 @@
-export enum BaseColumn {
-  ADDRESS = "address",
-  DEBT = "debt",
-  PENALTY = "penalty",
-  TERM_DEBT = "debt-term-mounts",
-}
-
-export enum VirtualColumnClaimTable {
+export enum VirtualColumnAnalysisTable {
   ACTION = "action",
-  DEBTOR = "debtor",
+  DEBT = "debt",
+  DEBTORS = "debtors",
   INDEX = "index",
   NUMBER_DEBTORS = "numberDebtors",
   PREMISES_DATA = "premisesData",

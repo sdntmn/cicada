@@ -11,30 +11,23 @@ import { updateScroll } from "@/shared/lib/hooks/updateScroll"
 import { useHoveredIndex } from "@/shared/lib/hooks/useHoveredIndex"
 import { IconArrow } from "@/shared/ui/IconArrow"
 import { ListBox } from "@/shared/ui/ListBox"
-import { Portal } from "@/shared/ui/Portal"
-import { PositionedWrap } from "@/shared/ui/PositionedWrap"
+import { PositionPortal } from "@/shared/ui/PositionPortal" // ← Используем PositionPortal!
 import { SelectItem } from "@/shared/ui/SelectItem"
 
 import "./styles.scss"
 
 export interface Props extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
-  /** Дополнительный класс */
   className?: string
-  /** Отключение компонента */
   disabled?: boolean
-  /** Задержка анимации */
   durationAnimation?: DurationAnimation
-  /** Загрузка */
+  id: string
   isLoading?: boolean
-  /** Список элементов */
   items: Item[]
-  /** Обработчик изменения значения */
+  name: string
   onChange(values: string[]): void
   onSearch?: (query: string) => void
-  /** Подпись */
   placeholder?: string
   searchQuery?: string
-  /** Выбранные элементы */
   selectedItems?: string[]
 }
 
@@ -45,8 +38,10 @@ export const MultiSelectField: React.FC<Props> = ({
     durationClose: 200,
     durationOpen: 300,
   },
+  id,
   isLoading,
   items,
+  name,
   onChange,
   onSearch,
   placeholder = "",
@@ -120,7 +115,7 @@ export const MultiSelectField: React.FC<Props> = ({
       if (items.length === 0) {
         return "Список пуст"
       } else {
-        return "Выбрать из списка"
+        return placeholder || "Выбрать из списка"
       }
     }
 
@@ -233,6 +228,8 @@ export const MultiSelectField: React.FC<Props> = ({
     }
   }, [isMouseMoved])
 
+  // Используем useOnClickOutside только для MultiSelectField
+  // PositionPortal уже имеет свою реализацию закрытия по клику снаружи
   useOnClickOutside(ref, onClose, isOpen, refChildren as RefObject<HTMLElement>)
 
   return (
@@ -242,6 +239,7 @@ export const MultiSelectField: React.FC<Props> = ({
         "itpc-multi-select",
         disabled && " itpc-multi-select_disabled",
         !disabled && " itpc-multi-select_hover",
+        isOpen && "itpc-multi-select_open",
         className
       )}
       aria-expanded={isOpen}
@@ -256,6 +254,8 @@ export const MultiSelectField: React.FC<Props> = ({
         <input
           className={cn("itpc-multi-select__input", isOpen && "itpc-multi-select__input_focused")}
           disabled={disabled}
+          id={id}
+          name={name}
           onChange={handleInputChange}
           onClick={handleOpen}
           onKeyDown={handleInputKeyDown}
@@ -272,37 +272,39 @@ export const MultiSelectField: React.FC<Props> = ({
         <IconArrow disabled={disabled} onClick={handleOpen} orientation={isOpen ? "top" : "bottom"} />
       )}
 
-      <Portal element={document.body}>
-        <PositionedWrap horizontalAlignment={HORIZONTAL_POSITION.LEFT} isClosing={isClosing} isOpen={isOpen} refParent={ref}>
-          <ListBox
-            durationAnimation={durationAnimation}
-            isOpen={isOpen ? !isClosing : isOpen}
-            refChildren={refChildren}
-            refParent={ref}
-          >
-            {!Boolean(items.length) ? (
-              <SelectItem id="empty-id" itemIndex={0} disabled>
-                {searchQuery ? "Ничего не найдено" : "Список пуст"}
+      {/* Используем PositionPortal вместо дублирования Portal + PositionedWrap */}
+      <PositionPortal
+        anchorRef={ref}
+        className="itpc-multi-select-dropdown"
+        distanceBetweenElements={4}
+        horizontalAlignment={HORIZONTAL_POSITION.LEFT}
+        isOpen={isOpen}
+        onClose={onClose}
+        position="absolute"
+      >
+        <ListBox durationAnimation={durationAnimation} isOpen={isOpen ? !isClosing : isOpen} refChildren={refChildren} refParent={ref}>
+          {!Boolean(items.length) ? (
+            <SelectItem id="empty-id" itemIndex={0} disabled>
+              {searchQuery ? "Ничего не найдено" : "Список пуст"}
+            </SelectItem>
+          ) : (
+            items.map((item, itemIndex) => (
+              <SelectItem
+                activeIndex={activeIndex}
+                disabled={item.disabled}
+                id={item.id}
+                isActive={selectedItems?.includes(item.id) ?? false}
+                itemIndex={itemIndex}
+                key={item.id}
+                onChange={handleMouseSelection}
+                onMouseEnter={onMouseEnter}
+              >
+                {item.value}
               </SelectItem>
-            ) : (
-              items.map((item, itemIndex) => (
-                <SelectItem
-                  activeIndex={activeIndex}
-                  disabled={item.disabled}
-                  id={item.id}
-                  isActive={selectedItems?.includes(item.id) ?? false}
-                  itemIndex={itemIndex}
-                  key={item.id}
-                  onChange={handleMouseSelection}
-                  onMouseEnter={onMouseEnter}
-                >
-                  {item.value}
-                </SelectItem>
-              ))
-            )}
-          </ListBox>
-        </PositionedWrap>
-      </Portal>
+            ))
+          )}
+        </ListBox>
+      </PositionPortal>
     </div>
   )
 }

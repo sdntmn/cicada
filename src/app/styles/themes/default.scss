@@ -1,74 +1,74 @@
-.app_default_theme {
-  // фон
-  --primary-bg-color: #ffffff;
-  --hider-table-color: #fafafa;
-  --extra-bg-color: #5c53ac;
+// .app_default_theme {
+//   // фон
+//   --primary-bg-color: #ffffff;
+//   --hider-table-color: #fafafa;
+//   --extra-bg-color: #5c53ac;
 
-  // Цвета состояния
-  --error-color: #d42564;
-  --success-color: #7add7a;
-  --disabled-color: #b2b7c7;
-  --warning-color: #ecc022;
+//   // Цвета состояния
+//   --error-color: #d42564;
+//   --success-color: #7add7a;
+//   --disabled-color: #b2b7c7;
+//   --warning-color: #ecc022;
 
-  // Текст
-  --primary-text-color: #212529;
-  --secondary-text-color: #b2b7c7;
-  --small-text-color: #575757;
-  --button-text-color: #ffffff;
-  --input-text-color: #212529;
+//   // Текст
+//   --primary-text-color: #212529;
+//   --secondary-text-color: #b2b7c7;
+//   --small-text-color: #575757;
+//   --button-text-color: #ffffff;
+//   --input-text-color: #212529;
 
-  // Ховеры
-  --primary-hover: #f0f0f0;
-  --extra-hover: #e7e7e7;
-  --primary-icon-hover: #6f65cb;
-  --primary-border-hover: #6f65cb;
+//   // Ховеры
+//   --primary-hover: #f0f0f0;
+//   --extra-hover: #e7e7e7;
+//   --primary-icon-hover: #6f65cb;
+//   --primary-border-hover: #6f65cb;
 
-  // Тени
-  --box-shadow-color: #e5e5e5;
-  --box-shadow-color-second: #d4d6e7;
+//   // Тени
+//   --box-shadow-color: #e5e5e5;
+//   --box-shadow-color-second: #d4d6e7;
 
-  // Иконки
-  --primary-icon-color: #393185;
-  --secondary-icon-color: #ffffff;
-  --extra-icon-color: #b2b7c7;
-  --success-icon-color: #7add7a;
-  --cancel-icon-color: #d42564;
-  --additional-icon-color: #8f8f8f;
-  --icon-color-yellow: #ecc022;
-  --icon-color-blue: #0d6efd;
-  --icon-color-red: #d42564;
-  --icon-color-gray: #575757;
+//   // Иконки
+//   // --primary-icon-color: #393185;
+//   --secondary-icon-color: #ffffff;
+//   --extra-icon-color: #b2b7c7;
+//   --success-icon-color: #7add7a;
+//   --cancel-icon-color: #d42564;
+//   --additional-icon-color: #8f8f8f;
+//   --icon-color-yellow: #ecc022;
+//   --icon-color-blue: #0d6efd;
+//   --icon-color-red: #d42564;
+//   --icon-color-gray: #575757;
 
-  --link-color: #0d6efd;
-  --line-color: #393185;
+//   --link-color: #0d6efd;
+//   --line-color: #393185;
 
-  // Скелетон
-  --skeleton-start: #eeeef4;
-  --skeleton-fifty: #fafafa;
-  --skeleton-end: #f0f0f0;
+//   // Скелетон
+//   --skeleton-start: #eeeef4;
+//   --skeleton-fifty: #fafafa;
+//   --skeleton-end: #f0f0f0;
 
-  // Бордеры
-  --primary-border-color: #37374538;
-  --secondary-border-color: #d4d6e7;
-  --extra-border-color: #393185;
+//   // Бордеры
+//   --primary-border-color: #37374538;
+//   --secondary-border-color: #d4d6e7;
+//   --extra-border-color: #393185;
 
-  // Ui kit
-  --primary-placeholder-text-color: #b2b7c7;
-  --focused-placeholder-text-color: #575757;
-  --input-border-color: #b2b7c7;
-  --extra-bg-component: #ffffff;
-  --modal-overlay-bg: rgba(0, 0, 0, 0.2);
-  --disabled-input-color: #eeeef4;
+//   // Ui kit
+//   --primary-placeholder-text-color: #b2b7c7;
+//   --focused-placeholder-text-color: #575757;
+//   --input-border-color: #b2b7c7;
+//   --extra-bg-component: #ffffff;
+//   --modal-overlay-bg: rgba(0, 0, 0, 0.2);
+//   --disabled-input-color: #eeeef4;
 
-  // // Скролл
-  // --primary-scroll-color: #ffffff;
-  // --extra-scroll-color: #4c43a1;
-  // --extra-scroll-thumb-color: #979797;
+//   // // Скролл
+//   // --primary-scroll-color: #ffffff;
+//   // --extra-scroll-color: #4c43a1;
+//   // --extra-scroll-thumb-color: #979797;
 
-  // Вкладки
-  --primary-tab-color: #f0f0f0;
-  --secondary-tab-color: #e7e7e7;
-}
+//   // Вкладки
+//   --primary-tab-color: #f0f0f0;
+//   --secondary-tab-color: #e7e7e7;
+// }
 
 :root {
   /* фон */
@@ -154,7 +154,7 @@
 
   // Новые цвета
   --primary-bg-color: #ffffff;
-  --primary-icon-color: #393185;
+  // --primary-icon-color: #393185;
   --button-color-primary: #726bb5;
   --button-color-primary-rgb: 114, 107, 181;
   --selected-row-table-color: hsl(0, 0%, 96%);
@@ -167,4 +167,188 @@
   --icon-color-gray-2: #7d7d7d;
   --icon-color-gray-l: #8f8f8f;
   --text-color: #6b7280;
+  /*======================================================!! Используются
+  /* === Фон === */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fc;
+  --color-bg-extra: #f2f2f2;
+
+  /* === ЦВЕТА ТЕКСТА === */
+  --color-text-primary: #1a202c; /* !!Используется Основной текст: заголовки, ФИО, адреса, суммы */
+  --color-text-secondary: #4b4b4b; /* !!Используется Основной текст: заголовки, ФИО, адреса, суммы */
+
+  /* === Бордеры === */
+  --color-border-primary: #e2e8f0;
+  --secondary-border-color: #e0e0e0;
+  --color-border-accent: #5d55b0; /* = акценту */
+  --color-border-accent-rgb: 93, 85, 176;
+
+  /* === Иконки === */
+  --color-icon-primary: #5d55b0;
+  --color-icon-primary-rgb: 93, 85, 176;
+  --color-icon-secondary: #7d7d7d;
+  --color-icon-additional: #ffffff;
+
+  /* === ЦВЕТА ДЛЯ КНОПОК === */
+  --color-button-primary: #5d55b0;
+  --color-button-primary-rgb: 93, 85, 176;
+  --color-button-clear: #ffffff;
+
+  /* === Ховеры === */
+  --color-hover-btn-rgb: 79, 70, 229;
+  --primary-hover: #f8f9fa;
+  --extra-hover: #edf2f7; /* теплый светло-серый — гармонирует с темой */
+  --primary-icon-hover: #5d55b0; /* = --extra-bg-color (единый акцент) */
+  --primary-border-hover: #5d55b0;
+
+  --extra-icon-color: #a0aec0; /* согласовано с текстом */
+  --success-icon-color: #38a169;
+  --cancel-icon-color: #e53e3e;
+  --additional-icon-color: #718096;
+  --icon-color-yellow: #d69e2e;
+  --icon-color-blue: #3182ce; /* чуть приглушенный (вместо #0d6efd — слишком яркий) */
+  --icon-color-red: #e53e3e;
+  --icon-color-gray: #4a5568;
+  --color-icon-secondary: #7d7d7d; // !! используется цвет иконок навигации
+
+  /* === Тени === */
+  --color-box-shadow: #e2e8f0;
+  --color-box-shadow-second: #cbd5e0;
+
+  // Надо смотреть
+
+  // --color-text-secondary: #6b7280; /* Вспомогательный текст: подписи к полям, даты, пояснения */
+  --color-text-tertiary: #9ca3af; /* Неактивный текст: placeholder в полях, выключенные кнопки */
+  --color-text-on-primary: #ffffff; /* Текст на цветном фоне (белый текст на фиолетовых кнопках) */
+
+  --hider-table-color: #fafbfe; /* чуть теплее, чтобы не "резал" глаз (вместо #fafafa) */
+  --extra-bg-color: #5c53ac;
+  --extra-bg-rgb: 92, 83, 172; // тот же цвет в RGB
+
+  /* === Цвета состояния === */
+  --error-color: #e53e3e; /* более стандартный, насыщенный красный (лучше читается) */
+  --success-color: #38a169; /* приглушенный зеленый (менее "неоновый", чем #7add7a) */
+  --warning-color: #d69e2e; /* золотисто-оранжевый (менее кислый, чем #ecc022) */
+  --disabled-color: #cbd5e0; /* мягкий серо-голубой (лучше сочетается с фиолетовой темой) */
+
+  /* === Текст === */
+  --primary-text-color: #1a202c; /* чуть темнее (лучше контраст на белом) */
+  // --primary-text-color: #3c4962; /* чуть темнее (лучше контраст на белом) */
+  --secondary-text-color: #718096; /* теплый серый вместо холодного #b2b7c7 */
+  --secondary-text-color: #718096; /* теплый серый вместо холодного #b2b7c7 */
+  --small-text-color: #4a5568; /* чуть темнее для лучшей читаемости */
+  --button-text-color: #ffffff;
+
+  /* === Ховеры === */
+  --primary-hover: #f8f9fa; /* очень мягкий серый (менее заметный, чем #f0f0f0) */
+  --extra-hover: #edf2f7; /* теплый светло-серый — гармонирует с темой */
+  --primary-icon-hover: #5d55b0; /* = --extra-bg-color (единый акцент) */
+  --primary-border-hover: #5d55b0;
+
+  --extra-icon-color: #a0aec0; /* согласовано с текстом */
+  --success-icon-color: #38a169;
+  --cancel-icon-color: #e53e3e;
+  --additional-icon-color: #718096;
+  --icon-color-yellow: #d69e2e;
+  --icon-color-blue: #3182ce; /* чуть приглушенный (вместо #0d6efd — слишком яркий) */
+  --icon-color-red: #e53e3e;
+  --icon-color-gray: #4a5568;
+  --color-icon-secondary: #7d7d7d; // !! используется цвет иконок навигации
+
+  /* === Ссылки и линии === */
+  --link-color: #4299e1; /* мягкий синий (хорошо сочетается с фиолетовым) */
+  --line-color: #5d55b0; /* = акценту */
+
+  /* === Скелетон === */
+  --skeleton-start: #edf2f7;
+  --skeleton-fifty: #f7fafc;
+  --skeleton-end: #e2e8f0;
+
+  /* === Бордеры === */
+  --primary-border-color: #e2e8f0; /* мягкий серый (вместо полупрозрачного #37374538) */
+  --secondary-border-color: #cbd5e0;
+  --extra-border-color: #5d55b0; /* = акценту */
+
+  /* === UI Kit === */
+  --primary-placeholder-text-color: #a0aec0;
+  --focused-placeholder-text-color: #718096;
+  --input-border-color: #cbd5e0;
+  --extra-bg-component: #ffffff;
+  --modal-overlay-bg: rgba(0, 0, 0, 0.3); /* чуть темнее — лучше затемнение */
+  --disabled-input-color: #f7fafc;
+
+  /* === Вкладки === */
+  --primary-tab-color: #f7fafc;
+  --secondary-tab-color: #edf2f7;
+
+  /* === Новые RGB-переменные для состояний === */
+  --success-rgb: 56, 161, 105; /* от #38a169 */
+  --warning-rgb: 214, 158, 46; /* от #d69e2e */
+  --error-rgb: 229, 62, 62; /* от #e53e3e */
+  --link-rgb: 66, 153, 225; /* от #4299e1 (если используете для info) */
+}
+
+:root {
+  /* === ГЛАВНЫЙ ЦВЕТ ИНТЕРФЕЙСА (фиолетовый) === */
+  --color-primary-light: #f0eeff; /* Фон выбранной строки в таблице, подсветка важного поля */
+
+  /* === ЦВЕТА ФОНА === */
+  --color-bg-primary: #ffffff; /* Основной фон страницы, карточек, модальных окон */
+  // --color-bg-secondary: #f8f9fc; /* Фон шапки таблицы, фон блока фильтров */
+  --color-bg-tertiary: #f0f2f5; /* Фон нечетных строк таблицы, фон выпадающих списков */
+
+  /* === ЦВЕТА РАМОК И РАЗДЕЛИТЕЛЕЙ === */
+  --color-border-light: #e5e7eb; /* Границы между строками таблицы, рамки карточек */
+  --color-border-medium: #d1d5db; /* Рамка у поля ввода при фокусе, границы кнопок "второго" плана */
+
+  /* === ЦВЕТА ТЕКСТА === */
+  --color-text-primary: #111827; /* Основной текст: заголовки, ФИО, адреса, суммы */
+  // --color-text-secondary: #6b7280; /* Вспомогательный текст: подписи к полям, даты, пояснения */
+  --color-text-tertiary: #9ca3af; /* Неактивный текст: placeholder в полях, выключенные кнопки */
+  --color-bg-tertiary: #7d7a75; /* Заголовки окон */
+  --color-text-on-primary: #ffffff; /* Текст на цветном фоне (белый текст на фиолетовых кнопках) */
+
+  /* === ЦВЕТА ДЛЯ СТАТУСОВ И УВЕДОМЛЕНИЙ === */
+  --color-success: #10b981; /* Оплачено, успешно, подключено */
+  --color-warning: #f59e0b; /* Предупреждение: срок оплаты истекает через 3 дня */
+  --color-danger: #ef4444; /* Ошибка: просроченный долг, отказ, критическое состояние */
+  --color-info: #3b82f6; /* Информация: ссылки, подсказки, всплывающие уведомления */
+
+  /* === ЦВЕТА ПРИ НАВЕДЕНИИ И НАЖАТИИ === */
+  --color-hover-primary: rgba(109, 74, 255, 0.08); /* Легкая фиолетовая подсветка при наведении на строку таблицы */
+  --color-hover-neutral: rgba(0, 0, 0, 0.04); /* Серая подсветка при наведении на кнопку "второго" плана */
+  --color-active-primary: rgba(109, 74, 255, 0.12); /* Фиолетовая подсветка при клике на элемент */
+
+  /* === ЦВЕТА ДЛЯ КНОПОК === */
+  --color-button-primary-bg: var(--color-primary); /* Фон основной кнопки */
+  --color-button-primary-hover: var(--color-primary-dark); /* Фон основной кнопки при наведении */
+  --color-button-secondary-bg: transparent; /* Фон второстепенной кнопки (прозрачный) */
+  --color-button-secondary-border: var(--color-border-medium); /* Рамка второстепенной кнопки */
+  --color-button-secondary-hover: var(--color-bg-tertiary); /* Фон второстепенной кнопки при наведении */
+
+  /* === ЦВЕТА ДЛЯ ТАБЛИЦ === */
+  --color-table-header-bg: var(--color-bg-secondary); /* Фон заголовков столбцов таблицы */
+  --color-table-row-even: var(--color-bg-primary); /* Фон четных строк таблицы (белый) */
+  --color-table-row-odd: var(--color-bg-tertiary); /* Фон нечетных строк таблицы (светло-серый) */
+  --color-table-row-hover: var(--color-hover-neutral); /* Фон строки таблицы при наведении */
+  --color-table-row-selected: var(--color-primary-light); /* Фон выбранной строки таблицы */
+  --color-table-border: var(--color-border-light); /* Границы между ячейками таблицы */
+
+  --chip-height-sm: 24px;
+  --chip-height-md: 32px;
+  --chip-height-lg: 40px;
+
+  --chip-padding-x-sm: 8px;
+  --chip-padding-x-md: 12px;
+  --chip-padding-x-lg: 16px;
+
+  --chip-font-size-sm: 12px;
+  --chip-font-size-md: 14px;
+  --chip-font-size-lg: 16px;
+
+  --chip-icon-size-sm: 16px;
+  --chip-icon-size-md: 20px;
+  --chip-icon-size-lg: 24px;
+
+  --chip-border-radius: 9999px;
 }

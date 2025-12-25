@@ -2,26 +2,39 @@ import { useState } from "react"
 
 import { Column } from "@/shared/lib/types/table"
 
-import type { InitialData } from "../../types/initialDataTypes"
+export type EntityRow = Record<string, unknown>
+interface CellState<T> {
+  activeCellKey: string | null
+  columnName: string | null
+  currentCell: HTMLElement | null
+  dataRow: null | T
+  isOpenViewInfoCell: boolean
+}
 
-export const useCellInteractions = () => {
-  const [cellState, setCellState] = useState({
-    activeCellKey: null as string | null,
-    columnName: null as string | null,
-    currentCell: null as HTMLElement | null,
-    dataRow: null as InitialData | null,
+export interface Identifiable {
+  id: string | number
+}
+
+export const useCellInteractions = <T extends Identifiable>() => {
+  const [cellState, setCellState] = useState<CellState<T>>({
+    activeCellKey: null,
+    columnName: null,
+    currentCell: null,
+    dataRow: null,
     isOpenViewInfoCell: false,
   })
 
-  const handleCellClick = (rowData: InitialData, column: Column<InitialData>, e: React.MouseEvent<HTMLTableCellElement>) => {
-    const newCellKey = `${rowData.id}-${String(column.name)}`
+  const handleCellClick = (rowData: T, column: Column<T>, e: React.MouseEvent<HTMLTableCellElement>) => {
+    // Гарантируем, что column.name — строка
+    const columnName = String(column.name)
+    const newCellKey = `${(rowData as any).id}-${columnName}`
 
     if (cellState.isOpenViewInfoCell && cellState.activeCellKey === newCellKey) {
       closePopupInfoCell()
     } else {
       setCellState({
         activeCellKey: newCellKey,
-        columnName: column.name,
+        columnName,
         currentCell: e.currentTarget,
         dataRow: rowData,
         isOpenViewInfoCell: true,

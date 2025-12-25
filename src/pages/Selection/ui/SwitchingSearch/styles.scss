@@ -2,6 +2,10 @@
   // max-width: 600px;
   width: 100%;
 
+  .itpc-tabs {
+    gap: 8px;
+  }
+
   .itpc-tabs__button {
     padding: 4px 12px;
     line-height: 1.4;
@@ -9,5 +13,9 @@
 
   .itpc-tabs__button_active {
     cursor: default;
+  }
+
+  .itpc-tabs__content {
+    gap: 8px;
   }
 }

@@ -1,7 +1,7 @@
 import React from "react"
 
 import { Debtor } from "@/entities/Debtor"
-import { formatCurrency, parseDebtValue } from "@/shared/lib/helpers"
+import { formatCurrencyNode, parseDebtValue } from "@/shared/lib/helpers"
 import { Column, DataColumn, VirtualColumn } from "@/shared/lib/types/table"
 
 import { ColumnTableSelect } from "../types/types"
@@ -34,7 +34,7 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<D
     isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.DEBT,
-    render: (value) => formatCurrency(parseDebtValue(value)),
+    render: (value) => formatCurrencyNode(parseDebtValue(value)),
     sorter: (a, b) => parseDebtValue(a.debt) - parseDebtValue(b.debt),
     title: "Долг",
     type: "data",
@@ -52,7 +52,7 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<D
     isFilterable: true,
     isSortable: true,
     name: BaseColumnTableSelect.PENALTY,
-    render: (value) => formatCurrency(parseDebtValue(value)),
+    render: (value) => formatCurrencyNode(parseDebtValue(value)),
     sorter: (a, b) => parseDebtValue(a.penalty) - parseDebtValue(b.penalty),
     title: "Пени",
     type: "data",
@@ -62,7 +62,7 @@ export const SELECTION_TABLE_COLUMNS: Record<BaseColumnTableSelect, DataColumn<D
     isFilterable: false,
     isSortable: true,
     name: BaseColumnTableSelect.TERM_DEBT,
-    sorter: (a, b) => parseDebtValue(a.debt - term - mounts) - parseDebtValue(b.debt - term - mounts),
+    // sorter: (a, b) => parseDebtValue(a.debt - term - mounts) - parseDebtValue(b.debt - term - mounts),
     title: "Срок / мес.",
     type: "data",
   },

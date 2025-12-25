@@ -4,6 +4,7 @@ import { getVerticalPosition } from "../getVerticalPosition/getVerticalPosition"
 
 export enum VERTICAL_POSITION {
   BOTTOM = "bottom",
+  CENTER = "center",
   TOP = "top",
 }
 

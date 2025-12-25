@@ -6,7 +6,7 @@ import { eyeIcon } from "@/shared/constants"
 import { Icon } from "@/shared/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
 
-import { InitialData } from "../../lib/types/initialDataTypes"
+import { InitialData } from "../../lib/types/analysisTypes"
 
 import "./styles.scss"
 

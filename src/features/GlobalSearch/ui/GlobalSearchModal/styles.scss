@@ -1,0 +1,28 @@
+@use "../../../../app/styles/index.scss";
+
+.global-search-modal {
+  .itpc-modal {
+    height: 50vh;
+  }
+
+  &__content {
+    padding: 16px 0;
+  }
+
+  &__btn-close {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background: var(--color-hover-neutral);
+    }
+  }
+
+  &__btn-close-icon {
+    color: var(--icon-color-gray-2);
+    padding: 8px;
+  }
+}

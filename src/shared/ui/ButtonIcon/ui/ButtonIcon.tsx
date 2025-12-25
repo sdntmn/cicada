@@ -12,7 +12,7 @@ interface IconButtonProps {
   icon: string
   iconClassName?: string
   label?: string
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
   size?: "sm" | "md" | "lg"
   title?: string
   variant?: "default" | "primary" | "danger" | "ghost"
@@ -40,8 +40,8 @@ export const ButtonIcon: React.FC<IconButtonProps> = ({
   )
 
   return (
-    <button className={cn("button-icon")} disabled={disabled} onClick={onClick} title={title} type="button">
-      <Icon className={cn(icon, iconClassName, buttonClasses)} />
+    <button className={cn("button-icon", buttonClasses)} disabled={disabled} onClick={(e) => onClick?.(e)} title={title} type="button">
+      <Icon className={cn(icon, iconClassName)} />
       {label && <span className="button-icon__label">{label}</span>}
     </button>
   )

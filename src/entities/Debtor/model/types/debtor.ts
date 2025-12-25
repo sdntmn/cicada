@@ -30,6 +30,7 @@ export interface SearchParams {
   houseIds?: string[]
   minDebt?: number
   minTerm?: number
+  previewAddresses?: string[]
 }
 
 export type Debtor = BaseDebtor | NewDebtor

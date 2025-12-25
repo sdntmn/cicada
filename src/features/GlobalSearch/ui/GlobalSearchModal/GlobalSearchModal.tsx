@@ -1,7 +1,13 @@
 // GlobalSearchModal.tsx
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
-import { Modal, ModalContent, useDebounce } from "itpc-ui-kit"
+import cn from "classnames"
+import { Modal, ModalContent, SearchField } from "itpc-ui-kit"
+
+import { closeIcon } from "@/shared/constants"
+import { Icon } from "@/shared/ui/Icon"
+
+import "./styles.scss"
 
 interface Props {
   isOpen: boolean
@@ -11,41 +17,33 @@ interface Props {
 export const GlobalSearchModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const [query, setQuery] = useState("")
   const [results, setResults] = useState<{ cases: any[]; debtors: any[] }>({ cases: [], debtors: [] })
-  const debouncedQuery = useDebounce(query, 300)
-
-  useEffect(() => {
-    if (debouncedQuery.length >= 3) {
-      fetch(`/api/v1/search?q=${encodeURIComponent(debouncedQuery)}`)
-        .then((res) => res.json())
-        .then(setResults)
-    } else {
-      setResults({ cases: [], debtors: [] })
-    }
-  }, [debouncedQuery])
 
   const handleSelect = (url: string) => {
     onClose()
-    // Используйте ваш роутер (React Router, etc.)
-    window.location.href = url // или navigate(url)
+    window.location.href = url
   }
 
   return (
     <Modal
+      iconClose={
+        <button className="global-search-modal__btn-close" onClick={onClose}>
+          <Icon className={cn("global-search-modal__btn-close-icon", closeIcon)} />
+        </button>
+      }
       className="global-search-modal"
-      iconClose={<i className="fa-regular fa-xmark" onClick={onClose} />}
       isOpen={isOpen}
       onClose={onClose}
       title="Глобальный поиск"
     >
-      <ModalContent>
-        <input
-          className="global-search-input"
-          onChange={(e) => setQuery(e.target.value)}
+      <ModalContent className="global-search-modal__content">
+        <SearchField
+          onChange={() => {
+            console.info(" сеарч")
+          }}
+          className={"global-search-input"}
+          items={[]}
           placeholder="Введите ФИО, адрес, номер дела..."
-          value={query}
-          autoFocus
         />
-
         <div className="search-results">
           <h4>Должники ({results.debtors.length})</h4>
           {results.debtors.map((d) => (

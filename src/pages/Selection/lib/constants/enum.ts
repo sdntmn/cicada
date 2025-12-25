@@ -5,7 +5,7 @@ export enum BaseColumnTableSelect {
   DEBT = "debt",
   FIO = "fio",
   PENALTY = "penalty",
-  TERM_DEBT = "debt-term-mounts",
+  TERM_DEBT = "debtTermMounts",
 }
 
 export enum VirtualColumnTableSelect {

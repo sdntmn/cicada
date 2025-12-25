@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import cn from "classnames"
 import { Checkbox } from "itpc-ui-kit"
 
-import { HORIZONTAL_POSITION, RowDensity, verticaDots } from "@/shared/constants"
+import { HORIZONTAL_POSITION, RowDensity, verticalDots } from "@/shared/constants"
 import { FontSize } from "@/shared/lib/types/types"
 import { Flex } from "@/shared/ui/layout/Flex"
 import { PositionPortal } from "@/shared/ui/PositionPortal"
@@ -54,7 +54,7 @@ export const TableSettingsMenu: React.FC<Props> = ({
           ref={refButton}
           type="button"
         >
-          <i className={cn(verticaDots, " table-settings-menu__icon")} />
+          <i className={cn(verticalDots, " table-settings-menu__icon")} />
         </button>
       </div>
 

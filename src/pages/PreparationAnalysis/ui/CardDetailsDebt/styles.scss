@@ -1,0 +1,80 @@
+// .card-details-debt {
+//   border-bottom: 1px solid #eee;
+
+//   &__value {
+//     // Стиль для значений (данных)
+//     font-weight: 500; // Полужирный шрифт для значений
+//     color: #333; // Темный цвет для значений
+//   }
+
+//   &__title {
+//     border-bottom: 1px solid #eee;
+//   }
+
+//   &__body {
+//     padding: 8px 0;
+//   }
+// }
+
+.card-details-debt {
+}
+
+.card-details-debt__title {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-secondary, #111);
+  letter-spacing: -0.01em;
+  border-bottom: 1px solid #eee;
+}
+
+.card-details-debt__table {
+  display: inline-table;
+  border-collapse: collapse; // ← КЛЮЧЕВОЕ: убирает зазоры между ячейками
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+// Ховер-стиль как в RowInfoText
+.card-details-debt__hover {
+  &:hover .card-details-debt__label {
+    background: var(--extra-hover, #cfcfcf);
+    border-radius: 4px 0 0 4px;
+  }
+  &:hover .card-details-debt__value {
+    background: var(--extra-hover, #cfcfcf);
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+.card-details-debt__label,
+.card-details-debt__value {
+  padding: 6px 8px;
+  vertical-align: top;
+  // НЕ задавайте background по умолчанию!
+}
+
+.card-details-debt__label {
+  color: var(--text-secondary, #666);
+  font-weight: 500;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  opacity: 0.9;
+}
+
+.card-details-debt__label .icon {
+  width: 14px;
+  height: 14px;
+  color: var(--text-secondary, #888);
+  flex-shrink: 0;
+}
+
+.card-details-debt__value {
+  color: var(--text-primary, #111);
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}

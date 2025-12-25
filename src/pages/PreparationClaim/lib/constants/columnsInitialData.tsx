@@ -35,15 +35,15 @@ export const VIRTUAL_COLUMNS_STUBS: Record<VirtualColumnInitialDataTableKey, Vir
   //   name: VirtualColumnInitialDataTableKey.DEBTS,
   //   title: "Долг",
   //   type: "virtual",
+  [VirtualColumnInitialDataTableKey.DEBTOR]: {
+    name: VirtualColumnInitialDataTableKey.DEBTOR,
+    title: "Должник",
+    type: "virtual",
+  },
   // },
   [VirtualColumnInitialDataTableKey.DOCUMENTS]: {
     name: VirtualColumnInitialDataTableKey.DOCUMENTS,
     title: "Документы",
-    type: "virtual",
-  },
-  [VirtualColumnInitialDataTableKey.DEBTOR]: {
-    name: VirtualColumnInitialDataTableKey.DEBTOR,
-    title: "Должник",
     type: "virtual",
   },
   [VirtualColumnInitialDataTableKey.PREMISES_DATA]: {
@@ -93,9 +93,9 @@ export const INITIAL_DATA_COLUMN_LABELS: Record<ColumnInitialData, string> = {
   [BaseColumnInitialDataTableKey.INDEX]: "№",
   // [BaseColumnInitialDataTableKey.TERM_DEBT]: "Срок / мес.",
   [VirtualColumnInitialDataTableKey.ACTION]: "Действия",
+  [VirtualColumnInitialDataTableKey.DEBTOR]: "Должник",
   // [VirtualColumnInitialDataTableKey.DEBTS]: "Долг",
   [VirtualColumnInitialDataTableKey.DOCUMENTS]: "Документы",
-  [VirtualColumnInitialDataTableKey.DEBTOR]: "Должник",
   [VirtualColumnInitialDataTableKey.PREMISES_DATA]: "Долг",
   [VirtualColumnInitialDataTableKey.STAGE]: "Стадия",
 }

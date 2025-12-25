@@ -1,12 +1,11 @@
+@use "../../../app/styles/index.scss";
+
 .sub-nav {
-  background: #00000014; /* фон как в таблицах */
-  // border-top: 1px solid var(--box-shadow-color-second);
+  background: var(--color-bg-extra);
   padding: 8px 32px 8px 8px;
   display: inline-flex;
   align-items: center;
-  // box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
 
-  // clip-path: none;
   .button-icon {
     background-color: none;
 

@@ -14,7 +14,7 @@ interface DebtorCardModalProps {
   isOpen: boolean
 }
 
-export const CardDetailsDocuments: React.FC<DebtorCardModalProps> = ({ debtor, isOpen, onClose }) => {
+export const CardDetailsDocuments: React.FC<DebtorCardModalProps> = ({ debtor, isOpen }) => {
   if (!debtor) {
     return null
   }

@@ -6,7 +6,7 @@ import { editDataIcon, emailIcon, registrationLocationIcon, shareIcon } from "@/
 import { Icon } from "@/shared/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
 
-import type { InitialData } from "../../lib/types/initialDataTypes"
+import type { InitialData } from "../../lib/types/analysisTypes"
 
 interface Props {
   onCellClick?: (rowData: InitialData, e: React.MouseEvent) => void

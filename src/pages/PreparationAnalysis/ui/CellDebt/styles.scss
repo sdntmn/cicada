@@ -1,0 +1,26 @@
+@use "../../../../app/styles/index.scss";
+
+.cell-debt {
+  padding: 8px;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    .cell-debt__btn {
+      opacity: 1;
+    }
+    .cell-debt__btn-icon {
+      color: var(--extra-bg-color);
+    }
+  }
+
+  &__row-icon {
+  }
+
+  &__btn {
+    position: absolute;
+    right: 8px;
+    bottom: 4px;
+    opacity: 0;
+  }
+}

@@ -58,3 +58,7 @@ export interface TooltipPositionConfig {
 }
 
 export type TooltipPosition = "bottom" | "right" | "left" | "top"
+export type ChipSize = "md" | "sm" | "lg"
+export type ChipVariant = "outline" | "default" | "filled" | "ghost"
+export type BadgeVariant = "overflow" | "default" | "success" | "warning" | "counter" | "danger" | "info"
+export type BadgeSize = "md" | "sm" | "lg"

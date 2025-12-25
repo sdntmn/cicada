@@ -1,0 +1,76 @@
+@use "../../../../app/styles/themes/default.scss";
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  line-height: 1;
+  white-space: nowrap;
+  padding: 4px 6px;
+  font-weight: 500;
+  border: 1px solid var(--color-border-primary);
+  transition: all 0.15s ease;
+
+  // Размеры
+  &__sm {
+    padding: 4px 6px;
+    font-size: 12px;
+    border-radius: 12px;
+    height: 24px;
+    min-width: 24px;
+  }
+
+  &__md {
+    padding: 6px 8px;
+    font-size: 13px;
+    border-radius: 16px;
+  }
+
+  &__lg {
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 20px;
+  }
+
+  // Варианты — используем цвета из вашей темы
+  &__default {
+    background-color: var(--hider-table-color); // светло-серый фон
+    color: var(--small-text-color);
+    border-color: var(--secondary-border-color);
+  }
+
+  &__info {
+    background-color: rgba(49, 130, 206, 0.1); // #3182ce с прозрачностью
+    color: var(--link-color); // или --icon-color-blue
+    border-color: rgba(49, 130, 206, 0.3);
+  }
+
+  &__success {
+    background-color: rgba(var(--success-rgb, 56, 161, 105), 0.1);
+    color: var(--success-color);
+    border-color: rgba(var(--success-rgb, 56, 161, 105), 0.3);
+  }
+
+  &__warning {
+    background-color: rgba(var(--warning-rgb, 214, 158, 46), 0.1);
+    color: var(--warning-color);
+    border-color: rgba(var(--warning-rgb, 214, 158, 46), 0.3);
+  }
+
+  &__danger {
+    background-color: rgba(var(--error-rgb, 229, 62, 62), 0.1);
+    color: var(--error-color);
+    border-color: rgba(var(--error-rgb, 229, 62, 62), 0.3);
+  }
+
+  &__overflow {
+    background-color: white;
+    color: var(--secondary-text-color);
+  }
+
+  &__counter {
+    background: var(--color-primary);
+    color: white;
+    text-align: center;
+  }
+}

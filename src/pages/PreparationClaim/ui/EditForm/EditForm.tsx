@@ -1,5 +1,7 @@
 // AnalysisEditForm.tsx
 import React from "react"
+
+import type { Menu } from "@/shared/constants"
 interface AnalysisEditFormProps {
   data: any
   itemId: string

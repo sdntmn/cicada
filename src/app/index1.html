@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Карточка долга - Таблица с Hover</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f7fa;
+        padding: 20px;
+      }
+
+      .card-table {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+        max-width: 500px;
+        margin: 0 auto;
+      }
+
+      .card-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+        padding: 16px 24px;
+        background: linear-gradient(90deg, #f8f9fa, #ffffff);
+        border-bottom: 2px solid #e9ecef;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        padding: 12px 24px;
+        text-align: left;
+        font-size: 14px;
+        color: #2c3e50;
+      }
+
+      th {
+        font-weight: 500;
+        color: #6c757d;
+        background-color: #f8f9fa;
+        border-top: 1px solid #dee2e6;
+        border-bottom: 2px solid #dee2e6;
+      }
+
+      tr {
+        border-bottom: 1px solid #dee2e6;
+        transition: background-color 0.2s ease;
+      }
+
+      tr:hover {
+        background-color: #f1f3f5;
+        cursor: pointer;
+      }
+
+      .value-sum {
+        font-weight: 600;
+        color: #e74c3c;
+      }
+
+      .value-period {
+        color: #95a5a6;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card-table">
+      <div class="card-title">Данные о долге</div>
+      <table>
+        <tbody>
+          <tr>
+            <th>Параметр</th>
+            <th>Значение</th>
+          </tr>
+          <tr>
+            <td>адрес</td>
+            <td>ул. Советская, д. 76, кв. 190</td>
+          </tr>
+          <tr>
+            <td>фио</td>
+            <td>Фамилия203 Имя203 Отчество203</td>
+          </tr>
+          <tr>
+            <td>долг</td>
+            <td class="value-sum">51 658.69 ₽</td>
+          </tr>
+          <tr>
+            <td>пени</td>
+            <td class="value-sum">296.73 ₽</td>
+          </tr>
+          <tr>
+            <td>период</td>
+            <td class="value-period">01.01.2025 - 01.10.2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Карточка долга - Минималистичная таблица</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #fafafa;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+        max-width: 450px;
+        overflow: hidden;
+      }
+
+      .card-header {
+        padding: 20px 24px;
+        background: #2c3e50;
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .card-body {
+        padding: 0;
+      }
+
+      .table-row {
+        display: flex;
+        padding: 14px 24px;
+        border-bottom: 1px solid #eee;
+        transition:
+          background 0.2s ease,
+          transform 0.1s ease;
+      }
+
+      .table-row:hover {
+        background: #f8f9fa;
+        transform: translateX(4px);
+      }
+
+      .label {
+        font-weight: 500;
+        color: #6c757d;
+        min-width: 100px;
+        margin-right: 16px;
+      }
+
+      .value {
+        flex-grow: 1;
+        color: #2c3e50;
+        font-weight: 500;
+      }
+
+      .value.sum {
+        color: #e74c3c;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .value.period {
+        color: #95a5a6;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-header">Данные о долге</div>
+      <div class="card-body">
+        <div class="table-row">
+          <span class="label">адрес</span>
+          <span class="value">ул. Советская, д. 76, кв. 190</span>
+        </div>
+        <div class="table-row">
+          <span class="label">фио</span>
+          <span class="value">Фамилия203 Имя203 Отчество203</span>
+        </div>
+        <div class="table-row">
+          <span class="label">долг</span>
+          <span class="value sum">51 658.69 ₽</span>
+        </div>
+        <div class="table-row">
+          <span class="label">пени</span>
+          <span class="value sum">296.73 ₽</span>
+        </div>
+        <div class="table-row">
+          <span class="label">период</span>
+          <span class="value period">01.01.2025 - 01.10.2025</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Карточка долга - С иконками и hover</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background: #f0f2f5;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        max-width: 500px;
+        overflow: hidden;
+      }
+
+      .card-header {
+        padding: 20px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      .card-body {
+        padding: 0;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        padding: 16px 24px;
+        border-bottom: 1px solid #eee;
+        transition:
+          background 0.3s ease,
+          transform 0.2s ease;
+      }
+
+      .row:hover {
+        background: #f8f9fa;
+        transform: scale(1.01) translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 16px;
+        fill: #6c757d;
+        transition: fill 0.2s ease;
+      }
+
+      .row:hover .icon {
+        fill: #3498db;
+      }
+
+      .label {
+        font-weight: 500;
+        color: #6c757d;
+        margin-right: 12px;
+        min-width: 80px;
+      }
+
+      .value {
+        flex-grow: 1;
+        color: #2c3e50;
+        font-weight: 500;
+      }
+
+      .value.sum {
+        color: #e74c3c;
+        font-weight: 600;
+        font-size: 16px;
+      }
+
+      .value.period {
+        color: #95a5a6;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="card-header">Данные о долге</div>
+      <div class="card-body">
+        <div class="row">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+            />
+          </svg>
+          <span class="label">адрес</span>
+          <span class="value">ул. Советская, д. 76, кв. 190</span>
+        </div>
+        <div class="row">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+          </svg>
+          <span class="label">фио</span>
+          <span class="value">Фамилия203 Имя203 Отчество203</span>
+        </div>
+        <div class="row">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M11.8 10.9c-2.27-.59-3.8-2.4-3.8-4.55C8 4.18 9.53 2.37 11.8 1.78V0C11.8 0 11.79 0 11.79 0c-3.06 0-5.55 2.5-5.55 5.55 0 3.06 2.49 5.55 5.55 5.55.75 0 1.45-.16 2.08-.43L12 10.9z"
+            />
+            <path
+              d="M18.04 10.9c-2.27-.59-3.8-2.4-3.8-4.55C14.24 4.18 15.77 2.37 18.04 1.78V0C18.04 0 18.03 0 18.03 0c-3.06 0-5.55 2.5-5.55 5.55 0 3.06 2.49 5.55 5.55 5.55.75 0 1.45-.16 2.08-.43L18.04 10.9z"
+            />
+            <path
+              d="M12 19.5c-1.67 0-3.17-.71-4.3-1.83l-1.82 1.82 1.41 1.41 1.82-1.82C10.03 20.57 11.02 21 12 21s1.97-.43 2.89-1.35l1.82 1.82 1.41-1.41-1.82-1.82C15.17 18.79 13.67 19.5 12 19.5z"
+            />
+          </svg>
+          <span class="label">долг</span>
+          <span class="value sum">51 658.69 ₽</span>
+        </div>
+        <div class="row">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+            />
+          </svg>
+          <span class="label">пени</span>
+          <span class="value sum">296.73 ₽</span>
+        </div>
+        <div class="row">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M9 13H7v-2h2v2zm4 0h-2v-2h2v2zm4 0h-2v-2h2v2zm2-8h-1V3h-2v2H8V3H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-2 16H6V9h12v10z"
+            />
+          </svg>
+          <span class="label">период</span>
+          <span class="value period">01.01.2025 - 01.10.2025</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

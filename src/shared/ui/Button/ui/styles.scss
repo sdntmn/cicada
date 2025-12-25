@@ -1,0 +1,146 @@
+// shared/ui/Button/Button.scss
+@use "../../../../app/styles/index.scss";
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
+  color: var(--color-text-primary);
+  font-family: inherit;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+  outline: none;
+
+  &__size-xs {
+    height: 24px;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  &__size-sm {
+    height: 28px;
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  &__size-md {
+    height: 32px;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  &__size-lg {
+    height: 40px;
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+
+  // Варианты
+  &__variant-primary {
+    background-color: var(--color-primary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-primary-hover);
+    }
+  }
+
+  &__variant-secondary {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-bg-tertiary);
+    }
+  }
+
+  &__variant-outline {
+    border-color: var(--color-border-muted);
+    background: white;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-bg-secondary);
+    }
+  }
+
+  &__variant-text {
+    background: transparent;
+    color: var(--color-text-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-bg-secondary);
+    }
+  }
+
+  &__variant-icon {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    width: auto;
+    padding: 4px;
+
+    .button__icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-icon-primary);
+    }
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-bg-secondary);
+    }
+
+    &.button_active {
+      background-color: var(--color-bg-tertiary);
+      .button__icon {
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  &__variant-chip {
+    color: var(--color-text-primary);
+    box-shadow: 0 0 0 1px rgba(var(--color-border-accent-rgb), 0.46);
+    background-color: rgba(var(--color-button-primary-rgb), 0.1);
+    border: none;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    padding: 6px 12px;
+
+    &:hover {
+      background-color: rgba(var(--color-button-primary-rgb), 0.06);
+    }
+  }
+
+  // Состояния
+  &--active {
+    // Можно усилить для non-icon кнопок
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb), 0.2);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--full-width {
+    width: 100%;
+  }
+
+  &--icon-only {
+    width: auto;
+    min-width: auto;
+    padding: 4px;
+  }
+}

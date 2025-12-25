@@ -2,11 +2,11 @@ import React, { useEffect } from "react"
 
 import { debtorsActions } from "@/entities/Debtor"
 import { getDebtorsNew } from "@/entities/Debtor/model/thunk/thunk"
-import type { Menu } from "@/shared/constants"
 import { useTablePagination, useTableRowSelection } from "@/shared/lib/hooks"
 import { useTableColumns } from "@/shared/lib/hooks/useTableColumns/useTableColumns"
 import { useAppDispatch, useAppSelector } from "@/shared/lib/store"
 import { BulkActionsPanel } from "@/shared/ui/BulkActionsPanel"
+import { Panel } from "@/shared/ui/Panel/Panel"
 import { PositionPortal } from "@/shared/ui/PositionPortal"
 import { BaseTable } from "@/widgets/BaseTable"
 
@@ -17,21 +17,20 @@ import { getVisibleColumns } from "../../lib/helpers/getVisibleColumns/getVisibl
 import { useCellInteractions } from "../../lib/hooks/useCellInteractions/useCellInteractions"
 import { useEditModal } from "../../lib/hooks/useEditModal/useEditModal"
 import { InitialData } from "../../lib/types/initialDataTypes"
+import { CardDebt } from "../CardDebt/CardDebt"
 import { CardDetailsDocuments } from "../CardDetailsDocuments/CardDetailsDocuments"
-import { CardDetailsPremises } from "../CardDetailsPremises/CardDetailsPremises"
-import { CardPersonData } from "../CardPersonData/CardPersonData"
 import { AnalysisEditForm } from "../EditForm/EditForm"
-import { InitialDataEditModal } from "../InitialDataEditModal/InitialDataEditModal"
 
 import "./styles.scss"
+import { CardDetailsDebtor } from "@/pages/PreparationAnalysis/ui/CardDetailsDebtor/CardDetailsDebtor"
 
-interface AnalysisTableProps {
-  navigationMode: "detail" | "main"
+interface Props {
+  // navigationMode: "detail" | "main"
   onDetailOpen: (detail: { component: React.ComponentType; props?: any; subSection: string }) => void
-  onNavigateToItem: (target: { itemId: string; section: Menu; subSection: string }) => void
+  // onNavigateToItem: (target: { itemId: string; section: Menu; subSection: string }) => void
 }
 
-export const PreparationClaimPage: React.FC<AnalysisTableProps> = ({ navigationMode, onDetailOpen, onNavigateToItem }) => {
+export const PreparationClaimPage: React.FC<Props> = ({ onDetailOpen }) => {
   const dispatch = useAppDispatch()
   const { debtors, isLoading, page, pageSize, total } = useAppSelector((state) => state.debtors)
   const { defaultVisible, displayOrder, requiredColumns } = INITIAL_DATA_TABLE_CONFIG
@@ -83,7 +82,14 @@ export const PreparationClaimPage: React.FC<AnalysisTableProps> = ({ navigationM
     })
   }
 
-  const virtualColumns = createVirtualColumns(open, handleCellClick)
+  const openEditPanel = () => {
+    if (cellState.isOpenViewInfoCell) {
+      closePopupInfoCell()
+    }
+    open(selectedDebtor)
+  }
+
+  const virtualColumns = createVirtualColumns(openEditPanel, handleCellClick)
 
   const previewColumns = getVisibleColumns(visibleColumns, INITIAL_DATA_TABLE_CONFIG)
 
@@ -124,16 +130,19 @@ export const PreparationClaimPage: React.FC<AnalysisTableProps> = ({ navigationM
           visibleColumns={visibleColumns}
         />
         {isOpen && editingData && (
-          <InitialDataEditModal
-            isOpen={isOpen}
-            onClose={close}
-            onSave={handleSave}
-            rowData={editingData}
-            title="Редактирование должника"
-            visibleColumns={previewColumns}
-          >
+          <Panel isOpen={isOpen} onClose={close} title="Долг">
             <div>Пока пусто</div>
-          </InitialDataEditModal>
+          </Panel>
+          // <InitialDataEditModal
+          //   isOpen={isOpen}
+          //   onClose={close}
+          //   onSave={handleSave}
+          //   rowData={editingData}
+          //   title="Редактирование должника"
+          //   visibleColumns={previewColumns}
+          // >
+          //   <div>Пока пусто</div>
+          // </InitialDataEditModal>
         )}
       </div>
 
@@ -147,10 +156,10 @@ export const PreparationClaimPage: React.FC<AnalysisTableProps> = ({ navigationM
           onClose={closePopupInfoCell}
         >
           {cellState.columnName === VirtualColumnInitialDataTableKey.DEBTOR && (
-            <CardPersonData debtor={cellState.dataRow} isOpen={cellState.isOpenViewInfoCell} />
+            <CardDetailsDebtor debtor={cellState.dataRow} isOpen={cellState.isOpenViewInfoCell} />
           )}
           {cellState.columnName === VirtualColumnInitialDataTableKey.PREMISES_DATA && (
-            <CardDetailsPremises debtor={cellState.dataRow} isOpen={cellState.isOpenViewInfoCell} />
+            <CardDebt debtor={cellState.dataRow} isOpen={cellState.isOpenViewInfoCell} />
           )}
           {cellState.columnName === VirtualColumnInitialDataTableKey.DOCUMENTS && (
             <CardDetailsDocuments debtor={cellState.dataRow} isOpen={cellState.isOpenViewInfoCell} />

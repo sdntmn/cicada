@@ -2,6 +2,7 @@ import React, { useState } from "react"
 
 import { Tabs, TabsItem } from "itpc-ui-kit"
 
+import { SearchByAccount } from "@/features/SearchByAccount"
 import { SearchByAddress } from "@/features/SearchByAddress"
 import { SelectedSearch } from "@/shared/constants"
 
@@ -16,6 +17,11 @@ export const SwitchingSearch: React.FC = () => {
     {
       content: <MultiSelectHouses />,
       title: SelectedSearch.LIST_HOUSES,
+    },
+
+    {
+      content: <SearchByAccount />,
+      title: SelectedSearch.ACCOUNT,
     },
     {
       content: <SearchByAddress />,

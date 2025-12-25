@@ -1,0 +1,16 @@
+.address-tooltip {
+  &__tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 6px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    margin: 0 4px 4px 0;
+  }
+  &__overflow {
+    background: #e2e8f0;
+    border-style: dashed;
+    color: #64748b;
+  }
+}

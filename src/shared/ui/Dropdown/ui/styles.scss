@@ -1,0 +1,26 @@
+@use "../../../../app/styles/index.scss";
+
+.dropdown {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  animation: dropdown-appear 0.2s ease-out;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 12px 8px 12px;
+    margin: 0 8px;
+    border-bottom: 1px solid #dfdfdf;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+  }
+
+  &__body {
+    padding: 8px;
+  }
+}

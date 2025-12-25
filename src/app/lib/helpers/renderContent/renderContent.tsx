@@ -8,7 +8,7 @@ import { DashboardPage } from "@/pages/Dashboard"
 import { ArchivePage } from "@/pages/Archive"
 import { DebtorsPage } from "@/pages/Debtors"
 import { MonitoringPage } from "@/pages/Monitoring"
-import { DebtInitialization } from "@/pages/PreparationAnalysis"
+import { PreparationAnalysisPage } from "@/pages/PreparationAnalysis"
 import { PreparationClaimPage } from "@/pages/PreparationClaim"
 import { SelectionPage } from "@/pages/Selection"
 import { Menu } from "@/shared/constants"
@@ -53,15 +53,21 @@ export const renderContent = ({ caseId, onNavigateToItem, section, subSection }:
   if (section === Menu.preparation) {
     switch (subSection) {
       case "analysis":
-        return <DebtInitialization currentSubSection={subSection} onNavigateToItem={onNavigateToItem} />
+        return <PreparationAnalysisPage currentSubSection={subSection} onNavigateToItem={onNavigateToItem} />
       case "claim":
-        return <PreparationClaimPage />
+        return (
+          <PreparationClaimPage
+            onDetailOpen={() => {
+              console.info("onDetailOpen")
+            }}
+          />
+        )
       case "settlement":
         return <div> Пока пусто</div>
       case "courtPreparation":
         return <div> Пока пусто</div>
       default:
-        return <DebtInitialization currentSubSection={subSection} onNavigateToItem={onNavigateToItem} />
+        return <PreparationAnalysisPage currentSubSection={subSection} onNavigateToItem={onNavigateToItem} />
     }
   }
 

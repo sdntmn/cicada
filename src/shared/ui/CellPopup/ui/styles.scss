@@ -1,0 +1,13 @@
+@use "../../../../app/styles/index.scss";
+
+.cell-popup {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-primer);
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  min-width: 200px;
+}

@@ -1,12 +1,16 @@
-import React, { useRef, useState } from "react"
+// TagPanelSelectedHouses.tsx
+import React, { useEffect, useMemo, useRef, useState } from "react"
 
 import cn from "classnames"
 
-import { closeIcon, HORIZONTAL_POSITION } from "@/shared/constants"
+import { HORIZONTAL_POSITION, sortAscIcon, sortDescIcon } from "@/shared/constants"
 import type { PremisesOption } from "@/shared/lib/types/types"
+import { Button } from "@/shared/ui/Button"
+import { Dropdown } from "@/shared/ui/Dropdown"
 import { Icon } from "@/shared/ui/Icon/ui/Icon"
-import { Flex } from "@/shared/ui/layout/Flex"
-import { PositionPortal } from "@/shared/ui/PositionPortal"
+import { Flex } from "@/shared/ui/layout/Flex" // 👈 подключили
+
+import { Chip } from "@/shared/ui/Chip"
 
 import "./styles.scss"
 
@@ -16,89 +20,123 @@ interface Props {
   selectedHouses?: PremisesOption[]
 }
 
+type SortOrder = "desc" | "asc" | null
+
 export const TagPanelSelectedHouses: React.FC<Props> = ({ onClearAll, onRemoveHouse, selectedHouses = [] }) => {
   const moreButtonRef = useRef<HTMLButtonElement>(null)
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [sortOrder, setSortOrder] = useState<SortOrder>(null)
 
-  const closeDropdown = () => {
-    if (isDropdownOpen) {
-      setIsDropdownOpen(false)
-    }
-  }
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen)
-  }
-
-  const VISIBLE_TAGS_LIMIT = 3
+  const VISIBLE_TAGS_LIMIT = 2
   const visibleHouses = selectedHouses.slice(0, VISIBLE_TAGS_LIMIT)
   const hiddenHouses = selectedHouses.slice(VISIBLE_TAGS_LIMIT)
   const hasHidden = hiddenHouses.length > 0
 
-  if (!selectedHouses?.length) {
+  const sortedHiddenHouses = useMemo(() => {
+    if (sortOrder === null) {
+      return hiddenHouses
+    }
+    return [...hiddenHouses].sort((a, b) => (sortOrder === "asc" ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name)))
+  }, [hiddenHouses, sortOrder])
+
+  const toggleSortOrder = () => {
+    setSortOrder((prev) => {
+      if (prev === null) {
+        return "asc"
+      }
+      if (prev === "asc") {
+        return "desc"
+      }
+      return null
+    })
+  }
+
+  // Закрываем выпадашку, если скрытых адресов больше нет
+  useEffect(() => {
+    if (isDropdownOpen && !hasHidden) {
+      setIsDropdownOpen(false)
+    }
+  }, [hasHidden, isDropdownOpen])
+
+  const headerDropdown = (
+    <Flex className="tag-panel-selected-houses__header" gap={32} justify="space-between">
+      {/* <span>Ещё {hiddenHouses.length}</span> */}
+      <span>Выбранные адреса </span>
+      <Button
+        aria-label={
+          sortOrder === null ? "Сортировать по возрастанию" : sortOrder === "asc" ? "Сортировать по убыванию" : "Отключить сортировку"
+        }
+        onClick={(e) => {
+          e.stopPropagation()
+          toggleSortOrder()
+        }}
+        className={cn(sortOrder !== null && "tag-panel-selected-houses__sort-active")}
+        size="xs"
+        variant="icon"
+      >
+        <Icon
+          className={
+            sortOrder === null
+              ? sortAscIcon // серая иконка
+              : sortOrder === "asc"
+                ? sortAscIcon
+                : sortDescIcon
+          }
+        />
+      </Button>
+    </Flex>
+  )
+
+  if (!selectedHouses.length) {
     return null
   }
 
   return (
-    <Flex align="flex-start" className="tag-panel-selected-houses" gap={24}>
+    <Flex align="flex-start" className="tag-panel-selected-houses" gap={8}>
       <Flex className="tag-panel-selected-houses__tag-wrap" gap={8}>
         {visibleHouses.map((house) => (
-          <span className="tag-panel-selected-houses__tag" key={house.id}>
+          <Chip key={house.id} onRemove={() => onRemoveHouse?.(house.id)} size="lg">
             {house.name}
-            <button
-              aria-label="Удалить фильтр"
-              className="tag-panel-selected-houses__btn-remove"
-              onClick={() => onRemoveHouse?.(house.id)}
-            >
-              <Icon className={cn(closeIcon, "tag-panel-selected-houses__icon-close")} />
-            </button>
-          </span>
+          </Chip>
         ))}
 
         {hasHidden && (
           <div className="tag-panel-selected-houses__more">
-            <button
+            <Button
               aria-expanded={isDropdownOpen}
-              className="tag-panel-selected-houses__more-btn"
-              onClick={toggleDropdown}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               ref={moreButtonRef}
+              size="lg"
+              variant="chip"
             >
               +{hiddenHouses.length}
-            </button>
+            </Button>
           </div>
         )}
 
-        {/* Выпадающий список */}
-
         {hasHidden && (
-          <PositionPortal
+          <Dropdown
             anchorRef={moreButtonRef}
-            className="tag-panel-selected-houses__portal"
-            distanceBetweenElements={8}
+            distanceBetweenElements={4}
+            header={headerDropdown}
             horizontalAlignment={HORIZONTAL_POSITION.RIGHT}
             isOpen={isDropdownOpen}
-            onClose={closeDropdown}
+            onClose={() => setIsDropdownOpen(false)}
           >
-            <div className="tag-panel-selected-houses__dropdown">
-              {hiddenHouses.map((house) => (
-                <span className="tag-panel-selected-houses__tag" key={house.id}>
+            <div className="tag-panel-selected-houses__list">
+              {sortedHiddenHouses.map((house) => (
+                <Chip key={house.id} onRemove={() => onRemoveHouse?.(house.id)} size="md">
                   {house.name}
-                  <button
-                    aria-label="Удалить фильтр"
-                    className="tag-panel-selected-houses__btn-remove"
-                    onClick={() => onRemoveHouse?.(house.id)}
-                  >
-                    <Icon className={cn(closeIcon, "tag-panel-selected-houses__icon-close")} />
-                  </button>
-                </span>
+                </Chip>
               ))}
             </div>
-          </PositionPortal>
+          </Dropdown>
         )}
       </Flex>
-      <button className="tag-panel-selected-houses__btn-clear" onClick={onClearAll}>
+
+      <Button className="tag-panel-selected-houses__btn-clear" onClick={onClearAll} size="sm" variant="text">
         Очистить всё
-      </button>
+      </Button>
     </Flex>
   )
 }

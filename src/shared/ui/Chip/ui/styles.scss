@@ -1,0 +1,100 @@
+@use "../../../../app/styles/themes/default.scss";
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1;
+  white-space: nowrap;
+  font-weight: 500;
+  box-sizing: border-box;
+  box-shadow: inset 0 0 0 1px var(--color-border-primary);
+  border-radius: var(--chip-border-radius);
+  transition: all 0.15s ease;
+  color: var(--color-text-primary);
+  width: fit-content;
+  min-width: 0; /* сбрасывает min-width: auto у flex-элементов */
+  max-width: 100%;
+
+  // Размеры
+  &_sm {
+    padding: 3px 3px 3px 8px;
+    font-size: 12px;
+  }
+
+  &_md {
+    padding: 5px 6px 5px 10px;
+    font-size: 13px;
+  }
+
+  &_lg {
+    padding: 6px 6px 6px 12px;
+    font-size: 13px;
+  }
+
+  // Варианты — используем цвета из вашей темы
+  &__default {
+    background-color: var(--hider-table-color); // светло-серый фон
+    color: var(--color-text-accent);
+    border-color: var(--secondary-border-color);
+  }
+
+  &__filled {
+    background-color: var(--hider-table-color);
+    color: var(--color-text-accent);
+    border-color: var(--secondary-border-color);
+  }
+
+  &__outline {
+    background-color: transparent;
+    border-color: var(--secondary-border-color);
+  }
+
+  &__ghost {
+    background-color: transparent;
+    border-color: transparent;
+    color: var(--secondary-text-color);
+  }
+
+  &__removable {
+    background-color: rgba(var(--color-button-primary-rgb), 0.1);
+    align-items: center;
+    .chip__remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      flex-shrink: 0;
+      background: none;
+      border: none;
+
+      border-radius: 50%;
+      cursor: pointer;
+      color: var(--icon-color-gray-2);
+
+      &:hover {
+        background-color: rgba(var(--color-hover-btn-rgb), 0.1);
+      }
+
+      .icon {
+        // font-size: 16px;
+        color: var(--icon-color-gray-2);
+      }
+
+      &_sm {
+        padding: 3px 5px;
+        font-size: 12px;
+      }
+
+      &_md {
+        padding: 4px 6px;
+        font-size: 14px;
+      }
+
+      &_lg {
+        padding: 6px 8px;
+        font-size: 16px;
+      }
+    }
+  }
+}

@@ -1,46 +1,31 @@
 @use "../../../../app/styles/index.scss";
 .multi-select-houses {
-  width: 100%;
-
-  &__input-wrap {
-    max-width: 560px;
+  &__input {
+    max-width: 360px;
     width: 100%;
   }
 
-  &__checkbox {
-    .itpc-checkbox__label {
-      margin-left: 8px;
-      color: #6b7280;
-      font-size: 15px;
-    }
-
-    &:hover {
-      .itpc-checkbox__label {
-        color: var(--itpc-primary-text-color);
-      }
-    }
-
-    &_active {
-      .itpc-checkbox__label {
-        margin-left: 8px;
-        color: var(--itpc-primary-text-color);
-      }
-    }
+  .itpc-search-field {
+    z-index: 10;
   }
 
   &__btn-apply {
-    max-height: 40px;
-    font-size: 20px;
-    background: radial-gradient(circle, #7263c0 0%, #6a5abf 50%, #5c53ac 100%);
-    box-shadow: 0 2px 6px rgba(92, 64, 255, 0.3);
-    padding: 4px 12px;
+    box-shadow: 0 2px 6px rgba(var(--extra-bg-rgb), 0.25);
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
 
     &:hover {
-      background: radial-gradient(circle, #5f4db6 0%, #6553be 50%, #5c53ac 100%);
+      background-color: var(--primary-icon-hover);
+      box-shadow: 0 3px 8px rgba(var(--extra-bg-rgb), 0.35);
+    }
+
+    &:active {
+      box-shadow: 0 1px 4px rgba(var(--extra-bg-rgb), 0.25);
     }
   }
 
   &__btn-filters-icon {
-    color: #fff;
+    color: var(--button-text-color);
   }
 }

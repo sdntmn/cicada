@@ -22,6 +22,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
     "@types/json-server": "^0.14.8",
+    "baseline-browser-mapping": "^2.9.6",
     "classnames": "^2.5.1",
     "itpc-ui-kit": "^4.1.3",
     "react": "18.2.0",

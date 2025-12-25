@@ -32,7 +32,7 @@ export const closeIcon = "fa-solid fa-xmark"
 
 export const filterIcon = "fa-solid fa-filter"
 
-export const verticaDots = "fa-solid fa-ellipsis-vertical"
+export const verticalDots = "fa-solid fa-ellipsis-vertical"
 
 export const borderIcon = "fa-solid fa-rectangle-list"
 
@@ -56,7 +56,11 @@ export const arrowLongIcon = "fa-solid fa-arrow-right-long"
 export const copyLinkIcon = "fa-solid fa-link"
 export const debtorIcon = "fa-solid fa-id-badge"
 export const selectionIcon = "fa-solid fa-square-check"
-
-{
-  /* <i class="fa-solid fa-arrow-down-short-wide"></i> */
-}
+export const historyIcon = "fa-solid fa-clock-rotate-left"
+export const clockIcon = "fa-regular fa-clock"
+export const listIcon = "fa-solid fa-list"
+export const cityIcon = "fa-solid fa-city"
+export const repeatIcon = "fa-solid fa-repeat"
+export const sortAscIcon = "fa-solid fa-arrow-down-short-wide"
+export const sortDescIcon = "fa-solid fa-arrow-down-wide-short"
+export const userIcon = "fa-solid fa-user"

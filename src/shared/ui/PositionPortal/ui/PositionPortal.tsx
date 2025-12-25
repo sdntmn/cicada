@@ -2,6 +2,7 @@ import React, { useCallback, useRef } from "react"
 
 import { HORIZONTAL_POSITION } from "@/shared/constants"
 import { useAnimation, useOnClickOutside } from "@/shared/lib/hooks"
+import type { PositionType } from "@/shared/lib/types/types"
 import { Portal } from "@/shared/ui/Portal"
 import { PositionedWrap } from "@/shared/ui/PositionedWrap"
 
@@ -14,6 +15,7 @@ interface Props {
   horizontalAlignment?: HORIZONTAL_POSITION
   isOpen: boolean
   onClose: () => void
+  position?: PositionType
 }
 
 export const PositionPortal: React.FC<Props> = ({
@@ -25,6 +27,7 @@ export const PositionPortal: React.FC<Props> = ({
   horizontalAlignment,
   isOpen,
   onClose,
+  position = "absolute",
 }) => {
   const contentRef = useRef<HTMLDivElement>(null)
 
@@ -64,7 +67,7 @@ export const PositionPortal: React.FC<Props> = ({
         horizontalAlignment={horizontalAlignment}
         isClosing={isClosing}
         isOpen={isOpen}
-        position={"absolute"}
+        position={position}
         refParent={resolvedAnchorRef}
       >
         <div className={className} ref={contentRef}>

@@ -4,10 +4,7 @@
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif;
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.08),
-    0 1px 4px rgba(0, 0, 0, 0.04);
+  box-shadow: 0px 2px 6px -2px rgba(0, 0, 0, 0.15);
   pointer-events: none;
   user-select: none;
   white-space: pre-wrap;
@@ -15,19 +12,44 @@
   line-height: 1.5;
   max-width: 320px;
   width: max-content;
-  animation: tooltipFadeIn 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  // animation: tooltipFadeIn 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: none;
+  will-change: transform, opacity;
 
   // Современные светлые цвета
   background: #fafafa;
-  color: #333333;
+  color: #6b7280;
   border: 1px solid #e0e0e0;
+
+  &__ready {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 150ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  &__content {
+    line-height: 1.4;
+  }
+
+  &__title {
+    font-weight: 600;
+    color: #333c42;
+  }
+
+  &__description {
+    // font-size: 13px;
+  }
 }
 
 .tooltip__arrow {
   position: absolute;
   width: 10px;
   height: 10px;
-  background: #ffffff;
+  background: #fafafa;
   border: 1px solid #e5e7eb;
   pointer-events: none;
   z-index: 2;
@@ -52,38 +74,50 @@
     border-right: none;
   }
 
+  // &--bottom {
+  //   top: -4px;
+  //   left: 50%;
+  //   transform: translateX(-50%) rotate(45deg);
+  //   border-left: 5px solid transparent;
+  //   border-right: 5px solid transparent;
+  //   border-bottom: 5px solid #fafafa;
+  //   box-shadow: -1px -1px 2px -1px rgba(0, 0, 0, 0.1);
+  // }
+
   // LEFT - стрелочка справа
   &--left {
-    right: -6px;
+    right: -4px;
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
-    clip-path: polygon(0% 100%, 100% 100%, 0% 0%);
-    border-left: none;
-    border-bottom: none;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid #fafafa;
+    box-shadow: 1px 1px 2px -1px rgba(0, 0, 0, 0.1);
   }
 
   // RIGHT - стрелочка слева
   &--right {
-    left: -6px;
+    left: -4px;
     top: 50%;
     transform: translateY(-50%) rotate(45deg);
-    clip-path: polygon(100% 0%, 100% 100%, 0% 0%);
-    border-right: none;
-    border-top: none;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-right: 5px solid #fafafa;
+    box-shadow: -1px 1px 2px -1px rgba(0, 0, 0, 0.1);
   }
 }
 
 // Анимация появления
-@keyframes tooltipFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(4px) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
+// @keyframes tooltipFadeIn {
+//   from {
+//     opacity: 0;
+//     transform: translateY(4px) scale(0.96);
+//   }
+//   to {
+//     opacity: 1;
+//     transform: translateY(0) scale(1);
+//   }
+// }
 
 // Адаптивность
 @media (max-width: 768px) {

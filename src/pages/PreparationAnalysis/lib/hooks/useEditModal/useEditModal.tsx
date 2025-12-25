@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import type { InitialData } from "../../types/initialDataTypes"
+import type { InitialData } from "../../types/analysisTypes"
 
 export const useEditModal = () => {
   const [isOpen, setIsOpen] = useState(false)

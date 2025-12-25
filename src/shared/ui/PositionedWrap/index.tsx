@@ -2,7 +2,7 @@ import React, { type CSSProperties, useEffect, useRef, useState } from "react"
 
 import cn from "classnames"
 
-import { ALLOWED_POSITIONS, HORIZONTAL_POSITION } from "@/shared/constants"
+import { HORIZONTAL_POSITION } from "@/shared/constants"
 import { getCalculatePosition } from "@/shared/lib/helpers/getCalculatePosition/getCalculatePosition"
 import { PositionType } from "@/shared/lib/types/types"
 
@@ -24,7 +24,7 @@ export const PositionedWrap: React.FC<PositionedWrapProps> = ({
   horizontalAlignment,
   isClosing,
   isOpen,
-  position = ALLOWED_POSITIONS.FIXED,
+  position,
   refParent,
 }) => {
   const ref = useRef<HTMLDivElement>(null)

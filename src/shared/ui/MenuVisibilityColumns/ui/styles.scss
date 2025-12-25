@@ -20,16 +20,27 @@
   }
 
   &__icon {
-    color: var(--primary-icon-color);
+    color: var(--color-icon-primary);
   }
 
   &__content {
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 12px;
+    //   background: var(--color-bg-primary);
+    //   border: 1px solid #ddd;
+    //   border-radius: 6px;
+    //   box-shadow: 0 4px 12px var(--color-box-shadow);
+    //   padding: 12px;
     min-width: 200px;
-    z-index: 1000;
+    //   z-index: 1000;
   }
 }
+
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     padding: 0px 12px 8px 0px;
+//     margin: 0 0px;
+//     border-bottom: 1px solid #dfdfdf;
+//     font-weight: 600;
+//     font-size: 14px;
+//     color: var(--color-text-secondary);
+// }

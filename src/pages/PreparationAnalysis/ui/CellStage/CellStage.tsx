@@ -6,7 +6,7 @@ import { arrowLongIcon } from "@/shared/constants"
 import { Icon } from "@/shared/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
 
-import type { InitialData } from "../../lib/types/initialDataTypes"
+import type { InitialData } from "../../lib/types/analysisTypes"
 
 import "./styles.scss"
 

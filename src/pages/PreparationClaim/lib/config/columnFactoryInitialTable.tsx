@@ -3,9 +3,9 @@ import React from "react"
 import { VirtualColumn } from "@/shared/lib/types/table"
 
 import { CellActions } from "../../ui/CellActions/CellActions"
+import { CellDebt } from "../../ui/CellDebt/CellDebt"
 import { CellDocuments } from "../../ui/CellDocuments/CellDocuments"
 import { CellPersonData } from "../../ui/CellPersonData/CellPersonData"
-import { CellPremisesData } from "../../ui/CellPremisesData/CellPremisesData"
 import { CellStage } from "../../ui/CellStage/CellStage"
 import { VirtualColumnInitialDataTableKey } from "../constants/columnKeysInitialData"
 import type { InitialData } from "../types/initialDataTypes"
@@ -50,7 +50,7 @@ export const createVirtualColumns = (
     isFilterable: true,
     name: VirtualColumnInitialDataTableKey.PREMISES_DATA,
     onCellClick: (rowData, column, e) => onCellClick(rowData, column, e),
-    render: (rowData: InitialData) => <CellPremisesData rowData={rowData} />,
+    render: (rowData: InitialData) => <CellDebt onEdit={onEdit} rowData={rowData} />,
     title: "Долг",
     type: "virtual",
   },

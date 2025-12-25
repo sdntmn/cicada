@@ -36,8 +36,9 @@ export const ColumnSelector = <T,>({ allColumns, getColumnLabel, onChange, selec
   const isAllSelected = allColumns.length > 0 && allColumns.every((col) => selected.has(col))
 
   return (
-    <Flex className="column-selector__list" vertical>
+    <Flex className="column-selector" gap={16} vertical>
       <Checkbox
+        className="column-selector__item"
         id="check-all"
         isChecked={isAllSelected}
         label="Выбрать все"
@@ -48,6 +49,7 @@ export const ColumnSelector = <T,>({ allColumns, getColumnLabel, onChange, selec
       <Flex className="column-selector__list" gap={4} vertical>
         {allColumns.map((column, index) => (
           <Checkbox
+            className="column-selector__item"
             id={`check-${column}`}
             isChecked={selected.has(column)}
             key={index}

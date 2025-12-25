@@ -5,7 +5,7 @@ import { TextTag, Typography } from "itpc-ui-kit"
 
 import { Flex } from "@/shared/ui/layout/Flex"
 
-import { InitialData } from "../../lib/types/initialDataTypes"
+import { InitialData } from "../../lib/types/analysisTypes"
 
 import "./styles.scss"
 
@@ -14,7 +14,7 @@ interface DebtorCardModalProps {
   isOpen: boolean
 }
 
-export const CardDetailsDocuments: React.FC<DebtorCardModalProps> = ({ debtor, isOpen, onClose }) => {
+export const CardDetailsDocuments: React.FC<DebtorCardModalProps> = ({ debtor, isOpen }) => {
   if (!debtor) {
     return null
   }
