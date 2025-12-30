@@ -7,6 +7,7 @@ import { Column, NumberColumns, RowType } from "@/shared/lib/types/table"
 import { FontSize } from "@/shared/lib/types/types"
 
 import { TableRow } from "../TableRow"
+import { TableSkeletonRows } from "../TableSkeletonRows/TableSkeletonRows"
 
 import "./styles.scss"
 
@@ -48,27 +49,14 @@ export const TableBody = <T extends RowType>({
   return (
     <tbody className={cn("table-body", fontSizeClass)} {...rest}>
       {isLoading ? (
-        Array.from({ length: rows.length || 10 }).map((_, rowIndex) => (
-          <tr className="table-row table-row--skeleton" key={`skeleton-${rowIndex}`}>
-            {isShowSelection && (
-              <td className={cn("table-row__selection-cell", verticalBorders && "table-row__vertical-border")}>
-                <div className="skeleton skeleton--checkbox" />
-              </td>
-            )}
-            {columns?.map((column) => (
-              <td
-                className={cn(
-                  "table-body-cell",
-                  `table-body-cell__align-${column.align || "left"}`,
-                  verticalBorders && "table-body-cell__vertical-border"
-                )}
-                key={String(column.name)}
-              >
-                <div className="skeleton skeleton--text" />
-              </td>
-            ))}
-          </tr>
-        ))
+        <TableSkeletonRows
+          columns={columns}
+          fontSize={fontSize}
+          isShowSelection={isShowSelection}
+          rowCount={rows.length || 10}
+          rowDensity={rowDensity}
+          verticalBorders={verticalBorders}
+        />
       ) : rows.length ? (
         rows.map((row: T, rowIndex) => {
           const rowId = row.id

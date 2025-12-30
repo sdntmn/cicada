@@ -5,7 +5,6 @@ import { SearchField } from "itpc-ui-kit"
 import { SearchButton } from "@/pages/Selection/ui/SearchButton/SearchButton"
 import { SearchHistoryButton } from "@/pages/Selection/ui/SearchHistoryButton/SearchHistoryButton"
 import { useAppSelector } from "@/shared/lib/store"
-import { Flex } from "@/shared/ui/layout/Flex"
 
 import "./styles.scss"
 

@@ -1,8 +1,9 @@
 .font-size-menu {
   &__title {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    color: #333;
+
+    color: var(--color-text-small);
   }
 
   &__option {
@@ -14,14 +15,14 @@
     border-radius: 4px;
 
     &_active {
-      background-color: #e6f0ff;
-      border-color: #1890ff;
-      color: #1890ff;
+      background-color: rgba(var(--color-border-accent-rgb), 0.1);
+      border-color: rgba(var(--color-border-accent-rgb), 0.46);
+      color: rgba(var(--color-border-accent-rgb), 1);
       font-weight: 500;
     }
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: rgba(var(--color-border-accent-rgb), 0.05);
     }
   }
 

@@ -1,0 +1,58 @@
+// В styles.scss или отдельном файле
+.table-row {
+  &--density {
+    &_comfortable {
+      // стандартная высота
+      .table-body-cell,
+      .table-row__selection-cell {
+        padding: 12px 8px;
+        height: auto;
+      }
+    }
+    &_compact {
+      .table-body-cell,
+      .table-row__selection-cell {
+        padding: 6px 8px;
+        height: auto;
+      }
+    }
+    &_ spacious {
+      .table-body-cell,
+      .table-row__selection-cell {
+        padding: 16px 8px;
+        height: auto;
+      }
+    }
+  }
+
+  &--font {
+    &_small {
+      .skeleton--text {
+        height: 14px;
+      }
+      .skeleton--checkbox {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    &_normal {
+      .skeleton--text {
+        height: 16px;
+      }
+      .skeleton--checkbox {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    &_large,
+    &_xlarge {
+      .skeleton--text {
+        height: 18px;
+      }
+      .skeleton--checkbox {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { FilterMode } from "@/shared/api/DebtorApi"
 import { cityIcon, filterIcon, historyIcon, repeatIcon, searchIcon } from "@/shared/constants"
 import { useAppSelector } from "@/shared/lib/store"
 import { Badge } from "@/shared/ui/Badge/ui/Badge"
+import { Button } from "@/shared/ui/Button"
 import { Dropdown } from "@/shared/ui/Dropdown"
 import { Icon } from "@/shared/ui/Icon"
 import { Tooltip } from "@/shared/ui/Tooltip"
@@ -36,16 +37,27 @@ export const SearchHistoryButton: React.FC = () => {
 
   return (
     <div className="search-history">
-      <button
+      <Button
+        icon={
+          <>
+            <Icon className={cn(historyIcon, "search-history__btn-icon-history")} />
+            <Icon
+              className={cn(
+                searchIcon,
+                "search-history__btn-icon-search fa-flip-horizontal",
+                isOpen && "search-history__btn-icon-search_active search-history__btn_active"
+              )}
+            />
+          </>
+        }
+        active={isOpen}
         aria-label="История поиска"
         className={cn("search-history__btn search-history__btn-icon", isOpen && "search-history__btn_active")}
         disabled={isLoading || !premises.length}
         onClick={() => setIsOpen(!isOpen)}
         ref={buttonRef}
-      >
-        <Icon className={cn(historyIcon, "search-history__btn-icon-history")} />
-        <Icon className={cn(searchIcon, "search-history__btn-icon-search fa-flip-horizontal")} />
-      </button>
+        variant="icon"
+      />
 
       <Dropdown
         anchorRef={buttonRef}

@@ -1,8 +1,8 @@
 @use "../../../../app/styles/index.scss";
 
 .icon {
-  color: var(--itpc-default-icon-color);
+  color: var(--color-icon-default);
   &_active {
-    color: var(--itpc-primary-icon-color);
+    color: var(--color-icon-primary);
   }
 }

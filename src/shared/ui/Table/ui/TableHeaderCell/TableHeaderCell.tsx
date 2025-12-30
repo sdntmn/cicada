@@ -62,6 +62,7 @@ export const TableHeaderCell = <T extends RowType>({
         "table-header-cell",
         hasControls ? "table-header-cell_clickable" : "table-header-cell_pointer-none",
         isActive ? "table-header-cell_background-active" : "table-header-cell_background",
+
         verticalBorders && "table-header-cell__vertical-border"
       )}
       onClick={isSortable ? handleSorterClick : undefined}

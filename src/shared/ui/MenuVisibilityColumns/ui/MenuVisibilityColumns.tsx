@@ -2,9 +2,12 @@ import React, { useRef, useState } from "react"
 
 import cn from "classnames"
 
-import { HORIZONTAL_POSITION } from "@/shared/constants"
+import { HORIZONTAL_POSITION, tableColumnsIcon } from "@/shared/constants"
 import { Dropdown } from "@/shared/ui/Dropdown"
 import { ColumnSelector } from "@/shared/ui/Table/ui/ColumnSelector/ColumnSelector"
+
+import { Button } from "../../Button"
+import { Icon } from "../../Icon"
 
 import "./styles.scss"
 
@@ -29,21 +32,23 @@ export const MenuVisibilityColumns = <T,>({ allColumns, getColumnLabel, onChange
 
   return (
     <div className="menu-column">
-      <button
+      <Button
+        active={isOpen}
         aria-label="Выбрать колонки таблицы"
-        className={cn("menu-column__btn", isOpen && "menu-column__btn_active")}
+        className={cn("menu-column__btn")}
+        icon={<Icon className={cn(tableColumnsIcon)} />}
         onClick={toggleMenu}
         ref={buttonRef}
+        size="md"
         type="button"
-      >
-        <i className="fa-solid fa-table-columns menu-column__icon" />
-      </button>
+        variant="icon"
+      />
 
       <Dropdown
         anchorRef={buttonRef}
         className="menu-column__content"
         distanceBetweenElements={4}
-        header="Выбор колонок:"
+        header="Выбор колонок"
         horizontalAlignment={HORIZONTAL_POSITION.RIGHT}
         isOpen={isOpen}
         onClose={closeMenu}

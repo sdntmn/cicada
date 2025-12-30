@@ -75,7 +75,7 @@
 
   &__more-btn {
     color: var(--color-text-primary);
-    box-shadow: 0 0 0 1px rgba(var(--color-border-accent-rgb), 0.46);
+    box-shadow: inset 0 0 0 1px rgba(var(--color-border-accent-rgb), 0.46);
     background-color: rgba(var(--color-button-primary-rgb), 0.1);
     border: none;
     border-radius: 20px;
@@ -90,12 +90,6 @@
 
     &:hover {
       background-color: rgba(var(--color-button-primary-rgb), 0.06);
-    }
-  }
-
-  &__sort-active {
-    .icon {
-      color: var(--color-primary); // или ваш акцентный цвет
     }
   }
 
@@ -143,8 +137,25 @@
     display: flex;
     flex-direction: column;
     max-height: 400px;
+    min-width: 200px;
     overflow-y: auto;
     gap: 8px;
     padding: 8px 16px;
+  }
+
+  &__btn-sort {
+    position: absolute;
+    right: 8px;
+    top: 10px;
+
+    &:hover {
+      background-color: rgba(var(--color-hover-btn-rgb), 0.1);
+    }
+
+    &_active {
+      .icon {
+        color: var(--color-primary);
+      }
+    }
   }
 }

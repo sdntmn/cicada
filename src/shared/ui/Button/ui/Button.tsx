@@ -38,7 +38,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         "button",
         `button__variant-${variant}`,
         `button__size-${size}`,
-        active && "button__active",
+        active && "button_active",
         disabled && "button__disabled",
         fullWidth && "button__full-width",
         !children && icon && "button__icon-only",
@@ -49,7 +49,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type={type}
       {...props}
     >
-      {icon && <span className="button__icon">{icon}</span>}
+      {icon}
       {children && <span className="button__content">{children}</span>}
     </button>
   )

@@ -23,7 +23,7 @@ import "./styles.scss"
 export const MultiSelectHouses: React.FC = () => {
   const dispatch = useAppDispatch()
   const [searchQuery, setSearchQuery] = useState("")
-
+  console.info(searchQuery)
   const { isLoading, premises } = useAppSelector((state) => state.premises)
   const { selectedHouseIds } = useAppSelector((state) => state.houseSelection)
 

@@ -1,10 +1,8 @@
 import React from "react"
 
-import cn from "classnames"
-
-import { closeIcon } from "@/shared/constants"
-import { Icon } from "@/shared/ui/Icon"
 import { Flex } from "@/shared/ui/layout/Flex"
+
+import { Chip } from "../../Chip"
 
 import "./styles.scss"
 
@@ -39,22 +37,12 @@ export const TagPanelActiveFilters: React.FC<Props> = ({ columnLabels, filters, 
 
   return (
     <Flex align="center" gap={16} wrap="wrap">
-      <Flex gap={8} wrap="wrap">
-        {activeFilters.map(([column, value]) => (
-          <div className="tag-panel-active-filters__item" key={String(column)}>
-            <span className="tag-panel-active-filters__label">{columnLabels[column]}:</span>
-            <span className="tag-panel-active-filters__value">{value}</span>
-            <button
-              aria-label={`Убрать фильтр по ${columnLabels[column]}`}
-              className="tag-panel-active-filters__remove"
-              onClick={() => onRemoveFilter(column)}
-              type="button"
-            >
-              <Icon className={cn(closeIcon, "tag-panel-active-filters__icon-close")} />
-            </button>
-          </div>
-        ))}
-      </Flex>
+      {activeFilters.map(([column, value]) => (
+        <Chip key={String(column)} onRemove={() => onRemoveFilter(column)} size="sm">
+          <span className="tag-panel-active-filters__label">{columnLabels[column]}:</span> {value}
+        </Chip>
+      ))}
+
       <button className="tag-panel-active-filters__reset" onClick={onResetAll} type="button">
         Очистить всё
       </button>

@@ -60,7 +60,6 @@ export const TagPanelSelectedHouses: React.FC<Props> = ({ onClearAll, onRemoveHo
 
   const headerDropdown = (
     <Flex className="tag-panel-selected-houses__header" gap={32} justify="space-between">
-      {/* <span>Ещё {hiddenHouses.length}</span> */}
       <span>Выбранные адреса </span>
       <Button
         aria-label={
@@ -70,20 +69,11 @@ export const TagPanelSelectedHouses: React.FC<Props> = ({ onClearAll, onRemoveHo
           e.stopPropagation()
           toggleSortOrder()
         }}
-        className={cn(sortOrder !== null && "tag-panel-selected-houses__sort-active")}
-        size="xs"
+        className={cn("tag-panel-selected-houses__btn-sort", sortOrder !== null && "tag-panel-selected-houses__btn-sort_active")}
+        icon={<Icon className={sortOrder === null ? sortAscIcon : sortOrder === "asc" ? sortAscIcon : sortDescIcon} />}
+        size="sm"
         variant="icon"
-      >
-        <Icon
-          className={
-            sortOrder === null
-              ? sortAscIcon // серая иконка
-              : sortOrder === "asc"
-                ? sortAscIcon
-                : sortDescIcon
-          }
-        />
-      </Button>
+      />
     </Flex>
   )
 
