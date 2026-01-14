@@ -1,4 +1,4 @@
-import React, { MutableRefObject, TableHTMLAttributes, useEffect, useState } from "react"
+import React, { MutableRefObject, TableHTMLAttributes, useCallback, useEffect, useRef, useState } from "react"
 
 import cn from "classnames"
 
@@ -11,6 +11,7 @@ import { TableBody } from "../TableBody"
 import { TableHeader } from "../TableHeader"
 
 import "./styles.scss"
+import { TableSkeletonRows } from "../TableSkeletonRows/TableSkeletonRows"
 
 export interface Props<T extends RowType> extends TableHTMLAttributes<HTMLTableElement> {
   activeCellKey?: string
@@ -56,6 +57,9 @@ export const Table = <T extends RowType>({
   verticalBorders = false,
   ...rest
 }: Props<T>) => {
+  const theadRef = useRef<HTMLTableSectionElement>(null)
+  const resizeObserverRef = useRef<ResizeObserver | null>(null)
+  const [columnWidths, setColumnWidths] = useState<number[]>([])
   const [currentKey, setCurrentKey] = useState<KeySort<T>>()
   const [currentKeys, setCurrentKeys] = useState<KeysSort<T>>({})
   const [data, setData] = useState<T[]>(rows)
@@ -116,14 +120,116 @@ export const Table = <T extends RowType>({
     }
   }
 
+  const measureColumnWidths = useCallback(() => {
+    if (!theadRef.current || !columns?.length) {
+      return
+    }
+
+    const thElements = theadRef.current.querySelectorAll("th")
+    const widths: number[] = []
+
+    thElements.forEach((th) => {
+      const rect = th.getBoundingClientRect()
+      // Получаем реальную ширину элемента с учетом padding, border
+      const computedStyle = window.getComputedStyle(th)
+      const width = rect.width
+      // Вычитаем padding если нужно точное значение для content
+      const paddingLeft = parseFloat(computedStyle.paddingLeft) || 0
+      const paddingRight = parseFloat(computedStyle.paddingRight) || 0
+      const contentWidth = width - paddingLeft - paddingRight
+
+      widths.push(contentWidth > 0 ? contentWidth : width)
+    })
+
+    // Обновляем только если есть изменения
+    if (widths.length > 0 && JSON.stringify(widths) !== JSON.stringify(columnWidths)) {
+      setColumnWidths(widths)
+    }
+  }, [columns, columnWidths])
+
+  const handleColumnWidthsReady = (widths: number[]) => {
+    setColumnWidths(widths)
+  }
+
   useEffect(() => {
     setData(rows)
   }, [rows])
+
+  useEffect(() => {
+    // Замеряем после монтирования
+    const timer = setTimeout(() => {
+      measureColumnWidths()
+    }, 100)
+
+    // Создаем ResizeObserver для отслеживания изменений размеров
+    if ("ResizeObserver" in window) {
+      resizeObserverRef.current = new ResizeObserver(() => {
+        measureColumnWidths()
+      })
+
+      if (theadRef.current) {
+        resizeObserverRef.current.observe(theadRef.current)
+      }
+    }
+
+    return () => {
+      clearTimeout(timer)
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect()
+      }
+    }
+  }, [measureColumnWidths])
+
+  useEffect(() => {
+    measureColumnWidths()
+  }, [columns, isShowSelection, measureColumnWidths])
 
   const totalRows = rows.length
   const selectedCount = selectedRow.size
   const isAllSelected = totalRows > 0 && selectedCount === totalRows
   const safeIsAllSelected = Boolean(isAllSelected)
+
+  const renderSkeleton = () => (
+    <TableSkeletonRows
+      columns={columns}
+      columnWidths={columnWidths.length > 0 ? columnWidths : undefined}
+      fontSize={fontSize}
+      isShowSelection={isShowSelection}
+      rowCount={rows.length || 10}
+      rowDensity={rowDensity}
+      verticalBorders={verticalBorders}
+    />
+  )
+
+  const renderEmptyState = () => {
+    const colSpan = (columns?.length || 0) + (isShowSelection ? 1 : 0)
+    return (
+      <tr>
+        <td className="table-body__empty" colSpan={colSpan}>
+          Нет данных
+        </td>
+      </tr>
+    )
+  }
+
+  const renderData = () => (
+    <TableBody
+      activeCellKey={activeCellKey}
+      columns={columns}
+      isOpenExpandedInfoCell={isOpenExpandedInfoCell}
+      isShowSelection={isShowSelection}
+      nameMainColumnSort={currentKeys?.mainKey?.name}
+      onRowSelect={onRowSelect}
+      rowDensity={rowDensity}
+      rows={data}
+      selectedRow={selectedRow}
+      sortByNumberColumns={sortByNumberColumns}
+      striped={striped}
+      verticalBorders={verticalBorders}
+    />
+  )
+
+  const tableBodyContent = isLoading ? renderSkeleton() : !data.length ? renderEmptyState() : renderData()
 
   return (
     <table {...rest} className={cn("table", striped && "table__striped", className)}>
@@ -137,32 +243,17 @@ export const Table = <T extends RowType>({
           filterButtonRefs={filterButtonRefs}
           isAllSelected={safeIsAllSelected}
           isShowSelection={isShowSelection}
+          onColumnWidthsReady={handleColumnWidthsReady}
           onFilterIconClick={onFilterIconClick}
           onSelectAll={onSelectAll}
+          ref={theadRef}
           setKeySort={setKeySort}
           sortByNumberColumns={sortByNumberColumns}
           verticalBorders={verticalBorders}
         />
       )}
 
-      {data && (
-        <TableBody<T>
-          activeCellKey={activeCellKey}
-          columns={columns}
-          fontSize={fontSize}
-          isLoading={isLoading}
-          isOpenExpandedInfoCell={isOpenExpandedInfoCell}
-          isShowSelection={isShowSelection}
-          nameMainColumnSort={currentKeys?.mainKey?.name}
-          onRowSelect={onRowSelect}
-          rowDensity={rowDensity}
-          rows={data}
-          selectedRow={selectedRow}
-          sortByNumberColumns={sortByNumberColumns}
-          striped={striped}
-          verticalBorders={verticalBorders}
-        />
-      )}
+      <tbody className={`table-body table-body__font_${fontSize}`}>{tableBodyContent}</tbody>
     </table>
   )
 }

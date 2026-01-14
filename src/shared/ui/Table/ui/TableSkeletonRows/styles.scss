@@ -1,7 +1,7 @@
 // В styles.scss или отдельном файле
-.table-row {
-  &--density {
-    &_comfortable {
+.table-row-skeleton {
+  &__density {
+    &_medium {
       // стандартная высота
       .table-body-cell,
       .table-row__selection-cell {
@@ -9,14 +9,24 @@
         height: auto;
       }
     }
-    &_compact {
+    &_small {
       .table-body-cell,
       .table-row__selection-cell {
-        padding: 6px 8px;
+        padding: 8px;
         height: auto;
       }
     }
-    &_ spacious {
+
+    &_large {
+      // как .table-row_large (48px)
+      .table-body-cell,
+      .table-row__selection-cell {
+        padding: 16px 8px;
+        height: auto;
+      }
+    }
+
+    &_xLarge {
       .table-body-cell,
       .table-row__selection-cell {
         padding: 16px 8px;
@@ -25,34 +35,59 @@
     }
   }
 
-  &--font {
-    &_small {
-      .skeleton--text {
-        height: 14px;
-      }
-      .skeleton--checkbox {
-        width: 14px;
-        height: 14px;
-      }
+  &_small {
+    .skeleton--text {
+      height: 14px;
     }
-    &_normal {
-      .skeleton--text {
-        height: 16px;
-      }
-      .skeleton--checkbox {
-        width: 16px;
-        height: 16px;
-      }
+    .skeleton--checkbox {
+      width: 14px;
+      height: 14px;
     }
-    &_large,
-    &_xlarge {
-      .skeleton--text {
-        height: 18px;
-      }
-      .skeleton--checkbox {
-        width: 18px;
-        height: 18px;
-      }
+  }
+  &_normal {
+    .skeleton--text {
+      height: 16px;
     }
+    .skeleton--checkbox {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  &_large,
+  &_xLarge {
+    .skeleton--text {
+      height: 18px;
+    }
+    .skeleton--checkbox {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .skeleton {
+    display: block;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: 4px;
+  }
+
+  .skeleton--checkbox {
+    width: 16px;
+    height: 16px;
+  }
+
+  .skeleton--text {
+    height: 16px;
+    width: 100%;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
