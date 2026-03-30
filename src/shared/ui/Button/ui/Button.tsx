@@ -8,7 +8,7 @@ import "./styles.scss"
 export type ButtonVariant = "secondary" | "primary" | "outline" | "text" | "icon" | "chip"
 export type ButtonSize = "xs" | "sm" | "md" | "lg"
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean // для toggle-состояний (например, сортировка)
   children?: ReactNode
   fullWidth?: boolean
@@ -17,7 +17,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, Props>(
   (
     {
       active = false,

@@ -9,9 +9,9 @@ import { FontSize } from "@/shared/lib/types/types"
 
 import { TableBody } from "../TableBody"
 import { TableHeader } from "../TableHeader"
+import { TableSkeletonRows } from "../TableSkeletonRows/TableSkeletonRows"
 
 import "./styles.scss"
-import { TableSkeletonRows } from "../TableSkeletonRows/TableSkeletonRows"
 
 export interface Props<T extends RowType> extends TableHTMLAttributes<HTMLTableElement> {
   activeCellKey?: string
@@ -75,7 +75,7 @@ export const Table = <T extends RowType>({
         break
 
       case SortType.DESCENDING:
-        setData([...data].reverse())
+        setData([...data].sort(byKey(key)))
         break
 
       default:

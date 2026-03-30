@@ -6,6 +6,7 @@ import { DashboardPage } from "@/pages/Dashboard"
 // === Workspace'ы: Expertise ===
 
 import { ArchivePage } from "@/pages/Archive"
+import ComponentGallery from "@/pages/ComponentGallery/ComponentGallery"
 import { DebtorsPage } from "@/pages/Debtors"
 import { MonitoringPage } from "@/pages/Monitoring"
 import { PreparationAnalysisPage } from "@/pages/PreparationAnalysis"
@@ -34,7 +35,7 @@ export const renderContent = ({ caseId, onNavigateToItem, section, subSection }:
 
   // 🔹 Standalone страницы (без подсекций)
   if (section === Menu.dashboard) {
-    return <DashboardPage />
+    return <ComponentGallery />
   }
   if (section === Menu.selection) {
     return <SelectionPage />

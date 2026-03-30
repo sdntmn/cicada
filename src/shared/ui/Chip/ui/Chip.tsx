@@ -9,7 +9,7 @@ import { Icon } from "../../Icon"
 
 import "./styles.scss"
 
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+export interface Props extends HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode
   className?: string
   onRemove?: () => void
@@ -18,7 +18,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   variant?: ChipVariant
 }
 
-export const Chip = forwardRef<HTMLSpanElement, BadgeProps>(
+export const Chip = forwardRef<HTMLSpanElement, Props>(
   ({ children, className, onRemove, removable, size = "small", variant = "filled", ...props }, ref) => {
     const isRemovable = onRemove != null || removable
     return (

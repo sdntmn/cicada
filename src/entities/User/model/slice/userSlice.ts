@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { UserApi } from "@/shared/api"
 import { ErrorResponse } from "@/shared/api/types"
 
-import { convertUserApiToUser } from "../service/convertUserApiToUser/connvertUserApiToUser"
+import { convertUserApiToUser } from "../service/convertUserApiToUser/convertUserApiToUser"
 import { getUser } from "../thunk/thunk"
 import { UserStorage } from "../types/user"
 

@@ -1,0 +1,69 @@
+@use "../../../../app/styles/themes/default.scss";
+
+.card {
+  display: block;
+  background-color: var(--color-background-primary);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+
+  // Варианты
+  &__default {
+    border: 1px solid var(--color-border);
+  }
+
+  &__outlined {
+    border: 1px solid var(--color-border);
+    background-color: transparent;
+  }
+
+  &__elevated {
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &__filled {
+    border: none;
+    background-color: var(--color-background-secondary);
+  }
+
+  // Размеры
+  &__sm {
+    border-radius: 6px;
+  }
+
+  &__md {
+    border-radius: 8px;
+  }
+
+  &__lg {
+    border-radius: 12px;
+  }
+
+  // Отступы
+  &__padding {
+    padding: 16px;
+
+    &.card__sm {
+      padding: 12px;
+    }
+
+    &.card__lg {
+      padding: 24px;
+    }
+  }
+
+  // Интерактивность
+  &__interactive {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}

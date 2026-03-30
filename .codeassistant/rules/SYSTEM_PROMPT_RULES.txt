@@ -1,0 +1,62 @@
+=== ПРАВИЛА ПРОЕКТА ДЛЯ AI-АССИСТЕНТА ===
+
+🏗️ АРХИТЕКТУРА FSD:
+• Слои: shared → entities → features → widgets → pages → app
+• Импорты ТОЛЬКО снизу вверх
+• Абсолютные импорты через @/ (пример: @/shared/ui/Button)
+
+📝 ESLINT ОСНОВНОЕ:
+• Сортировка импортов: react → external → common → internal-src → parent → sibling → internal → index
+• Сортировка JSX пропсов алфавитно
+• Порядок атрибутов в JSX: className → id → aria-* → data-* → обработчики → ref → остальные
+• Форматирование: 2 пробела, двойные кавычки в JSX, без точки с запятой
+• Типы массивов: Type[] (не Array<Type>)
+• Запрет any (стараться избегать)
+• Запрет non-null assertion (!) - ошибка
+
+🎨 STYLELINT (SCSS):
+• HEX цвета: длинный формат (#ffffff)
+• Нулевые значения: без единиц (0 вместо 0px)
+• БЭМ-нотация: block__element--modifier
+• CSS-переменные: var(--color-text-primary)
+
+🧩 КОМПОНЕНТЫ UI:
+• Структура: ComponentName/{index.ts, ui/ComponentName.tsx, ui/styles.scss}
+• Использовать forwardRef если нужен ref
+• Определять displayName
+• Использовать classnames для условных классов
+• Экспортировать типы пропсов
+• Поддерживать className и style
+• Именование пропсов: использовать Props вместо ComponentNameProps (например interface Props, а не interface CardProps)
+• Экспорт пропсов: не экспортировать типы пропсов через index.ts - они должны быть доступны только через импорт из файла компонента
+
+📁 ИМЕНОВАНИЕ ФАЙЛОВ:
+• Компоненты: PascalCase.tsx
+• Стили: kebab-case.scss
+• Хуки: useCamelCase.ts
+• Утилиты: camelCase.ts
+
+🔧 КОМАНДЫ ПРОВЕРКИ:
+• TypeScript: npx tsc --noEmit --skipLibCheck
+• ESLint: npx eslint path/to/file.tsx
+• Stylelint: npx stylelint "src/**/*.scss"
+
+⚡ БЫСТРЫЕ СОВЕТЫ:
+1. Всегда проверяй сортировку импортов
+2. Проверяй порядок атрибутов в JSX
+3. Используй абсолютные импорты (@/)
+4. Избегай any - используй конкретные типы
+5. Для условных классов используй classnames
+6. UI-компоненты в shared/ui/
+7. Бизнес-логика в entities/, features/
+8. Страницы собирают фичи и виджеты в pages/
+
+🚨 ЧАСТЫЕ ОШИБКИ:
+• Относительные импорты с ../../../
+• Несортированные импорты
+• Неправильный порядок атрибутов в JSX
+• Использование any без необходимости
+• Отсутствие displayName у компонентов с forwardRef
+• Нарушение границ слоев FSD (импорты сверху вниз)
+• Использование ComponentNameProps вместо Props для интерфейса пропсов
+• Экспорт типов пропсов через index.ts (должны быть доступны только через импорт из файла компонента)

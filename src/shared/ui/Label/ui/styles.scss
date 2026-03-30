@@ -1,0 +1,71 @@
+@use "../../../../app/styles/themes/default.scss";
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.4;
+  cursor: default;
+  transition: color 0.15s ease;
+
+  // Размеры
+  &__sm {
+    font-size: 12px;
+  }
+
+  &__md {
+    font-size: 14px;
+  }
+
+  &__lg {
+    font-size: 16px;
+  }
+
+  // Варианты — используем цвета из темы приложения
+  &__default {
+    color: var(--color-text-secondary);
+  }
+
+  &__primary {
+    color: var(--color-button-primary);
+  }
+
+  &__secondary {
+    color: var(--color-text-secondary);
+  }
+
+  &__success {
+    color: var(--success-color);
+  }
+
+  &__warning {
+    color: var(--warning-color);
+  }
+
+  &__danger {
+    color: var(--error-color);
+  }
+
+  &__info {
+    color: var(--link-color);
+  }
+
+  // Состояния
+  &__required {
+    font-weight: 600;
+  }
+
+  &__disabled {
+    color: var(--color-text-tertiary);
+    cursor: not-allowed;
+  }
+
+  // Маркер обязательного поля
+  &__required-mark {
+    color: var(--error-color);
+    margin-left: 2px;
+    font-weight: 600;
+  }
+}

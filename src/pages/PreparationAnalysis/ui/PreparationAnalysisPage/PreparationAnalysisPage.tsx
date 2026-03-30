@@ -14,7 +14,6 @@ import { BaseTable } from "@/widgets/BaseTable"
 
 import { ANALYSIS_TABLE_CONFIG } from "../../lib/config/config"
 import { BaseColumn, VirtualColumnAnalysisTableKey } from "../../lib/constants/keysColumns"
-import { getVisibleColumns } from "../../lib/helpers/getVisibleColumns/getVisibleColumns"
 import { useCellInteractions } from "../../lib/hooks/useCellInteractions/useCellInteractions"
 import { useEditModal } from "../../lib/hooks/useEditModal/useEditModal"
 import { InitialData } from "../../lib/types/analysisTypes"
@@ -53,20 +52,20 @@ export const PreparationAnalysisPage: React.FC<Props> = ({ currentSubSection, on
     total,
   })
 
-  const { close, editingData, isOpen, open, selectedDebtor } = useEditModal()
+  const { close, editingData, isOpen, open } = useEditModal()
 
   const { cellState, closePopupInfoCell, handleCellClick } = useCellInteractions<InitialData>()
 
-  const handleSave = async () => {
-    if (!selectedDebtor) {
-      return
-    }
-    try {
-      close()
-    } catch (error) {
-      console.error("Ошибка при сохранении:", error)
-    }
-  }
+  // const handleSave = async () => {
+  //   if (!selectedDebtor) {
+  //     return
+  //   }
+  //   try {
+  //     close()
+  //   } catch (error) {
+  //     console.error("Ошибка при сохранении:", error)
+  //   }
+  // }
 
   const handleDeleteSelected = () => {
     const ids = Array.from(selectedRow)
@@ -84,7 +83,7 @@ export const PreparationAnalysisPage: React.FC<Props> = ({ currentSubSection, on
 
   const virtualColumns = createVirtualColumns(open, handleCellClick, onViewCase)
 
-  const previewColumns = getVisibleColumns(visibleColumns, ANALYSIS_TABLE_CONFIG)
+  // const previewColumns = getVisibleColumns(visibleColumns, ANALYSIS_TABLE_CONFIG)
 
   useEffect(() => {
     dispatch(getDebtorsNew({ page: 0, pageSize: 20 }))
